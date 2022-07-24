@@ -1,26 +1,29 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './templates/navbar/navbar.component';
 import { SidebarComponent } from './templates/sidebar/sidebar.component';
-import { LayoutsComponent } from './templates/layouts/layouts.component';
-import { DashboardComponent } from './templates/layouts/dashboard/dashboard.component';
-import { ContentsComponent } from './contents/contents.component';
-import { SuratMasukComponent } from './contents/surat-masuk/surat-masuk.component';
+import { DashboardComponent } from './templates/dashboard/dashboard.component';
+import { SuratMasukComponent } from './register/surat-masuk/surat-masuk.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     SidebarComponent,
-    LayoutsComponent,
     DashboardComponent,
-    ContentsComponent,
     SuratMasukComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
