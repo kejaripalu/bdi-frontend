@@ -5,13 +5,19 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './templates/navbar/navbar.component';
 import { SidebarComponent } from './templates/sidebar/sidebar.component';
 import { LayoutsComponent } from './templates/layouts/layouts.component';
+import { DashboardComponent } from './templates/layouts/dashboard/dashboard.component';
+import { ContentsComponent } from './contents/contents.component';
+import { SuratMasukComponent } from './contents/surat-masuk/surat-masuk.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     SidebarComponent,
-    LayoutsComponent
+    LayoutsComponent,
+    DashboardComponent,
+    ContentsComponent,
+    SuratMasukComponent
   ],
   imports: [
     BrowserModule
