@@ -70,14 +70,19 @@
                         class="form-control"
                         formControlName="keterangan"></textarea>
                 </div>
-                <button
+                <div class="mt-4" *ngIf="isLoading">
+                    <app-loading-spinner></app-loading-spinner>
+                </div>
+                <div *ngIf="!isLoading">
+                    <button
                     class="btn btn-success"
                     type="submit"
                     [disabled]="!suratMasukForm.valid">Simpan</button>
                 <button
                     class="btn btn-danger"
                     type="button"
-                    (click)="onCancel()">Batal</button>
+                    (click)="onCancel()">Batal</button>   
+                </div>       
             </form>
         </div>
     </div>

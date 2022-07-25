@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SuratMasuk } from '../../surat-masuk.model';
+import { SuratMasukService } from '../../surat-masuk.service';
 
 @Component({
   selector: 'app-surat-masuk-biasa-form',
@@ -10,18 +12,38 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class SuratMasukBiasaFormComponent implements OnInit {
   suratMasukForm!: FormGroup;
   editMode: boolean = false;
+  isLoading: boolean = false;
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(private suratMasukService: SuratMasukService,
+              private route: ActivatedRoute, 
+              private router: Router) { }
 
   ngOnInit(): void {
     this.initForm();
   }
 
   onSubmit() {
+    this.isLoading = true;
+    console.log(this.isLoading);
+    
+    const newSuratMasuk = new SuratMasuk();
+    newSuratMasuk.waktuPenerimaanSurat = this.suratMasukForm.value['waktuPenerimaanSurat'];
+    newSuratMasuk.asal = this.suratMasukForm.value['asal'];
+    newSuratMasuk.nomorSurat = this.suratMasukForm.value['nomorSurat'];
+    newSuratMasuk.tanggalSurat = this.suratMasukForm.value['tanggalSurat'];
+    newSuratMasuk.perihal = this.suratMasukForm.value['perihal'];
+    newSuratMasuk.jenisSurat = 'BIASA';
+    newSuratMasuk.isiDisposisi = this.suratMasukForm.value['isiDisposisi'];
+    newSuratMasuk.tindakLanjutDisposisi = this.suratMasukForm.value['tindakLanjutDisposisi'];
+    newSuratMasuk.keterangan = this.suratMasukForm.value['keterangan'];
 
+    this.suratMasukService.createSuratMasuk(newSuratMasuk);
+    console.log(this.isLoading);
+    // this.onCancel();
   }
 
   onCancel() {
+    this.isLoading = false;
     this.router.navigate(['../'], {relativeTo: this.route});
   }
 

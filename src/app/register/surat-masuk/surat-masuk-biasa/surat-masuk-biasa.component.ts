@@ -16,7 +16,7 @@ export class SuratMasukBiasaComponent implements OnInit, OnDestroy {
   currentMonth = new Date().getMonth() + 1;
   currentYear = new Date().getFullYear();
   year: number[] = [];
-  isLoading = false;
+  isLoading: boolean = false;
   private suratMasukChangedSub!: Subscription;
 
   constructor(private suratMasukService: SuratMasukService,

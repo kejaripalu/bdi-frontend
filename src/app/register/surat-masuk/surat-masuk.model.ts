@@ -6,6 +6,7 @@ export class SuratMasuk {
     perihal!: string;
     nomorSurat!: string;
     tanggalSurat!: string;
+    jenisSurat!: string;
     isiDisposisi!: string;
     tindakLanjutDisposisi!: string;
     keterangan!: string;
