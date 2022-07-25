@@ -1,10 +1,23 @@
 <main>
     <div class="container-fluid px-4">
         <div class="d-flex bd-highlight">
-            <div class="p-2 w-100 bd-highlight"><h2 class="mt-4">Surat Masuk</h2></div>
-            <div class="p-2 flex-shrink-1 bd-highlight"><h4 class="mt-4 text-success">R.IN.1</h4></div>
-          </div>
-        
-        <p>surat-masuk works!</p>
+            <div class="p-2 w-100 bd-highlight">
+                <h2 class="mt-4">Surat Masuk</h2>
+            </div>
+            <div class="p-2 flex-shrink-1 bd-highlight">
+                <h4 class="mt-4 text-success">R.IN.1</h4>
+            </div>
+        </div>
+        <hr>
+        <nav class="nav nav-pills nav-justified">
+            <a class="nav-link" aria-current="page" 
+                routerLink="/surat-masuk/biasa"
+                routerLinkActive=" active">Surat Masuk Biasa</a>
+            <a class="nav-link"
+                routerLink="/surat-masuk/rahasia"
+                routerLinkActive=" active">Surat Masuk Rahasia</a>
+        </nav>
+        <hr>
+        <router-outlet></router-outlet>
     </div>
 </main>

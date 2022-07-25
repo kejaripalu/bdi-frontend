@@ -9,6 +9,8 @@ import { DashboardComponent } from './templates/dashboard/dashboard.component';
 import { SuratMasukComponent } from './register/surat-masuk/surat-masuk.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
+import { SuratMasukBiasaComponent as SuratMasukBiasaComponent } from './register/surat-masuk/surat-masuk-biasa/surat-masuk-biasa.component';
+import { SuratMasukRahasiaComponent } from './register/surat-masuk/surat-masuk-rahasia/surat-masuk-rahasia.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { AppRoutingModule } from './app-routing.module';
     NavbarComponent,
     SidebarComponent,
     DashboardComponent,
-    SuratMasukComponent
+    SuratMasukComponent,
+    SuratMasukBiasaComponent,
+    SuratMasukRahasiaComponent
   ],
   imports: [
     BrowserModule,

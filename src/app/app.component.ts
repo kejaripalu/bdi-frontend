@@ -7,9 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   tahun = new Date().getFullYear();
-  loadedNav = '';
 
-  onNavigate(select: string) {
-    this.loadedNav = select;
-  }
+  constructor() { }
+
 }

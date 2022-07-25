@@ -1,0 +1,54 @@
+<div class="mt-4">
+    <div class="d-flex bd-highlight">
+        <div class="p-2 w-100 bd-highlight">
+            <button type="button" class="btn btn-success">Tambah Surat</button>
+        </div>
+        <div class="p-2 flex-shrink-1 bd-highlight">
+           <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                <option 
+                    *ngFor="let m of month; index as i;" 
+                    value="{{ i + 1 }}">{{ m }}</option>
+            </select>
+        </div>
+        <div class="p-2 flex-shrink-1 bd-highlight">
+            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                 <option selected>2022</option>
+                 <option value="1">2021</option>
+                 <option value="2">2020</option>
+                 <option value="3">2019</option>
+             </select>
+         </div>
+    </div>
+    <table class="table table-sm mt-4">
+        <thead>
+            <tr>
+                <th scope="col">No.</th>
+                <th scope="col">Waktu Penerimaan Surat</th>
+                <th scope="col">Asal Surat</th>
+                <th scope="col">Nomor & Tgl Surat</th>
+                <th scope="col">Perihal</th>
+                <th scope="col"></th>
+            </tr>
+            <tr *ngFor="let sm of suratMasuk; index as i;" style="cursor: pointer;">
+                <td class="align-top">{{ i + 1 }}</td>
+                <td class="align-top">{{ sm.waktuPenerimaanSurat }}</td>
+                <td class="align-top">{{ sm.asal }}</td>
+                <td class="align-top">{{ sm.nomorSurat }} - {{ sm.tanggalSurat }}</td>
+                <td class="align-top">{{ sm.perihal }}</td>
+                <td class="align-top">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Action
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" href="#">Detail</a></li>
+                            <li><a class="dropdown-item" href="#">Update</a></li>
+                            <li><a class="dropdown-item" href="#">Hapus</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </thead>
+    </table>
+</div>
