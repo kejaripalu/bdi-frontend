@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { SuratMasukBiasaFormComponent } from "./register/surat-masuk/surat-masuk-biasa/surat-masuk-biasa-form/surat-masuk-biasa-form.component";
 import { SuratMasukBiasaComponent } from "./register/surat-masuk/surat-masuk-biasa/surat-masuk-biasa.component";
 import { SuratMasukRahasiaComponent } from "./register/surat-masuk/surat-masuk-rahasia/surat-masuk-rahasia.component";
 import { SuratMasukComponent } from "./register/surat-masuk/surat-masuk.component";
@@ -9,7 +10,8 @@ const appRoutes: Routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     { path: 'dashboard', component: DashboardComponent },
     { path: 'surat-masuk', component: SuratMasukComponent, children: [
-        { path: 'biasa', component: SuratMasukBiasaComponent },
+        { path: 'biasa', component: SuratMasukBiasaComponent},
+        { path: 'biasa/form', component: SuratMasukBiasaFormComponent },
         { path: 'rahasia', component: SuratMasukRahasiaComponent }
     ]}
 ];

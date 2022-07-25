@@ -4,21 +4,22 @@
 <div class="mt-4" *ngIf="!isLoading">
     <div class="d-flex bd-highlight">
         <div class="p-2 w-100 bd-highlight">
-            <button type="button" class="btn btn-success">Tambah Surat</button>
+            <button type="button" class="btn btn-success" (click)="onNewSuratMasuk()">Tambah Surat</button>
         </div>
         <div class="p-2 flex-shrink-1 bd-highlight">
            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
                 <option 
                     *ngFor="let m of month; index as i;" 
-                    value="{{ i + 1 }}">{{ m }}</option>
+                    [value]="i + 1"
+                    [selected]="(i + 1) === (currentMonth)">{{ m }}</option>
             </select>
         </div>
         <div class="p-2 flex-shrink-1 bd-highlight">
             <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                 <option selected>2022</option>
-                 <option value="1">2021</option>
-                 <option value="2">2020</option>
-                 <option value="3">2019</option>
+                 <option 
+                    *ngFor="let y of year; index as i;"
+                    [value]="y"
+                    [selected]="currentYear">{{ y }}</option>
              </select>
          </div>
     </div>
@@ -32,7 +33,7 @@
                 <th scope="col">Perihal</th>
                 <th scope="col"></th>
             </tr>
-            <tr *ngFor="let sm of suratMasuk; index as i;" style="cursor: pointer;">
+            <tr *ngFor="let sm of suratMasuk; index as i;" style="cursor: pointer;" ngLin>
                 <td class="align-top">{{ i + 1 }}</td>
                 <td class="align-top">{{ sm.waktuPenerimaanSurat }}</td>
                 <td class="align-top">{{ sm.asal }}</td>
@@ -46,7 +47,7 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             <li><a class="dropdown-item" href="#">Detail</a></li>
-                            <li><a class="dropdown-item" href="#">Update</a></li>
+                            <li><a class="dropdown-item" href="#">Ubah</a></li>
                             <li><a class="dropdown-item" href="#">Hapus</a></li>
                         </ul>
                     </div>
