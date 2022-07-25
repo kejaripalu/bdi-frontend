@@ -17,9 +17,9 @@
         <div class="p-2 flex-shrink-1 bd-highlight">
             <select class="form-select form-select-sm" aria-label=".form-select-sm example">
                  <option 
-                    *ngFor="let y of year; index as i;"
+                    *ngFor="let y of year | reverse; index as i;"
                     [value]="y"
-                    [selected]="currentYear">{{ y }}</option>
+                    [selected]="currentYear === y">{{ y }}</option>
              </select>
          </div>
     </div>
@@ -33,7 +33,7 @@
                 <th scope="col">Perihal</th>
                 <th scope="col"></th>
             </tr>
-            <tr *ngFor="let sm of suratMasuk; index as i;" style="cursor: pointer;" ngLin>
+            <tr *ngFor="let sm of suratMasuk; index as i;" style="cursor: pointer;">
                 <td class="align-top">{{ i + 1 }}</td>
                 <td class="align-top">{{ sm.waktuPenerimaanSurat }}</td>
                 <td class="align-top">{{ sm.asal }}</td>

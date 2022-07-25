@@ -13,6 +13,7 @@ import { SuratMasukBiasaComponent as SuratMasukBiasaComponent } from './register
 import { SuratMasukRahasiaComponent } from './register/surat-masuk/surat-masuk-rahasia/surat-masuk-rahasia.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { SuratMasukBiasaFormComponent } from './register/surat-masuk/surat-masuk-biasa/surat-masuk-biasa-form/surat-masuk-biasa-form.component';
+import { ReversePipe } from './shared/reverse.pipe';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { SuratMasukBiasaFormComponent } from './register/surat-masuk/surat-masuk
     SuratMasukRahasiaComponent,
     LoadingSpinnerComponent,
     SuratMasukBiasaFormComponent,
+    ReversePipe
   ],
   imports: [
     BrowserModule,
