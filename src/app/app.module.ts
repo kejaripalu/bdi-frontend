@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { SuratMasukBiasaComponent as SuratMasukBiasaComponent } from './register/surat-masuk/surat-masuk-biasa/surat-masuk-biasa.component';
 import { SuratMasukRahasiaComponent } from './register/surat-masuk/surat-masuk-rahasia/surat-masuk-rahasia.component';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { SuratMasukRahasiaComponent } from './register/surat-masuk/surat-masuk-r
     DashboardComponent,
     SuratMasukComponent,
     SuratMasukBiasaComponent,
-    SuratMasukRahasiaComponent
+    SuratMasukRahasiaComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,

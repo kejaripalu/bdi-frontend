@@ -1,4 +1,7 @@
-<div class="mt-4">
+<div class="mt-4" *ngIf="isLoading" style="text-align: center;">
+    <app-loading-spinner></app-loading-spinner>
+</div>
+<div class="mt-4" *ngIf="!isLoading">
     <div class="d-flex bd-highlight">
         <div class="p-2 w-100 bd-highlight">
             <button type="button" class="btn btn-success">Tambah Surat</button>
