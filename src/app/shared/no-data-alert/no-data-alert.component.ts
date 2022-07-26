@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-no-data-alert',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./no-data-alert.component.css']
 })
 export class NoDataAlertComponent implements OnInit {
+
+  @Input() message: string = 'Tidak ada Data!';
 
   constructor() { }
 
