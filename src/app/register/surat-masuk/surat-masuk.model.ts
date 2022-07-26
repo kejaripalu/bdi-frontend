@@ -10,4 +10,5 @@ export class SuratMasuk {
     isiDisposisi!: string;
     tindakLanjutDisposisi!: string;
     keterangan!: string;
+    urlFile!: string;
 }

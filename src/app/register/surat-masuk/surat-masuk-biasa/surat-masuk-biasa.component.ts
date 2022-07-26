@@ -17,6 +17,7 @@ export class SuratMasukBiasaComponent implements OnInit, OnDestroy {
   currentYear = new Date().getFullYear();
   year: number[] = [];
   isLoading: boolean = false;
+  error: string = null as any;
   private suratMasukChangedSub!: Subscription;
 
   constructor(private suratMasukService: SuratMasukService,
@@ -24,12 +25,21 @@ export class SuratMasukBiasaComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.error = false as any;
     this.isLoading = true;
     this.getYear();
     this.suratMasukChangedSub = this.suratMasukService.getSuratMasuk(0, 20, 'BIASA', 10)
-      .subscribe(data => {
-        this.suratMasuk = data.content;
-        this.isLoading = false;
+      .subscribe({
+        next: (responseData) => {
+          // console.log(responseData);
+          this.suratMasuk = responseData.content;
+          this.isLoading = false;
+        },
+        error: (errorMessage) => {
+          // console.log(errorMessage);
+          this.error = 'Aduh... Gagal load data dari server!!!';
+          this.isLoading = false;
+        }
       });
   }
 

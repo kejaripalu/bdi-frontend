@@ -12,9 +12,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { SuratMasukBiasaComponent as SuratMasukBiasaComponent } from './register/surat-masuk/surat-masuk-biasa/surat-masuk-biasa.component';
 import { SuratMasukRahasiaComponent } from './register/surat-masuk/surat-masuk-rahasia/surat-masuk-rahasia.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
-import { SuratMasukBiasaFormComponent } from './register/surat-masuk/surat-masuk-biasa/surat-masuk-biasa-form/surat-masuk-biasa-form.component';
 import { ReversePipe } from './shared/reverse.pipe';
 import { DatePickerDirective } from './shared/date-picker.directive';
+import { SuratMasukFormComponent } from './register/surat-masuk/surat-masuk-form/surat-masuk-form.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,7 @@ import { DatePickerDirective } from './shared/date-picker.directive';
     SuratMasukBiasaComponent,
     SuratMasukRahasiaComponent,
     LoadingSpinnerComponent,
-    SuratMasukBiasaFormComponent,
+    SuratMasukFormComponent,
     ReversePipe,
     DatePickerDirective
   ],

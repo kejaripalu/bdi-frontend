@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { map } from "rxjs";
+import { catchError, map, throwError } from "rxjs";
 import { MonthConverter } from "src/app/shared/month-converter";
 import { environment } from "src/environments/environment";
 import { SuratMasuk } from "./surat-masuk.model";
@@ -17,16 +17,28 @@ export class SuratMasukService {
         const endDate = new MonthConverter().getEndDate(bulan, '2022');
         const getEndPoint = `${this.endPoint}?page=${page}&size=${size}&jenisSurat=${jenisSurat}&` +
             `startDate=${startDate}&endDate=${endDate}`;
-        return this.httpClient.get<ResponseSuratMasuk>(getEndPoint).pipe(
-            map(response => {
-                return response;
-            }));
+        return this.httpClient.get<ResponseSuratMasuk>(getEndPoint)
+            .pipe(
+                map(response => {
+                    return response;
+                }
+            ));
     }
 
     createSuratMasuk(suratMasuk: SuratMasuk) {
-        return this.httpClient.post<SuratMasuk>(this.endPoint, suratMasuk).subscribe(
-            response => console.log('Response = ' + response)
-        )
+        return this.httpClient.post<SuratMasuk>(this.endPoint, suratMasuk)
+            .pipe(catchError(errorResponse => {
+                let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
+                if (!errorResponse.error) {
+                    return throwError(() => errorMessage);
+                }
+                switch (errorResponse.error.message) {
+                    case 'DUPLICATE_DATA_FIELD':
+                      errorMessage = 'Bro.. Datanya sudah pernah dimasukan!!!';
+                      break;
+                  }
+                return throwError(() => errorMessage);
+            }));
     }
 }
 
