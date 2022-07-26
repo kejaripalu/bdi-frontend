@@ -20,12 +20,16 @@ export class SuratMasukBiasaFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    this.suratMasukForm.statusChanges.subscribe(
+      (status) => console.log(status)
+    )
   }
 
-  onSubmit() {
+  async onSubmit() {
     this.isLoading = true;
     console.log(this.isLoading);
-    
+    console.log(this.suratMasukForm);
+
     const newSuratMasuk = new SuratMasuk();
     newSuratMasuk.waktuPenerimaanSurat = this.suratMasukForm.value['waktuPenerimaanSurat'];
     newSuratMasuk.asal = this.suratMasukForm.value['asal'];
@@ -38,12 +42,14 @@ export class SuratMasukBiasaFormComponent implements OnInit {
     newSuratMasuk.keterangan = this.suratMasukForm.value['keterangan'];
 
     this.suratMasukService.createSuratMasuk(newSuratMasuk);
+    this.suratMasukForm.reset();
     console.log(this.isLoading);
-    // this.onCancel();
+    this.onCancel();
   }
 
   onCancel() {
     this.isLoading = false;
+    this.suratMasukForm.reset();
     this.router.navigate(['../'], {relativeTo: this.route});
   }
 
@@ -58,11 +64,11 @@ export class SuratMasukBiasaFormComponent implements OnInit {
     let keterangan = '';
 
     this.suratMasukForm = new FormGroup({
-      'waktuPenerimaanSurat': new FormControl(waktuPenerimaanSurat, Validators.required),
-      'asal': new FormControl(asal, Validators.required),
+      'waktuPenerimaanSurat': new FormControl(waktuPenerimaanSurat, [Validators.required, Validators.minLength(15)]),
+      'asal': new FormControl(asal, [Validators.required, Validators.minLength(5)]),
       'nomorSurat': new FormControl(nomorSurat, Validators.required),
-      'perihal': new FormControl(perihal, Validators.required),
-      'tanggalSurat': new FormControl(tanggalSurat, Validators.required),
+      'perihal': new FormControl(perihal, [Validators.required, Validators.minLength(5)]),
+      'tanggalSurat': new FormControl(tanggalSurat, [Validators.required]),
       'isiDisposisi': new FormControl(isiDisposisi),
       'tindakLanjutDisposisi': new FormControl(tindakLanjutDisposisi),
       'keterangan': new FormControl(keterangan)

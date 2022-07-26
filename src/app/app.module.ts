@@ -14,6 +14,7 @@ import { SuratMasukRahasiaComponent } from './register/surat-masuk/surat-masuk-r
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { SuratMasukBiasaFormComponent } from './register/surat-masuk/surat-masuk-biasa/surat-masuk-biasa-form/surat-masuk-biasa-form.component';
 import { ReversePipe } from './shared/reverse.pipe';
+import { DatePickerDirective } from './shared/date-picker.directive';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ReversePipe } from './shared/reverse.pipe';
     SuratMasukRahasiaComponent,
     LoadingSpinnerComponent,
     SuratMasukBiasaFormComponent,
-    ReversePipe
+    ReversePipe,
+    DatePickerDirective
   ],
   imports: [
     BrowserModule,
