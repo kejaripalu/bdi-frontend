@@ -7,8 +7,8 @@
                         <div class="form-group">
                             <label for="waktuPenerimaanSurat">Waktu Penerimaan Surat:</label>
                             <input 
-                                type="text" 
-                                name="waktuPenerimaanSurat" 
+                                type="datetime-local"
+                                name="waktuPenerimaanSurat"
                                 class="form-control"
                                 formControlName="waktuPenerimaanSurat">
                         </div>
@@ -62,11 +62,10 @@
                         <div class="form-group">
                             <label for="tanggalSurat">Tanggal Surat:</label>
                             <input 
-                                type="text" 
+                                type="date" 
                                 name="tanggalSurat" 
                                 class="form-control"
-                                formControlName="tanggalSurat"
-                                appDatePicker>
+                                formControlName="tanggalSurat">
                         </div>
                         <small 
                             class="text-alert" 
