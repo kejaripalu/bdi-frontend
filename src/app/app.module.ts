@@ -14,6 +14,7 @@ import { SuratMasukRahasiaComponent } from './register/surat-masuk/surat-masuk-r
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { ReversePipe } from './shared/reverse.pipe';
 import { SuratMasukFormComponent } from './register/surat-masuk/surat-masuk-form/surat-masuk-form.component';
+import { NoDataAlertComponent } from './shared/no-data-alert/no-data-alert.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { SuratMasukFormComponent } from './register/surat-masuk/surat-masuk-form
     SuratMasukRahasiaComponent,
     LoadingSpinnerComponent,
     SuratMasukFormComponent,
-    ReversePipe
+    ReversePipe,
+    NoDataAlertComponent
   ],
   imports: [
     BrowserModule,

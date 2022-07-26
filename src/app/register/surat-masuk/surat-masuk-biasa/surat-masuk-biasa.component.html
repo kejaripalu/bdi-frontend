@@ -60,7 +60,7 @@
             </tr>
         </tbody>
     </table>
-    <div class="alert alert-warning" role="alert" *ngIf="suratMasuk.length === 0">
-        Tidak ada Data!
+    <div *ngIf="suratMasuk.length === 0">
+        <app-no-data-alert></app-no-data-alert>
     </div>
 </div>
