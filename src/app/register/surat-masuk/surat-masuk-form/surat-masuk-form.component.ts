@@ -16,6 +16,7 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   error: string = null as any;
   private suratMasukFormSub!: Subscription;
+  private suratMasukSub!: Subscription;
 
   constructor(private suratMasukService: SuratMasukService,
               private route: ActivatedRoute, 
@@ -51,7 +52,7 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
       newSuratMasuk.keterangan = this.suratMasukForm.value['keterangan'];
       newSuratMasuk.urlFile = this.suratMasukForm.value['urlFile'];
 
-      this.suratMasukFormSub = this.suratMasukService.createSuratMasuk(newSuratMasuk).subscribe({
+      this.suratMasukSub = this.suratMasukService.createSuratMasuk(newSuratMasuk).subscribe({
         next: (responseData) => {
           console.log(responseData);
           this.isLoading = false;
@@ -96,7 +97,12 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-      this.suratMasukFormSub.unsubscribe();
+    if (this.suratMasukFormSub) {
+        this.suratMasukFormSub.unsubscribe();
+    }
+    if (this.suratMasukSub) {
+        this.suratMasukFormSub.unsubscribe();
+    }
   }
 
 }

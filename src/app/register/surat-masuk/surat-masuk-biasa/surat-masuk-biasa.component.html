@@ -36,6 +36,8 @@
                 <th scope="col">Perihal</th>
                 <th scope="col"></th>
             </tr>
+        </thead>
+        <tbody>
             <tr *ngFor="let sm of suratMasuk; index as i;" style="cursor: pointer;">
                 <td class="align-top">{{ i + 1 }}</td>
                 <td class="align-top">{{ sm.waktuPenerimaanSurat }}</td>
@@ -56,6 +58,9 @@
                     </div>
                 </td>
             </tr>
-        </thead>
+        </tbody>
     </table>
+    <div class="alert alert-warning" role="alert" *ngIf="suratMasuk.length === 0">
+        Tidak ada Data!
+    </div>
 </div>

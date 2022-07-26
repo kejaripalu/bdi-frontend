@@ -11,7 +11,7 @@ import { SuratMasukService } from '../surat-masuk.service';
   styleUrls: ['./surat-masuk-biasa.component.css']
 })
 export class SuratMasukBiasaComponent implements OnInit, OnDestroy {
-  suratMasuk!: SuratMasuk[];
+  suratMasuk: SuratMasuk[] = [];
   month = Object.keys(Month).filter((v) => isNaN(Number(v)));
   currentMonth = new Date().getMonth() + 1;
   currentYear = new Date().getFullYear();
@@ -54,7 +54,9 @@ export class SuratMasukBiasaComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-      this.suratMasukChangedSub.unsubscribe();
+      if (this.suratMasukChangedSub) {
+          this.suratMasukChangedSub.unsubscribe();
+      }
   }
 
 }
