@@ -10,7 +10,8 @@ const appRoutes: Routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     { path: 'dashboard', component: DashboardComponent },
     { path: 'surat-masuk', component: SuratMasukComponent, children: [
-        { path: 'biasa', component: SuratMasukBiasaComponent},
+        { path: '', redirectTo: '/surat-masuk/biasa', pathMatch: 'full' },
+        { path: 'biasa', component: SuratMasukBiasaComponent },
         { path: 'biasa/form', component: SuratMasukBiasaFormComponent },
         { path: 'rahasia', component: SuratMasukRahasiaComponent }
     ]}
