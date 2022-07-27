@@ -130,9 +130,7 @@
                         class="form-control"
                         formControlName="urlFile">
                 </div>
-                <div class="alert alert-danger mt-4" *ngIf="error" role="alert">
-                {{ error }}
-                </div>
+                <app-danger-alert [message]="error" *ngIf="error"></app-danger-alert>
                 <div class="mt-4" *ngIf="isLoading">
                     <app-loading-spinner></app-loading-spinner>
                 </div>

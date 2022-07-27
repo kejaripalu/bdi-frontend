@@ -1,9 +1,7 @@
 <div class="mt-4" *ngIf="isLoading" style="text-align: center;">
     <app-loading-spinner></app-loading-spinner>
 </div>
-<div class="alert alert-danger mt-4" *ngIf="error" role="alert">
-    {{ error }}
-</div>
+<app-danger-alert *ngIf="error" [message]="error"></app-danger-alert>
 <div class="mt-4" *ngIf="!isLoading && !error">
     <div class="d-flex bd-highlight">
         <div class="p-2 w-100 bd-highlight">

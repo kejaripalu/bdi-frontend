@@ -16,6 +16,7 @@ import { ReversePipe } from './shared/reverse.pipe';
 import { SuratMasukFormComponent } from './register/surat-masuk/surat-masuk-form/surat-masuk-form.component';
 import { NoDataAlertComponent } from './shared/no-data-alert/no-data-alert.component';
 import { SuratMasukDetailComponent } from './register/surat-masuk/surat-masuk-detail/surat-masuk-detail.component';
+import { DangerAlertComponent } from './shared/danger-alert/danger-alert.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { SuratMasukDetailComponent } from './register/surat-masuk/surat-masuk-de
     SuratMasukFormComponent,
     ReversePipe,
     NoDataAlertComponent,
-    SuratMasukDetailComponent
+    SuratMasukDetailComponent,
+    DangerAlertComponent
   ],
   imports: [
     BrowserModule,
