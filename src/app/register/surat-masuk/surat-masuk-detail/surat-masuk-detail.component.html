@@ -1,0 +1,74 @@
+<div *ngIf="isLoading" style="text-align: center;">
+    <app-loading-spinner></app-loading-spinner>
+</div>
+<div class="alert alert-danger mt-4" *ngIf="error" role="alert">
+    {{ error }}
+</div>
+<div class="mt-4" style="margin-bottom: 50px;"  *ngIf="!isLoading && !error">
+    <div class="row">
+        <div class="col-sm-10 col-md-10 col-xl-10 offset-sm-1 offset-md-1 offset-xl-1">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12" style="margin-bottom: 20px;">
+                    <button type="button" class="btn btn-warning" style="margin-right: 15px;">Ubah</button>
+                    <button type="button" class="btn btn-danger" (click)="onCancel()">Batal</button>
+                </div>
+                <hr>
+                <div class="col-sm-12 col-md-12 col-xl-12">
+                    <h4>Rincian Surat Masuk</h4>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-4 col-md-4 col-xl-4">
+                    <h5>Jenis Surat :</h5>
+                    <p>BIASA</p>
+                </div>
+                <div class="col-sm-4 col-md-4 col-xl-4">
+                    <h5>Waktu Penerimaan Surat :</h5>
+                    <p>{{ suratMasuk.waktuPenerimaanSurat }}</p>
+                </div>
+                <div class="col-sm-4 col-md-4 col-xl-4">
+                    <h5>Nomor & Tanggal Surat :</h5>
+                    <p>{{ suratMasuk.nomorSurat }}</p>
+                    <p>{{ suratMasuk.tanggalSurat }}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-4 col-md-4 col-xl-4">
+                    <h5>Asal Surat :</h5>
+                    <p>{{ suratMasuk.asal }}</p>
+                </div>
+                <div class="col-sm-8 col-md-8 col-xl-8">
+                    <h5>Perihal :</h5>
+                    <p>{{ suratMasuk.perihal }}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-4 col-md-4 col-xl-4">
+                    <h5>Isi Disposisi :</h5>
+                    <p>{{ suratMasuk.isiDisposisi }}</p>
+                </div>
+                <div class="col-sm-8 col-md-8 col-xl-8">
+                    <h5>Tindak Lanjut :</h5>
+                    <p>{{ suratMasuk.tindakLanjutDisposisi }}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12">
+                    <h5>Keterangan :</h5>
+                    <p>{{ suratMasuk.keterangan }}</p>
+                </div>
+            </div>
+            <div class="row" *ngIf="suratMasuk.urlFile">
+                <div class="col-sm-12 col-md-12 col-xl-12">
+                    <h5>File</h5>
+                    <p><a href="http://google.com">menuju.pdf</a></p>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+</div>

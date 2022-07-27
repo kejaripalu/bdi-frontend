@@ -38,7 +38,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let sm of suratMasuk; index as i;" style="cursor: pointer;">
+            <tr *ngFor="let sm of suratMasuk; index as i;">
                 <td class="align-top">{{ i + 1 }}</td>
                 <td class="align-top">{{ sm.waktuPenerimaanSurat }}</td>
                 <td class="align-top">{{ sm.asal }}</td>
@@ -50,14 +50,16 @@
                             aria-expanded="false">
                             Action
                         </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">Detail</a></li>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink"  style="cursor: pointer;">
+                            <li><a class="dropdown-item" 
+                                    [routerLink]="['/surat-masuk', 'biasa', sm.id, 'detail']">Detail</a></li>
                             <li><a class="dropdown-item" href="#">Ubah</a></li>
                             <li><a class="dropdown-item" href="#">Hapus</a></li>
                         </ul>
                     </div>
                 </td>
             </tr>
+            <router-outlet></router-outlet>
         </tbody>
     </table>
     <div *ngIf="suratMasuk.length === 0">

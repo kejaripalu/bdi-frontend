@@ -35,8 +35,7 @@ export class SuratMasukBiasaComponent implements OnInit, OnDestroy {
           this.suratMasuk = responseData.content;
           this.isLoading = false;
         },
-        error: (errorMessage) => {
-          // console.log(errorMessage);
+        error: () => {
           this.error = 'Aduh... Gagal load data dari server!!!';
           this.isLoading = false;
         }
