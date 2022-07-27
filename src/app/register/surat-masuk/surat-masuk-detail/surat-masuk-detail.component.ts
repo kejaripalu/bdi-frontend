@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SuratMasuk } from '../surat-masuk.model';
 import { SuratMasukService } from '../surat-masuk.service';
@@ -24,6 +24,11 @@ export class SuratMasukDetailComponent implements OnInit, OnDestroy {
     this.error = null as any;
     this.isLoading = true;
     this.id = this.route.snapshot.params['id'];
+    this.route.params.subscribe(
+      (params: Params) => {
+        this.id = params['id'];
+      }
+    )
 
     this.suratMasukChangeSub = this.suratMasukService.getOneSuratMasuk(this.id).subscribe({
       next: (responseData) => {

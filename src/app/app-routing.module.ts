@@ -14,6 +14,7 @@ const appRoutes: Routes = [
         { path: '', redirectTo: '/surat-masuk/biasa', pathMatch: 'full' },
         { path: 'biasa', component: SuratMasukBiasaComponent },
         { path: 'biasa/form', component: SuratMasukFormComponent },
+        { path: 'biasa/:id/form', component: SuratMasukFormComponent },
         { path: 'biasa/:id/detail', component: SuratMasukDetailComponent },
         { path: 'rahasia', component: SuratMasukRahasiaComponent }
     ]}

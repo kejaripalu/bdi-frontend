@@ -62,6 +62,18 @@ export class SuratMasukService {
                 return throwError(() => errorMessage);
             }));
     }
+
+    updateSuratMasuk(suratMasuk: SuratMasuk) {
+        const putEndPoint = `${this.endPoint}/${suratMasuk.id}`
+        return this.httpClient.put<SuratMasuk>(putEndPoint, suratMasuk)
+            .pipe(catchError(errorResponse => {
+                let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
+                if (!errorResponse.error) {
+                    return throwError(() => errorMessage);
+                }
+                return throwError(() => errorMessage);
+            }))
+    }
 }
 
 interface ResponseSuratMasuk {

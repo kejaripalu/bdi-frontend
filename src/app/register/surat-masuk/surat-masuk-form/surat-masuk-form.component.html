@@ -1,4 +1,11 @@
-<div class="mt-4" style="margin-bottom: 50px;">
+<div *ngIf="isLoading && isEditMode" class="mt-4" style="text-align: center;">
+    <app-loading-spinner></app-loading-spinner>
+</div>
+<div class="alert alert-danger mt-4" *ngIf="error && isEditMode" role="alert">
+    {{ error }} 
+    <br><a [routerLink]="['../../']" class="alert-link">Kembali</a>
+</div>
+<div class="mt-4" style="margin-bottom: 50px;" *ngIf="!isLoading && !error">
     <div class="row">
         <div class="col-sm-10 col-md-8 col-xl-8 offset-sm-2 col-md-2 offset-xl-2">
             <form [formGroup]="suratMasukForm" (ngSubmit)="onSubmit()">

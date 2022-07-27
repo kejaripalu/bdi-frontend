@@ -1,4 +1,4 @@
-<div *ngIf="isLoading" style="text-align: center;">
+<div *ngIf="isLoading" class="mt-4" style="text-align: center;">
     <app-loading-spinner></app-loading-spinner>
 </div>
 <div class="alert alert-danger mt-4" *ngIf="error" role="alert">
@@ -10,8 +10,10 @@
         <div class="col-sm-10 col-md-10 col-xl-10 offset-sm-1 offset-md-1 offset-xl-1">
             <div class="row">
                 <div class="col-sm-12 col-md-12 col-xl-12" style="margin-bottom: 20px;">
-                    <button type="button" class="btn btn-warning" style="margin-right: 15px;">Ubah</button>
-                    <button type="button" class="btn btn-danger" (click)="onCancel()">Kembali</button>
+                    <button type="button" class="btn btn-danger" style="margin-right: 15px;" (click)="onCancel()">Kembali</button>
+                    <button type="button" class="btn btn-warning"
+                            [routerLink]="['/surat-masuk', 'biasa', suratMasuk.id, 'form']"
+                            [queryParams]="{edit: 1}">Ubah</button>
                 </div>
                 <hr>
                 <div class="col-sm-12 col-md-12 col-xl-12">

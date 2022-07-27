@@ -51,7 +51,9 @@
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink"  style="cursor: pointer;">
                             <li><a class="dropdown-item" 
                                     [routerLink]="['/surat-masuk', 'biasa', sm.id, 'detail']">Detail</a></li>
-                            <li><a class="dropdown-item" href="#">Ubah</a></li>
+                            <li><a class="dropdown-item"
+                                    [routerLink]="['/surat-masuk', 'biasa', sm.id, 'form']"
+                                    [queryParams]="{edit: 1}">Ubah</a></li>
                             <li><a class="dropdown-item" href="#">Hapus</a></li>
                         </ul>
                     </div>
