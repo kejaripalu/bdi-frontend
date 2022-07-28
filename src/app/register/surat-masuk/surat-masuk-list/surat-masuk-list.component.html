@@ -5,7 +5,8 @@
 <div class="mt-4" *ngIf="!isLoading && !error">
     <div class="d-flex bd-highlight">
         <div class="p-2 w-100 bd-highlight">
-            <button type="button" class="btn btn-success" (click)="onNewSuratMasuk()">Tambah Surat</button>
+            <button type="button" class="btn btn-success" (click)="onNewSuratMasuk()">
+                <i class="bi bi-window-plus"></i> Tambah Surat Masuk</button>
         </div>
         <div class="p-2 flex-shrink-1 bd-highlight">
            <select class="form-select" aria-label=".form-select-sm example">
@@ -46,16 +47,16 @@
                     <div class="btn-group">
                         <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown"
                             aria-expanded="false">
-                            Action
+                            <i class="bi bi-gear-fill"></i> Action
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink"  style="cursor: pointer;">
-                            <li><a class="dropdown-item" 
+                            <li><a class="dropdown-item text-primary" 
                                     [routerLink]="['/surat-masuk', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa', sm.id, 'detail']"
-                                    [queryParams]="{jenisSurat: jenisSurat}">Detail</a></li>
-                            <li><a class="dropdown-item"
+                                    [queryParams]="{jenisSurat: jenisSurat}"><i class="bi bi-list-check"></i> Detail</a></li>
+                            <li><a class="dropdown-item text-success"
                                     [routerLink]="['/surat-masuk', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa', sm.id, 'form']"
-                                    [queryParams]="{edit: 1, jenisSurat: jenisSurat}">Ubah</a></li>
-                            <li><a class="dropdown-item" (click)="onDeleteSuratMasuk(sm.id)">Hapus</a></li>
+                                    [queryParams]="{edit: 1, jenisSurat: jenisSurat}"><i class="bi bi-pencil-square"></i> Ubah</a></li>
+                            <li><a class="dropdown-item text-danger" (click)="onDeleteSuratMasuk(sm.id)"><i class="bi bi-trash3-fill"></i> Hapus</a></li>
                         </ul>
                     </div>
                 </td>
