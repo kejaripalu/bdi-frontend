@@ -14,7 +14,10 @@ export class SuratMasukDetailComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   error: string = null as any;
   id!: string;
+  jenisSurat: string = null as any;
   private suratMasukChangeSub!: Subscription;
+  private suratMasukParamSub!: Subscription;
+  private suratMasukQueryParamSub!: Subscription;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -24,9 +27,14 @@ export class SuratMasukDetailComponent implements OnInit, OnDestroy {
     this.error = null as any;
     this.isLoading = true;
     this.id = this.route.snapshot.params['id'];
-    this.route.params.subscribe(
+    this.suratMasukParamSub = this.route.params.subscribe(
       (params: Params) => {
         this.id = params['id'];
+      }
+    )
+    this.suratMasukQueryParamSub = this.route.queryParams.subscribe(
+      (queryParams: Params) => {
+        this.jenisSurat = queryParams['jenisSurat']?.toUpperCase() !== 'RAHASIA' ? 'BIASA' : 'RAHASIA';
       }
     )
 
@@ -43,7 +51,11 @@ export class SuratMasukDetailComponent implements OnInit, OnDestroy {
   }
 
   onCancel() {
-    this.router.navigate(['../../'], {relativeTo: this.route});
+    if (this.jenisSurat === 'RAHASIA') {
+      this.router.navigate(['/surat-masuk', 'rahasia'], {queryParams: {jenisSurat: this.jenisSurat}});
+    } else {
+      this.router.navigate(['/surat-masuk', 'biasa'], {queryParams: {jenisSurat: this.jenisSurat}});
+    }
   }
 
   getColor() {
@@ -52,7 +64,13 @@ export class SuratMasukDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
       if (this.suratMasukChangeSub) {
-        this.suratMasukChangeSub.unsubscribe();
+          this.suratMasukChangeSub.unsubscribe();
+      }
+      if (this.suratMasukParamSub) {
+          this.suratMasukParamSub.unsubscribe();
+      }
+      if (this.suratMasukQueryParamSub) {
+          this.suratMasukQueryParamSub.unsubscribe()
       }
   }
 

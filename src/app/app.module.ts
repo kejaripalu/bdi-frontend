@@ -9,7 +9,6 @@ import { DashboardComponent } from './templates/dashboard/dashboard.component';
 import { SuratMasukComponent } from './register/surat-masuk/surat-masuk.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
-import { SuratMasukRahasiaComponent } from './register/surat-masuk/surat-masuk-rahasia/surat-masuk-rahasia.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { ReversePipe } from './shared/reverse.pipe';
 import { SuratMasukFormComponent } from './register/surat-masuk/surat-masuk-form/surat-masuk-form.component';
@@ -26,7 +25,6 @@ import { SuratMasukListComponent } from './register/surat-masuk/surat-masuk-list
     DashboardComponent,
     SuratMasukComponent,
     SuratMasukListComponent,
-    SuratMasukRahasiaComponent,
     LoadingSpinnerComponent,
     SuratMasukFormComponent,
     ReversePipe,

@@ -8,7 +8,7 @@
             <button type="button" class="btn btn-success" (click)="onNewSuratMasuk()">Tambah Surat</button>
         </div>
         <div class="p-2 flex-shrink-1 bd-highlight">
-           <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+           <select class="form-select" aria-label=".form-select-sm example">
                 <option 
                     *ngFor="let m of month; index as i;" 
                     [value]="i + 1"
@@ -16,7 +16,7 @@
             </select>
         </div>
         <div class="p-2 flex-shrink-1 bd-highlight">
-            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+            <select class="form-select" aria-label=".form-select-sm example">
                  <option 
                     *ngFor="let y of year | reverse; index as i;"
                     [value]="y"
@@ -50,10 +50,11 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink"  style="cursor: pointer;">
                             <li><a class="dropdown-item" 
-                                    [routerLink]="['/surat-masuk', 'biasa', sm.id, 'detail']">Detail</a></li>
+                                    [routerLink]="['/surat-masuk', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa', sm.id, 'detail']"
+                                    [queryParams]="{jenisSurat: jenisSurat}">Detail</a></li>
                             <li><a class="dropdown-item"
-                                    [routerLink]="['/surat-masuk', 'biasa', sm.id, 'form']"
-                                    [queryParams]="{edit: 1}">Ubah</a></li>
+                                    [routerLink]="['/surat-masuk', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa', sm.id, 'form']"
+                                    [queryParams]="{edit: 1, jenisSurat: jenisSurat}">Ubah</a></li>
                             <li><a class="dropdown-item" (click)="onDeleteSuratMasuk(sm.id)">Hapus</a></li>
                         </ul>
                     </div>

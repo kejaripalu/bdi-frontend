@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Month } from 'src/app/shared/month';
 import { SuratMasuk } from '../surat-masuk.model';
@@ -18,7 +18,9 @@ export class SuratMasukListComponent implements OnInit, OnDestroy {
   year: number[] = [];
   isLoading: boolean = false;
   error: string = null as any;
+  jenisSurat: string = null as any;
   private suratMasukSub!: Subscription;
+  private suratMasukQueryParamSub!: Subscription;
 
   constructor(private suratMasukService: SuratMasukService,
               private router: Router,
@@ -28,11 +30,15 @@ export class SuratMasukListComponent implements OnInit, OnDestroy {
     this.error = false as any;
     this.isLoading = true;
     this.getYear();
+    this.suratMasukQueryParamSub = this.route.queryParams
+      .subscribe((queryParams: Params) => {
+        this.jenisSurat = queryParams['jenisSurat']?.toUpperCase() !== 'RAHASIA' ? 'BIASA' : 'RAHASIA';
+    });
     this.loadDataSuratMasuk();
   }
 
   private loadDataSuratMasuk() {
-    this.suratMasukSub = this.suratMasukService.getSuratMasuk(0, 20, 'BIASA', 10)
+    this.suratMasukSub = this.suratMasukService.getSuratMasuk(0, 20, this.jenisSurat, 10)
       .subscribe({
         next: (responseData) => {
           // console.log(responseData);
@@ -47,8 +53,20 @@ export class SuratMasukListComponent implements OnInit, OnDestroy {
   }
 
   onNewSuratMasuk() {
-    this.router.navigate(['/surat-masuk', 'biasa', 'form'], {
-      queryParams: {jenisSurat: 'BIASA'}});
+    let jenisSrt = null as any;
+    switch (this.jenisSurat) {
+      case 'BIASA':
+        jenisSrt = 'biasa';
+        break;
+      case 'RAHASIA':
+        jenisSrt = 'rahasia';
+        break;
+      default:
+        jenisSrt = 'biasa';
+    }
+    this.router.navigate(['/surat-masuk', jenisSrt, 'form'], {
+      queryParams: {jenisSurat: this.jenisSurat}
+    });
   }
 
   onDeleteSuratMasuk(id: string) {
@@ -78,6 +96,9 @@ export class SuratMasukListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
       if (this.suratMasukSub) {
           this.suratMasukSub.unsubscribe();
+      }
+      if (this.suratMasukQueryParamSub) {
+          this.suratMasukQueryParamSub.unsubscribe();
       }
   }
 

@@ -3,7 +3,11 @@
 </div>
 <div class="alert alert-danger mt-4" *ngIf="error" role="alert">
     {{ error }} 
-    <br><a [routerLink]="['../../']" class="alert-link">Kembali</a>
+    <br>
+    <a 
+        [routerLink]="['/surat-masuk', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa']"
+        [queryParams]="{edit: 1, jenisSurat: jenisSurat}" 
+        class="alert-link">Kembali</a>
 </div>
 <div class="mt-4" style="margin-bottom: 50px;"  *ngIf="!isLoading && !error">
     <div class="row">
@@ -12,8 +16,8 @@
                 <div class="col-sm-12 col-md-12 col-xl-12" style="margin-bottom: 20px;">
                     <button type="button" class="btn btn-danger" style="margin-right: 15px;" (click)="onCancel()">Kembali</button>
                     <button type="button" class="btn btn-warning"
-                            [routerLink]="['/surat-masuk', 'biasa', suratMasuk.id, 'form']"
-                            [queryParams]="{edit: 1}">Ubah</button>
+                            [routerLink]="['/surat-masuk', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa', suratMasuk.id, 'form']"
+                            [queryParams]="{edit: 1, jenisSurat: jenisSurat}">Ubah</button>
                 </div>
                 <hr>
                 <div class="col-sm-12 col-md-12 col-xl-12">

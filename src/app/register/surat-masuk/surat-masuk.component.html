@@ -11,11 +11,13 @@
         <hr>
         <nav class="nav nav-pills nav-justified">
             <a class="nav-link" aria-current="page" 
-                routerLink="/surat-masuk/biasa"
-                routerLinkActive=" active">Surat Masuk Biasa</a>
+                [routerLink]="['/surat-masuk', 'biasa']"
+                [queryParams]="{jenisSurat: 'BIASA'}"
+                routerLinkActive="active">Surat Masuk Biasa</a>
             <a class="nav-link"
-                routerLink="/surat-masuk/rahasia"
-                routerLinkActive=" active">Surat Masuk Rahasia</a>
+                [routerLink]="['/surat-masuk', 'rahasia']"
+                [queryParams]="{jenisSurat: 'RAHASIA'}"
+                routerLinkActive="active">Surat Masuk Rahasia</a>
         </nav>
         <hr>
         <router-outlet></router-outlet>

@@ -18,3 +18,9 @@ textarea.ng-invalid.ng-touched {
     color: red;
     font-size: 0.875em;
 }
+.biasa {
+    color: darkgreen;
+}
+.rahasia {
+    color: crimson;
+}

@@ -3,11 +3,18 @@
 </div>
 <div class="alert alert-danger mt-4" *ngIf="editModeError && isEditMode" role="alert">
     {{ error }} 
-    <br><a [routerLink]="['../../']" class="alert-link">Kembali</a>
+    <br>
+    <a 
+        [routerLink]="['/surat-masuk', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa']"
+        [queryParams]="{edit: 1, jenisSurat: jenisSurat}" 
+        class="alert-link">Kembali</a>
 </div>
 <div class="mt-4" style="margin-bottom: 50px;" *ngIf="!isLoadingEditForm && !editModeError">
     <div class="row">
         <div class="col-sm-10 col-md-8 col-xl-8 offset-sm-2 col-md-2 offset-xl-2">
+            <strong [ngClass]="{biasa: jenisSurat === 'BIASA',
+                                rahasia: jenisSurat === 'RAHASIA'}">Jenis Surat: {{ jenisSurat }}</strong>
+            <hr>
             <form [formGroup]="suratMasukForm" (ngSubmit)="onSubmit()">
                 <div class="row">
                     <div class="col-sm-6">
