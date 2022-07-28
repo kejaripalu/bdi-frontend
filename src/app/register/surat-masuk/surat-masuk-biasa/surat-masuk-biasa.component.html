@@ -54,7 +54,7 @@
                             <li><a class="dropdown-item"
                                     [routerLink]="['/surat-masuk', 'biasa', sm.id, 'form']"
                                     [queryParams]="{edit: 1}">Ubah</a></li>
-                            <li><a class="dropdown-item" href="#">Hapus</a></li>
+                            <li><a class="dropdown-item" (click)="onDeleteSuratMasuk(sm.id)">Hapus</a></li>
                         </ul>
                     </div>
                 </td>

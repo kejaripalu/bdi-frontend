@@ -46,6 +46,10 @@ export class SuratMasukDetailComponent implements OnInit, OnDestroy {
     this.router.navigate(['../../'], {relativeTo: this.route});
   }
 
+  getColor() {
+    return this.suratMasuk.jenisSurat === 'RAHASIA' ? 'red' : 'green';
+  }
+
   ngOnDestroy(): void {
       if (this.suratMasukChangeSub) {
         this.suratMasukChangeSub.unsubscribe();

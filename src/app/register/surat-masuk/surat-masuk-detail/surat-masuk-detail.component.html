@@ -24,7 +24,9 @@
             <div class="row">
                 <div class="col-sm-4 col-md-4 col-xl-4">
                     <h5>Jenis Surat :</h5>
-                    <p>{{ suratMasuk.jenisSurat }}</p>
+                    <strong 
+                        [ngClass]="{biasa: suratMasuk.jenisSurat === 'BIASA',
+                                    rahasia: suratMasuk.jenisSurat === 'RAHASIA'}">{{ suratMasuk.jenisSurat }}</strong>
                 </div>
                 <div class="col-sm-4 col-md-4 col-xl-4">
                     <h5>Waktu Penerimaan Surat :</h5>
@@ -32,8 +34,8 @@
                 </div>
                 <div class="col-sm-4 col-md-4 col-xl-4">
                     <h5>Nomor & Tanggal Surat :</h5>
-                    <p>{{ suratMasuk.nomorSurat }}</p>
-                    <p>{{ suratMasuk.tanggalSurat }}</p>
+                    <p>{{ suratMasuk.nomorSurat }} <br>
+                    {{ suratMasuk.tanggalSurat }}</p>
                 </div>
             </div>
             <hr>

@@ -14,7 +14,9 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
   suratMasukForm!: FormGroup;
   isEditMode: boolean = false;
   isLoading: boolean = false;
+  isLoadingEditForm: boolean = false;
   error: string = null as any;
+  editModeError: boolean = false;
   private suratMasukFormSub!: Subscription;
   private suratMasukSub!: Subscription;
   private suratMasukParamSub!: Subscription;
@@ -26,6 +28,7 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isLoading = false;
+    this.isLoadingEditForm = false;
     this.suratMasukParamSub = this.route.params
       .subscribe((params: Params) => {
           this.isEditMode = params['id'] != null;
@@ -63,9 +66,9 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
         next: () => {
           this.isLoading = false;
           this.onCancel();
+          alert('Asiappp... berhasil update data!!!')
         },
         error: (errorMessage) => {
-          console.log(errorMessage);
           this.error = errorMessage;
           this.isLoading = false;
         }
@@ -92,9 +95,9 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
           // console.log(responseData);
           this.isLoading = false;
           this.onCancel();
+          alert('Asiappp... berhasil simpan data!!!')
         },
         error: (errorMessage) => {
-          console.log(errorMessage);
           this.error = errorMessage;
           this.isLoading = false;
         }
@@ -135,7 +138,7 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
     });
 
     if (this.isEditMode) {
-      this.isLoading = true;
+      this.isLoadingEditForm = true;
       this.suratMasukSub = this.suratMasukService.getOneSuratMasuk(this.id).subscribe({
         next: (suratMasuk) => {
           this.suratMasukForm = new FormGroup({
@@ -149,11 +152,13 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
             'keterangan': new FormControl(suratMasuk.keterangan),
             'urlFile': new FormControl(suratMasuk.urlFile)
           });
-          this.isLoading = false;
+          this.isLoadingEditForm = false;
+          this.editModeError = false;
         },
         error: (errorMessage) => {
-          this.isLoading = false;
+          this.isLoadingEditForm = false;
           this.error = errorMessage;
+          this.editModeError = true;
         }
       });
     }

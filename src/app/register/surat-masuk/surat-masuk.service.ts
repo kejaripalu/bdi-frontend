@@ -56,7 +56,7 @@ export class SuratMasukService {
                 }
                 switch (errorResponse.error.message) {
                     case 'DUPLICATE_DATA_FIELD':
-                      errorMessage = 'Bro.. Data ini sudah ada!!!';
+                      errorMessage = 'Bro.. Data ini sudah pernah diinput!!!';
                       break;
                   }
                 return throwError(() => errorMessage);
@@ -64,16 +64,42 @@ export class SuratMasukService {
     }
 
     updateSuratMasuk(suratMasuk: SuratMasuk) {
-        const putEndPoint = `${this.endPoint}/${suratMasuk.id}`
+        const putEndPoint = `${this.endPoint}/${suratMasuk.id}`;
         return this.httpClient.put<SuratMasuk>(putEndPoint, suratMasuk)
             .pipe(catchError(errorResponse => {
                 let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
                 if (!errorResponse.error) {
                     return throwError(() => errorMessage);
                 }
+                switch (errorResponse.error.message) {
+                    case 'ID_NOT_FOUND':
+                        errorMessage = 'Bro... Data tidak ditemukan!!!'
+                        break;
+                    case 'DUPLICATE_DATA_FIELD':
+                        errorMessage = 'Bro.. Data ini sudah pernah diinput!!!';
+                        break;
+                }
                 return throwError(() => errorMessage);
-            }))
+            }));
     }
+
+    deleteSuratMasuk(id: string) {
+        const deleteEndPoint = `${this.endPoint}/${id}`;
+        return this.httpClient.delete<SuratMasuk>(deleteEndPoint)
+            .pipe(catchError(errorResponse => {
+                let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
+                if (!errorResponse.error) {
+                    return throwError(() => errorMessage);
+                }
+                switch (errorResponse.error.message) {
+                    case 'ID_NOT_FOUND':
+                        errorMessage = 'Bro... Data tidak ditemukan!!!'
+                        break;
+                }
+                return throwError(() => errorMessage);
+            }));
+    }
+
 }
 
 interface ResponseSuratMasuk {

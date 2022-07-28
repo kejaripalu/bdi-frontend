@@ -18,7 +18,7 @@ export class SuratMasukBiasaComponent implements OnInit, OnDestroy {
   year: number[] = [];
   isLoading: boolean = false;
   error: string = null as any;
-  private suratMasukChangedSub!: Subscription;
+  private suratMasukSub!: Subscription;
 
   constructor(private suratMasukService: SuratMasukService,
               private router: Router,
@@ -28,7 +28,11 @@ export class SuratMasukBiasaComponent implements OnInit, OnDestroy {
     this.error = false as any;
     this.isLoading = true;
     this.getYear();
-    this.suratMasukChangedSub = this.suratMasukService.getSuratMasuk(0, 20, 'BIASA', 10)
+    this.loadDataSuratMasuk();
+  }
+
+  private loadDataSuratMasuk() {
+    this.suratMasukSub = this.suratMasukService.getSuratMasuk(0, 20, 'BIASA', 10)
       .subscribe({
         next: (responseData) => {
           // console.log(responseData);
@@ -46,6 +50,24 @@ export class SuratMasukBiasaComponent implements OnInit, OnDestroy {
     this.router.navigate(['form'], {relativeTo: this.route});
   }
 
+  onDeleteSuratMasuk(id: string) {
+    if (confirm('Yakin ente mau hapus data ini?')) {
+      this.isLoading = true;
+      this.suratMasukSub = this.suratMasukService.deleteSuratMasuk(id)
+        .subscribe({
+          next: () => {
+            this.isLoading = false;
+            this.loadDataSuratMasuk();
+            alert('Asiaapp... Sukses hapus data!!!');
+          },
+          error: (errorMessage) => {
+            this.error = errorMessage;
+            this.isLoading = false;
+          }
+        });
+    }
+  }
+
   getYear() {
     for (let startYear = 2019; startYear <= this.currentYear; startYear++) {
       this.year.push(startYear);
@@ -53,8 +75,8 @@ export class SuratMasukBiasaComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-      if (this.suratMasukChangedSub) {
-          this.suratMasukChangedSub.unsubscribe();
+      if (this.suratMasukSub) {
+          this.suratMasukSub.unsubscribe();
       }
   }
 
