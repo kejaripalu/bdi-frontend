@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SuratMasukListComponent } from './surat-masuk-biasa.component';
+import { SuratMasukListComponent } from './surat-masuk-list.component';
 
 describe('SuratMasukListComponent', () => {
   let component: SuratMasukListComponent;

@@ -21,6 +21,7 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
   private suratMasukSub!: Subscription;
   private suratMasukParamSub!: Subscription;
   private id: string = null as any;
+  private jenisSurat: string = null as any;
 
   constructor(private suratMasukService: SuratMasukService,
               private route: ActivatedRoute, 
@@ -33,6 +34,9 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
       .subscribe((params: Params) => {
           this.isEditMode = params['id'] != null;
           this.id = params['id'];
+          this.jenisSurat = params['jenisSurat'];
+          console.log(this.jenisSurat.toUpperCase());
+          
     });
     this.initForm();
     this.suratMasukFormSub = this.suratMasukForm.statusChanges.subscribe(
@@ -43,7 +47,7 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.isLoading = true;
     this.error = null as any;
-    
+       
     if (this.isEditMode) {
       // console.log(this.suratMasukForm);
       const suratMasuk = new SuratMasuk();
@@ -56,12 +60,14 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
       suratMasuk.nomorSurat = this.suratMasukForm.value['nomorSurat'];
       suratMasuk.tanggalSurat = this.suratMasukForm.value['tanggalSurat'];
       suratMasuk.perihal = this.suratMasukForm.value['perihal'];
-      suratMasuk.jenisSurat = 'BIASA';
+      suratMasuk.jenisSurat = this.jenisSurat.toUpperCase();
       suratMasuk.isiDisposisi = this.suratMasukForm.value['isiDisposisi'];
       suratMasuk.tindakLanjutDisposisi = this.suratMasukForm.value['tindakLanjutDisposisi'];
       suratMasuk.keterangan = this.suratMasukForm.value['keterangan'];
       suratMasuk.urlFile = this.suratMasukForm.value['urlFile'];
 
+      console.log(suratMasuk);
+      
       this.suratMasukSub = this.suratMasukService.updateSuratMasuk(suratMasuk).subscribe({
         next: () => {
           this.isLoading = false;

@@ -9,7 +9,6 @@ import { DashboardComponent } from './templates/dashboard/dashboard.component';
 import { SuratMasukComponent } from './register/surat-masuk/surat-masuk.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
-import { SuratMasukBiasaComponent as SuratMasukBiasaComponent } from './register/surat-masuk/surat-masuk-biasa/surat-masuk-biasa.component';
 import { SuratMasukRahasiaComponent } from './register/surat-masuk/surat-masuk-rahasia/surat-masuk-rahasia.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { ReversePipe } from './shared/reverse.pipe';
@@ -17,6 +16,7 @@ import { SuratMasukFormComponent } from './register/surat-masuk/surat-masuk-form
 import { NoDataAlertComponent } from './shared/no-data-alert/no-data-alert.component';
 import { SuratMasukDetailComponent } from './register/surat-masuk/surat-masuk-detail/surat-masuk-detail.component';
 import { DangerAlertComponent } from './shared/danger-alert/danger-alert.component';
+import { SuratMasukListComponent } from './register/surat-masuk/surat-masuk-list/surat-masuk-list.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import { DangerAlertComponent } from './shared/danger-alert/danger-alert.compone
     SidebarComponent,
     DashboardComponent,
     SuratMasukComponent,
-    SuratMasukBiasaComponent,
+    SuratMasukListComponent,
     SuratMasukRahasiaComponent,
     LoadingSpinnerComponent,
     SuratMasukFormComponent,

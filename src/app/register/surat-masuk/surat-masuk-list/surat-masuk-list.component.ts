@@ -6,11 +6,11 @@ import { SuratMasuk } from '../surat-masuk.model';
 import { SuratMasukService } from '../surat-masuk.service';
 
 @Component({
-  selector: 'app-surat-masuk-biasa',
-  templateUrl: './surat-masuk-biasa.component.html',
-  styleUrls: ['./surat-masuk-biasa.component.css']
+  selector: 'app-surat-masuk-list',
+  templateUrl: './surat-masuk-list.component.html',
+  styleUrls: ['./surat-masuk-list.component.css']
 })
-export class SuratMasukBiasaComponent implements OnInit, OnDestroy {
+export class SuratMasukListComponent implements OnInit, OnDestroy {
   suratMasuk: SuratMasuk[] = [];
   month = Object.keys(Month).filter((v) => isNaN(Number(v)));
   currentMonth = new Date().getMonth() + 1;
@@ -47,7 +47,8 @@ export class SuratMasukBiasaComponent implements OnInit, OnDestroy {
   }
 
   onNewSuratMasuk() {
-    this.router.navigate(['form'], {relativeTo: this.route});
+    this.router.navigate(['/surat-masuk', 'biasa', 'form'], {
+      queryParams: {jenisSurat: 'BIASA'}});
   }
 
   onDeleteSuratMasuk(id: string) {
