@@ -46,7 +46,7 @@ export class SuratMasukListComponent implements OnInit, OnDestroy {
           this.isLoading = false;
         },
         error: () => {
-          this.error = 'Aduh... Gagal load data dari server!!!';
+          this.error = 'Aduh... Gagal ambil data dari server!!!';
           this.isLoading = false;
         }
       });
