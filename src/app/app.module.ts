@@ -16,6 +16,7 @@ import { NoDataAlertComponent } from './shared/no-data-alert/no-data-alert.compo
 import { SuratMasukDetailComponent } from './register/surat-masuk/surat-masuk-detail/surat-masuk-detail.component';
 import { DangerAlertComponent } from './shared/danger-alert/danger-alert.component';
 import { SuratMasukListComponent } from './register/surat-masuk/surat-masuk-list/surat-masuk-list.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { SuratMasukListComponent } from './register/surat-masuk/surat-masuk-list
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
