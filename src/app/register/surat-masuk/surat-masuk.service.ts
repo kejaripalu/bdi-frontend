@@ -15,7 +15,7 @@ export class SuratMasukService {
     getSuratMasuk(page: number, size: number, jenisSurat: string, bulan: number) {
         const startDate = new MonthConverter().getStartDate(bulan, '2020');
         const endDate = new MonthConverter().getEndDate(bulan, '2022');
-        const getEndPoint = `${this.endPoint}?page=${page}&size=${size}&jenisSurat=${jenisSurat}&` +
+        const getEndPoint = `${this.endPoint}?pages=${page}&sizes=${size}&jenisSurat=${jenisSurat}&` +
             `startDate=${startDate}&endDate=${endDate}`;
         return this.httpClient.get<ResponseSuratMasuk>(getEndPoint)
             .pipe(
@@ -103,5 +103,9 @@ export class SuratMasukService {
 }
 
 interface ResponseSuratMasuk {
-    content: SuratMasuk[];
+    content: SuratMasuk[],
+    size: number,
+    totalElements: number,
+    totalPages: number,
+    number: number
 }

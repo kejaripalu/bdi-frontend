@@ -21,6 +21,9 @@ export class SuratMasukListComponent implements OnInit, OnDestroy {
   jenisSurat: string = null as any;
   private suratMasukSub!: Subscription;
   private suratMasukQueryParamSub!: Subscription;
+  pageNumber: number = 1;
+  pageSize: number = 10;
+  totalElements: number = 0;
 
   constructor(private suratMasukService: SuratMasukService,
               private router: Router,
@@ -37,12 +40,15 @@ export class SuratMasukListComponent implements OnInit, OnDestroy {
     this.loadDataSuratMasuk();
   }
 
-  private loadDataSuratMasuk() {
-    this.suratMasukSub = this.suratMasukService.getSuratMasuk(0, 20, this.jenisSurat, 10)
+  loadDataSuratMasuk() {
+    this.suratMasukSub = this.suratMasukService.getSuratMasuk(this.pageNumber - 1, this.pageSize, this.jenisSurat, 10)
       .subscribe({
         next: (responseData) => {
           // console.log(responseData);
           this.suratMasuk = responseData.content;
+          this.pageNumber = responseData.number + 1;
+          this.pageSize = responseData.size;
+          this.totalElements = responseData.totalElements;
           this.isLoading = false;
         },
         error: () => {

@@ -64,6 +64,13 @@
             <router-outlet></router-outlet>
         </tbody>
     </table>
+
+    <ngb-pagination
+        [(page)]="pageNumber"
+        [pageSize]="pageSize"
+        [collectionSize]="totalElements"
+        (pageChange)="loadDataSuratMasuk()"></ngb-pagination>
+
     <div *ngIf="suratMasuk.length === 0">
         <app-no-data-alert></app-no-data-alert>
     </div>
