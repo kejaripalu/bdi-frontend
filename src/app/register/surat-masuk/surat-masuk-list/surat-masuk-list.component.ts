@@ -99,6 +99,13 @@ export class SuratMasukListComponent implements OnInit, OnDestroy {
     }
   }
 
+  updatePageSize(pageSize: number) {
+    this.pageSize = pageSize;
+    this.pageNumber = 1;
+    this.isLoading = true;
+    this.loadDataSuratMasuk();
+  }
+
   ngOnDestroy(): void {
       if (this.suratMasukSub) {
           this.suratMasukSub.unsubscribe();

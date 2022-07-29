@@ -8,7 +8,7 @@
             <button type="button" class="btn btn-success" (click)="onNewSuratMasuk()">
                 <i class="bi bi-window-plus"></i> Tambah Surat Masuk</button>
         </div>
-        <div class="p-2 flex-shrink-1 bd-highlight">
+        <div class="p-2 bd-highlight">
            <select class="form-select" aria-label=".form-select-sm example">
                 <option 
                     *ngFor="let m of month; index as i;" 
@@ -16,7 +16,7 @@
                     [selected]="(i + 1) === (currentMonth)">{{ m }}</option>
             </select>
         </div>
-        <div class="p-2 flex-shrink-1 bd-highlight">
+        <div class="p-2 bd-highlight">
             <select class="form-select" aria-label=".form-select-sm example">
                  <option 
                     *ngFor="let y of year | reverse; index as i;"
@@ -65,11 +65,28 @@
         </tbody>
     </table>
 
-    <ngb-pagination
-        [(page)]="pageNumber"
-        [pageSize]="pageSize"
-        [collectionSize]="totalElements"
-        (pageChange)="loadDataSuratMasuk()"></ngb-pagination>
+    <div class="d-flex bd-highlight" *ngIf="suratMasuk.length !== 0">
+        <div class="p-2 w-100 bd-highlight">
+            <ngb-pagination
+                [(page)]="pageNumber"
+                [pageSize]="pageSize"
+                [collectionSize]="totalElements"
+                [maxSize]="5"
+                [boundaryLinks]="true"
+                (pageChange)="loadDataSuratMasuk()"></ngb-pagination>
+        </div>
+        <div class="p-2 flex-shrink-1 bd-highlight">
+            Tampilkan:
+        </div>
+        <div class="p-2 bd-highlight">
+            <select (change)="updatePageSize($any($event.target).value)">
+                <option value="5" [selected]="pageSize === 5">5</option>
+                <option value="10" [selected]="pageSize === 10">10</option>
+                <option value="20" [selected]="pageSize === 20">20</option>
+                <option value="50" [selected]="pageSize === 50">50</option>
+            </select>
+        </div>
+    </div>
 
     <div *ngIf="suratMasuk.length === 0">
         <app-no-data-alert></app-no-data-alert>
