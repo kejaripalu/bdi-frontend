@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { catchError, map, throwError } from "rxjs";
-import { MonthConverter } from "src/app/shared/month-converter";
+import { MonthConverterService } from "src/app/shared/month-converter.service";
 import { environment } from "src/environments/environment";
 import { SuratMasuk } from "./surat-masuk.model";
 
@@ -10,11 +10,16 @@ export class SuratMasukService {
     private endPoint = environment.baseUrl + '/surat-masuk';
     registerSuratMasuk: SuratMasuk[] = [];
 
-    constructor(private httpClient: HttpClient) { }
+    constructor(private httpClient: HttpClient, 
+                private monthConverterService: MonthConverterService) { }
 
-    getSuratMasuk(page: number, size: number, jenisSurat: string, bulan: number) {
-        const startDate = new MonthConverter().getStartDate(bulan, '2020');
-        const endDate = new MonthConverter().getEndDate(bulan, '2022');
+    getSuratMasuk(page: number, size: number, jenisSurat: string, bulan: number, tahun: string) {
+        const startDate = this.monthConverterService.getStartDate(bulan, tahun);
+        console.log(startDate);
+        
+        const endDate = this.monthConverterService.getEndDate(bulan, tahun);
+        console.log(endDate);
+        
         const getEndPoint = `${this.endPoint}?pages=${page}&sizes=${size}&jenisSurat=${jenisSurat}&` +
             `startDate=${startDate}&endDate=${endDate}`;
         return this.httpClient.get<ResponseSuratMasuk>(getEndPoint)

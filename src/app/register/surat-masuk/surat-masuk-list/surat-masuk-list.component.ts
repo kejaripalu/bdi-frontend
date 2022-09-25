@@ -13,8 +13,8 @@ import { SuratMasukService } from '../surat-masuk.service';
 export class SuratMasukListComponent implements OnInit, OnDestroy {
   suratMasuk: SuratMasuk[] = [];
   month = Object.keys(Month).filter((v) => isNaN(Number(v)));
-  currentMonth = new Date().getMonth() + 1;
-  currentYear = new Date().getFullYear();
+  currentMonth = new Date().getMonth() + 1; // get current month
+  currentYear = new Date().getFullYear(); // get current year
   year: number[] = [];
   isLoading: boolean = false;
   error: string = null as any;
@@ -24,7 +24,7 @@ export class SuratMasukListComponent implements OnInit, OnDestroy {
   pageNumber: number = 1;
   pageSize: number = 10;
   totalElements: number = 0;
-
+  
   constructor(private suratMasukService: SuratMasukService,
               private router: Router,
               private route: ActivatedRoute) { }
@@ -41,21 +41,26 @@ export class SuratMasukListComponent implements OnInit, OnDestroy {
   }
 
   loadDataSuratMasuk() {
-    this.suratMasukSub = this.suratMasukService.getSuratMasuk(this.pageNumber - 1, this.pageSize, this.jenisSurat, 10)
-      .subscribe({
-        next: (responseData) => {
-          // console.log(responseData);
-          this.suratMasuk = responseData.content;
-          this.pageNumber = responseData.number + 1;
-          this.pageSize = responseData.size;
-          this.totalElements = responseData.totalElements;
-          this.isLoading = false;
-        },
-        error: () => {
-          this.error = 'Aduh... Gagal ambil data dari server!!!';
-          this.isLoading = false;
-        }
-      });
+    this.suratMasukSub = this.suratMasukService.getSuratMasuk(
+      this.pageNumber - 1, 
+      this.pageSize, 
+      this.jenisSurat, 
+      +this.currentMonth, 
+      this.currentYear.toString())
+        .subscribe({
+          next: (responseData) => {
+            // console.log(responseData);
+            this.suratMasuk = responseData.content;
+            this.pageNumber = responseData.number + 1;
+            this.pageSize = responseData.size;
+            this.totalElements = responseData.totalElements;
+            this.isLoading = false;
+          },
+          error: () => {
+            this.error = 'Aduh... Gagal ambil data dari server!!!';
+            this.isLoading = false;
+          }
+        });
   }
 
   onNewSuratMasuk() {
@@ -101,6 +106,20 @@ export class SuratMasukListComponent implements OnInit, OnDestroy {
 
   updatePageSize(pageSize: number) {
     this.pageSize = pageSize;
+    this.pageNumber = 1;
+    this.isLoading = true;
+    this.loadDataSuratMasuk();
+  }
+
+  updateMonthSelected(month: number) {
+    this.currentMonth = +month;
+    this.pageNumber = 1;
+    this.isLoading = true;
+    this.loadDataSuratMasuk();
+  }
+
+  updateYearSelected(year: number) {
+    this.currentYear = +year;
     this.pageNumber = 1;
     this.isLoading = true;
     this.loadDataSuratMasuk();

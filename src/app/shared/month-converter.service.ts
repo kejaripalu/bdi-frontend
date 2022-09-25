@@ -1,9 +1,12 @@
-export class MonthConverter {
+import { Injectable } from "@angular/core";
+
+@Injectable({ providedIn: 'root' })
+export class MonthConverterService {
     private startDate!: string;
     private endDate!: string;
 
     getStartDate(month: number, year: string) {
-        switch (month) {
+        switch (+month) {
             case 1:
                 this.startDate = year + '-01-01';
                 break;
@@ -45,7 +48,7 @@ export class MonthConverter {
     }
 
     getEndDate(month: number, year: string) {
-        switch (month) {
+        switch (+month) {
             case 1:
                 this.endDate = year + '-01-31';
                 break;
