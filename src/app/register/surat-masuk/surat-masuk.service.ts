@@ -14,14 +14,10 @@ export class SuratMasukService {
                 private monthConverterService: MonthConverterService) { }
 
     getSuratMasuk(page: number, size: number, jenisSurat: string, bulan: number, tahun: string) {
-        const startDate = this.monthConverterService.getStartDate(bulan, tahun);
-        console.log(startDate);
-        
-        const endDate = this.monthConverterService.getEndDate(bulan, tahun);
-        console.log(endDate);
-        
+        const startDate = this.monthConverterService.getStartDate(bulan, tahun);        
+        const endDate = this.monthConverterService.getEndDate(bulan, tahun);    
         const getEndPoint = `${this.endPoint}?pages=${page}&sizes=${size}&jenisSurat=${jenisSurat}&` +
-            `startDate=${startDate}&endDate=${endDate}`;
+            `startDate=${startDate}&endDate=${endDate}`;        
         return this.httpClient.get<ResponseSuratMasuk>(getEndPoint)
             .pipe(
                 map(response => {

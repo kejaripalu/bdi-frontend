@@ -37,9 +37,9 @@
         <tbody>
             <tr *ngFor="let sm of suratMasuk; index as i;">
                 <td class="align-top">{{ i + 1 }}</td>
-                <td class="align-top">{{ sm.waktuPenerimaanSurat }}</td>
+                <td class="align-top">{{ sm.tanggalPenerimaanSurat }} {{ sm.jamPenerimaanSurat }}</td>
                 <td class="align-top">{{ sm.asal }}</td>
-                <td class="align-top">{{ sm.nomorSurat }} - {{ sm.tanggalSurat }}</td>
+                <td class="align-top">{{ sm.nomorSurat }} | {{ sm.tanggalSurat }}</td>
                 <td class="align-top">{{ sm.perihal }}</td>
                 <td class="align-top">
                     <div class="btn-group">

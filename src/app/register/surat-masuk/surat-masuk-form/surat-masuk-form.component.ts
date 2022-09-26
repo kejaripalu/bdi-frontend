@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { min, Subscription } from 'rxjs';
+import { CurrentDateTimeService } from 'src/app/shared/current-date-time.service';
 import { SuratMasuk } from '../surat-masuk.model';
 import { SuratMasukService } from '../surat-masuk.service';
 
@@ -26,7 +27,8 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
 
   constructor(private suratMasukService: SuratMasukService,
               private route: ActivatedRoute, 
-              private router: Router) { }
+              private router: Router,
+              private currentDateTimeService: CurrentDateTimeService) { }
 
   ngOnInit(): void {
     this.isLoading = false;
@@ -53,11 +55,10 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
     if (this.isEditMode) {
       // console.log(this.suratMasukForm);
       const suratMasuk = new SuratMasuk();
-      let waktuPenerimaanSuratConverted = 
-                    this.suratMasukForm.value['waktuPenerimaanSurat'].replace('T', ' ');
-     
+
       suratMasuk.id = this.id;
-      suratMasuk.waktuPenerimaanSurat = waktuPenerimaanSuratConverted;
+      suratMasuk.tanggalPenerimaanSurat = this.suratMasukForm.value['tanggalPenerimaanSurat'];
+      suratMasuk.jamPenerimaanSurat = this.suratMasukForm.value['jamPenerimaanSurat'];
       suratMasuk.asal = this.suratMasukForm.value['asal'];
       suratMasuk.nomorSurat = this.suratMasukForm.value['nomorSurat'];
       suratMasuk.tanggalSurat = this.suratMasukForm.value['tanggalSurat'];
@@ -82,10 +83,9 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
     } else {
       // console.log(this.suratMasukForm);
       const suratMasuk = new SuratMasuk();
-      let waktuPenerimaanSuratConverted = 
-                    this.suratMasukForm.value['waktuPenerimaanSurat'].replace('T', ' ');
      
-      suratMasuk.waktuPenerimaanSurat = waktuPenerimaanSuratConverted;
+      suratMasuk.tanggalPenerimaanSurat = this.suratMasukForm.value['tanggalPenerimaanSurat'];
+      suratMasuk.jamPenerimaanSurat = this.suratMasukForm.value['jamPenerimaanSurat'];
       suratMasuk.asal = this.suratMasukForm.value['asal'];
       suratMasuk.nomorSurat = this.suratMasukForm.value['nomorSurat'];
       suratMasuk.tanggalSurat = this.suratMasukForm.value['tanggalSurat'];
@@ -121,7 +121,8 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
   }
 
   private initForm() {
-    let waktuPenerimaanSurat = null as any;
+    let tanggalPenerimaanSurat = this.currentDateTimeService.getCurrentDate();
+    let jamPenerimaanSurat = this.currentDateTimeService.getCurrentTime();    
     let asal = null as any;
     let nomorSurat = null as any;
     let perihal = null as any;
@@ -132,8 +133,9 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
     let urlFile = null as any;
 
     this.suratMasukForm = new FormGroup({
-      'waktuPenerimaanSurat': new FormControl(waktuPenerimaanSurat, [Validators.required, Validators.minLength(15)]),
-      'asal': new FormControl(asal, [Validators.required, Validators.minLength(3)]),
+      'tanggalPenerimaanSurat': new FormControl(tanggalPenerimaanSurat, [Validators.required, Validators.minLength(10)]),
+      'jamPenerimaanSurat': new FormControl(jamPenerimaanSurat, [Validators.required, Validators.minLength(5)]),
+      'asal': new FormControl(asal, [Validators.required, Validators.minLength(5)]),
       'nomorSurat': new FormControl(nomorSurat, Validators.required),
       'perihal': new FormControl(perihal, [Validators.required, Validators.minLength(5)]),
       'tanggalSurat': new FormControl(tanggalSurat, [Validators.required]),
@@ -148,7 +150,8 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
       this.suratMasukSub = this.suratMasukService.getOneSuratMasuk(this.id).subscribe({
         next: (suratMasuk) => {
           this.suratMasukForm = new FormGroup({
-            'waktuPenerimaanSurat': new FormControl(suratMasuk.waktuPenerimaanSurat, [Validators.required, Validators.minLength(15)]),
+            'tanggalPenerimaanSurat': new FormControl(suratMasuk.tanggalPenerimaanSurat, [Validators.required, Validators.minLength(15)]),
+            'jamPenerimaanSurat': new FormControl(suratMasuk.jamPenerimaanSurat, [Validators.required, Validators.minLength(4)]),
             'asal': new FormControl(suratMasuk.asal, [Validators.required, Validators.minLength(3)]),
             'nomorSurat': new FormControl(suratMasuk.nomorSurat, Validators.required),
             'perihal': new FormControl(suratMasuk.perihal, [Validators.required, Validators.minLength(5)]),

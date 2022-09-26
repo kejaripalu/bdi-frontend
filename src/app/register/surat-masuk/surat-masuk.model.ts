@@ -1,7 +1,8 @@
 export class SuratMasuk {
     id!: string;
     deleted!: boolean;
-    waktuPenerimaanSurat!: string;
+    tanggalPenerimaanSurat!: string;
+    jamPenerimaanSurat!: string;
     asal!: string;
     perihal!: string;
     nomorSurat!: string;
