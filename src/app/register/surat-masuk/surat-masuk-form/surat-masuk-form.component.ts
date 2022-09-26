@@ -126,7 +126,7 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
     let asal = null as any;
     let nomorSurat = null as any;
     let perihal = null as any;
-    let tanggalSurat = null as any;
+    let tanggalSurat = this.currentDateTimeService.getCurrentDate();
     let isiDisposisi = null as any;
     let tindakLanjutDisposisi = null as any;
     let keterangan = null as any;
@@ -150,8 +150,8 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
       this.suratMasukSub = this.suratMasukService.getOneSuratMasuk(this.id).subscribe({
         next: (suratMasuk) => {
           this.suratMasukForm = new FormGroup({
-            'tanggalPenerimaanSurat': new FormControl(suratMasuk.tanggalPenerimaanSurat, [Validators.required, Validators.minLength(15)]),
-            'jamPenerimaanSurat': new FormControl(suratMasuk.jamPenerimaanSurat, [Validators.required, Validators.minLength(4)]),
+            'tanggalPenerimaanSurat': new FormControl(suratMasuk.tanggalPenerimaanSurat, [Validators.required, Validators.minLength(10)]),
+            'jamPenerimaanSurat': new FormControl(suratMasuk.jamPenerimaanSurat, [Validators.required, Validators.minLength(5)]),
             'asal': new FormControl(suratMasuk.asal, [Validators.required, Validators.minLength(3)]),
             'nomorSurat': new FormControl(suratMasuk.nomorSurat, Validators.required),
             'perihal': new FormControl(suratMasuk.perihal, [Validators.required, Validators.minLength(5)]),
