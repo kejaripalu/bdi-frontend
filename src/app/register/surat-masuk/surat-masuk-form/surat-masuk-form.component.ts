@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { min, Subscription } from 'rxjs';
-import { CurrentDateTimeService } from 'src/app/shared/current-date-time.service';
+import { CurrentDateTimeService } from 'src/app/shared/curent-date-time.service';
 import { SuratMasuk } from '../surat-masuk.model';
 import { SuratMasukService } from '../surat-masuk.service';
 

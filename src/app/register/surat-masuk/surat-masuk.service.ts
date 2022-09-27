@@ -26,6 +26,19 @@ export class SuratMasukService {
             );
     }
 
+    getSearchSuratMasuk(value: string, page: number, size: number, jenisSurat: string, tahun: string) {
+        const startDate = tahun + '-01-01';        
+        const endDate = tahun + '-12-31';    
+        const getEndPoint = `${this.endPoint}/search?pages=${page}&sizes=${size}&jenisSurat=${jenisSurat}&` +
+            `startDate=${startDate}&endDate=${endDate}&value=${value}`;  
+        return this.httpClient.get<ResponseSuratMasuk>(getEndPoint)
+            .pipe(
+                map(response => {
+                    return response;
+                })
+            );
+    }
+
     getOneSuratMasuk(id: string) {
         const getEndPoint = `${this.endPoint}/${id}/detail`;
         return this.httpClient.get<SuratMasuk>(getEndPoint)

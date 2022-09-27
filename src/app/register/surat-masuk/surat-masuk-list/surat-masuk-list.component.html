@@ -8,63 +8,79 @@
             <button type="button" class="btn btn-success" (click)="onNewSuratMasuk()">
                 <i class="bi bi-window-plus"></i> Tambah Surat Masuk</button>
         </div>
-        <div class="p-2 bd-highlight">
-            <select (change)="updateMonthSelected($any($event.target).value)" class="form-select" aria-label=".form-select-sm example">
-                <option 
-                    *ngFor="let m of month; index as i;" 
-                    [value]="i + 1" [selected]="(i + 1) === (currentMonth)">{{ m }}</option>
-            </select>
-        </div>
-        <div class="p-2 bd-highlight">
-            <select (change)="updateYearSelected($any($event.target).value)" class="form-select" aria-label=".form-select-sm example">
-                <option 
-                    *ngFor="let y of year | reverse; index as i;" 
-                    [value]="y" [selected]="currentYear === y">{{ y }}</option>
-            </select>
+        <div class="p-2 w-100 bd-highlight">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 mb-1">
+                    <select
+                        *ngIf="!isSearching"
+                        (change)="updateMonthSelected($any($event.target).value)" 
+                        class="form-select" 
+                        aria-label=".form-select-sm example">
+                            <option 
+                                *ngFor="let m of month; index as i;" 
+                                [value]="i + 1" [selected]="(i + 1) === (currentMonth)">{{ m }}</option>
+                    </select>
+                    <div *ngIf="isSearching" class="input-group">
+                        <input #searchData
+                            type="text"
+                            name="searchData"
+                            class="form-control"
+                            placeholder="Cari di sini..."
+                            (keyup.enter)="searchingSuratMasuk(searchData.value)">
+                            <button class="btn btn-outline-secondary" type="button" (click)="searchingSuratMasuk(searchData.value)"><i class="bi bi-search"></i></button>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 mb-1">
+                    <select (change)="updateYearSelected($any($event.target).value)" class="form-select" aria-label=".form-select-sm example">
+                        <option 
+                            *ngFor="let y of year | reverse; index as i;" 
+                            [value]="y" [selected]="currentYear === y">{{ y }}</option>
+                    </select>
+                </div>
+                <div class="col-md-2 col-sm-2">
+                    <button type="button" class="btn btn-danger" 
+                            *ngIf="!isSearching"
+                            (click)="onSearchingMode()"><i class="bi bi-search"></i></button>
+                    <button type="button" class="btn btn-success" 
+                            *ngIf="isSearching"
+                            (click)="onDateTimeShowData()"><i class="bi bi-calendar2-week"></i></button>
+                </div>
+            </div>            
         </div>
     </div>
-    <table class="table table-sm mt-4">
-        <thead>
-            <tr>
-                <th scope="col">No.</th>
-                <th scope="col">Waktu Penerimaan Surat</th>
-                <th scope="col">Asal Surat</th>
-                <th scope="col">Nomor & Tgl Surat</th>
-                <th scope="col">Perihal</th>
-                <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let sm of suratMasuk; index as i;">
-                <td class="align-top">{{ i + 1 }}</td>
-                <td class="align-top">{{ sm.tanggalPenerimaanSurat }} {{ sm.jamPenerimaanSurat }}</td>
-                <td class="align-top">{{ sm.asal }}</td>
-                <td class="align-top">{{ sm.nomorSurat }} | {{ sm.tanggalSurat }}</td>
-                <td class="align-top">{{ sm.perihal }}</td>
-                <td class="align-top">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            <i class="bi bi-gear-fill"></i> Action
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="cursor: pointer;">
-                            <li><a class="dropdown-item text-primary"
-                                    [routerLink]="['/surat-masuk', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa', sm.id, 'detail']"
-                                    [queryParams]="{jenisSurat: jenisSurat}"><i class="bi bi-list-check"></i> Detail</a>
-                            </li>
-                            <li><a class="dropdown-item text-success"
-                                    [routerLink]="['/surat-masuk', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa', sm.id, 'form']"
-                                    [queryParams]="{edit: 1, jenisSurat: jenisSurat}"><i
-                                        class="bi bi-pencil-square"></i> Ubah</a></li>
-                            <li><a class="dropdown-item text-danger" (click)="onDeleteSuratMasuk(sm.id)"><i
-                                        class="bi bi-trash3-fill"></i> Hapus</a></li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <router-outlet></router-outlet>
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-sm mt-4">
+            <thead>
+                <tr>
+                    <th scope="col">Waktu Penerimaan Surat</th>
+                    <th scope="col">Asal Surat</th>
+                    <th scope="col">Nomor & Tgl Surat</th>
+                    <th scope="col">Perihal</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let sm of suratMasuk">
+                    <td class="align-top">{{ sm.tanggalPenerimaanSurat }} {{ sm.jamPenerimaanSurat }}</td>
+                    <td class="align-top">{{ sm.asal }}</td>
+                    <td class="align-top">{{ sm.nomorSurat }} | {{ sm.tanggalSurat }}</td>
+                    <td class="align-top">{{ sm.perihal }}</td>
+                    <td class="align-top">
+                        <a class="dropdown-item text-primary"
+                                        [routerLink]="['/surat-masuk', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa', sm.id, 'detail']"
+                                        [queryParams]="{jenisSurat: jenisSurat}"><i class="bi bi-list-check"></i> Detail</a>                   
+                        <a class="dropdown-item text-success"
+                                        [routerLink]="['/surat-masuk', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa', sm.id, 'form']"
+                                        [queryParams]="{edit: 1, jenisSurat: jenisSurat}">
+                                        <i class="bi bi-pencil-square"></i> Ubah</a>
+                        <a class="dropdown-item text-danger" (click)="onDeleteSuratMasuk(sm.id)" style="cursor: pointer;"><i
+                                        class="bi bi-trash3-fill"></i> Hapus</a>
+                    </td>
+                </tr>
+                <router-outlet></router-outlet>
+            </tbody>
+        </table>    
+    </div>
 
     <div class="d-flex bd-highlight" *ngIf="suratMasuk.length !== 0">
         <div class="p-2 w-100 bd-highlight">

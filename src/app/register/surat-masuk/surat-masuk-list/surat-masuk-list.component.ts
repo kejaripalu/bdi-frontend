@@ -24,6 +24,7 @@ export class SuratMasukListComponent implements OnInit, OnDestroy {
   pageNumber: number = 1;
   pageSize: number = 10;
   totalElements: number = 0;
+  isSearching: boolean = false;
   
   constructor(private suratMasukService: SuratMasukService,
               private router: Router,
@@ -123,6 +124,39 @@ export class SuratMasukListComponent implements OnInit, OnDestroy {
     this.pageNumber = 1;
     this.isLoading = true;
     this.loadDataSuratMasuk();
+  }
+
+  onSearchingMode() {
+    this.isSearching = true;
+  }
+
+  onDateTimeShowData() {
+    this.isSearching = false;
+  }
+
+  searchingSuratMasuk(value: string) {
+    this.isLoading = true;
+    this.pageNumber = 1;
+    this.suratMasukSub = this.suratMasukService.getSearchSuratMasuk(
+      value,
+      this.pageNumber - 1, 
+      this.pageSize, 
+      this.jenisSurat, 
+      this.currentYear.toString())
+        .subscribe({
+          next: (responseData) => {
+            // console.log(responseData);
+            this.suratMasuk = responseData.content;
+            this.pageNumber = responseData.number + 1;
+            this.pageSize = responseData.size;
+            this.totalElements = responseData.totalElements;
+            this.isLoading = false;
+          },
+          error: () => {
+            this.error = 'Aduh... Gagal ambil data dari server!!!';
+            this.isLoading = false;
+          }
+        });
   }
 
   ngOnDestroy(): void {
