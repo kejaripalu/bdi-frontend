@@ -135,6 +135,9 @@ export class SuratMasukListComponent implements OnInit, OnDestroy {
   }
 
   searchingSuratMasuk(value: string) {
+    if (value === '') {
+      return;
+    }
     this.isLoading = true;
     this.pageNumber = 1;
     this.suratMasukSub = this.suratMasukService.getSearchSuratMasuk(
