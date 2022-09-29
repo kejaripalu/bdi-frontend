@@ -17,6 +17,8 @@ import { SuratMasukDetailComponent } from './register/surat-masuk/surat-masuk-de
 import { DangerAlertComponent } from './shared/danger-alert/danger-alert.component';
 import { SuratMasukListComponent } from './register/surat-masuk/surat-masuk-list/surat-masuk-list.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SuratKeluarComponent } from './register/surat-keluar/surat-keluar.component';
+import { SuratMasukHelpComponent } from './register/surat-masuk/surat-masuk-help/surat-masuk-help.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ReversePipe,
     NoDataAlertComponent,
     SuratMasukDetailComponent,
-    DangerAlertComponent
+    DangerAlertComponent,
+    SuratKeluarComponent,
+    SuratMasukHelpComponent
   ],
   imports: [
     BrowserModule,
