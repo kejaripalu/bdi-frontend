@@ -42,6 +42,28 @@ export class SuratKeluarService {
             }));
     }
 
+    getOneSuratKeluar(id: string) {
+        const getEndPoint = `${this.endPoint}/${id}/detail`;
+        return this.httpClient.get<SuratKeluar>(getEndPoint)
+            .pipe(
+                map(response => {
+                    return response;
+                }),
+                catchError(errorResponse => {
+                    let errorMessage =  'Aduh... Parah nih bos.. gagal ambil data dari server!!!';
+                    if (!errorResponse.error) {
+                        return throwError(() => errorMessage);
+                    }
+                    switch (errorResponse.error.message) {
+                        case 'ID_NOT_FOUND':
+                            errorMessage = 'Bro... Data tidak ditemukan!!!'
+                            break;
+                    }
+                    return throwError(() => errorMessage);
+                })
+            );
+    }
+
 }
 
 interface ResponseSuratKeluar {

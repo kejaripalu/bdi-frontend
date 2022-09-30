@@ -21,6 +21,7 @@ import { SuratKeluarComponent } from './register/surat-keluar/surat-keluar.compo
 import { SuratMasukHelpComponent } from './register/surat-masuk/surat-masuk-help/surat-masuk-help.component';
 import { SuratKeluarListComponent } from './register/surat-keluar/surat-keluar-list/surat-keluar-list.component';
 import { SuratKeluarFormComponent } from './register/surat-keluar/surat-keluar-form/surat-keluar-form.component';
+import { SuratKeluarDetailComponent } from './register/surat-keluar/surat-keluar-detail/surat-keluar-detail.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { SuratKeluarFormComponent } from './register/surat-keluar/surat-keluar-f
     SuratKeluarComponent,
     SuratMasukHelpComponent,
     SuratKeluarListComponent,
-    SuratKeluarFormComponent
+    SuratKeluarFormComponent,
+    SuratKeluarDetailComponent
   ],
   imports: [
     BrowserModule,
