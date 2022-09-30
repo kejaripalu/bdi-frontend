@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { map } from "rxjs";
+import { catchError, map, throwError } from "rxjs";
 import { MonthConverterService } from "src/app/shared/month-converter.service";
 import { environment } from "src/environments/environment";
 import { SuratKeluar } from "./surat-keluar.model";
@@ -24,6 +24,22 @@ export class SuratKeluarService {
                     return response;
                 })
             );
+    }
+
+    createSuratKeluar(suratKeluar: SuratKeluar) {
+        return this.httpClient.post<SuratKeluar>(this.endPoint, suratKeluar)
+            .pipe(catchError(errorResponse => {
+                let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
+                if (!errorResponse.error) {
+                    return throwError(() => errorMessage);
+                }
+                switch (errorResponse.error.message) {
+                    case 'DUPLICATE_DATA_FIELD':
+                      errorMessage = 'Bro.. Data ini sudah pernah diinput!!!';
+                      break;
+                  }
+                return throwError(() => errorMessage);
+            }));
     }
 
 }

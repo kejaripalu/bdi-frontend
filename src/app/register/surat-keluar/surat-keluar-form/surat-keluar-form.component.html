@@ -1,0 +1,156 @@
+<div *ngIf="isLoadingEditForm && isEditMode" class="mt-4" style="text-align: center;">
+    <app-loading-spinner></app-loading-spinner>
+</div>
+<div class="alert alert-danger mt-4" *ngIf="editModeError && isEditMode" role="alert">
+    {{ error }} 
+    <br>
+    <a 
+        [routerLink]="['/surat-keluar', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa']"
+        [queryParams]="{edit: 1, jenisSurat: jenisSurat}" 
+        class="alert-link">Kembali</a>
+</div>
+<div class="mt-4" style="margin-bottom: 50px;" *ngIf="!isLoadingEditForm && !editModeError">
+    <div class="row">
+        <div class="col-sm-10 col-md-8 col-xl-8 offset-sm-2 col-md-2 offset-xl-2">
+            <strong [ngClass]="{biasa: jenisSurat === 'BIASA',
+                                rahasia: jenisSurat === 'RAHASIA'}">Jenis Surat: {{ jenisSurat }}</strong>
+            <hr>
+            <form [formGroup]="suratKeluarForm" (ngSubmit)="onSubmit()">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="tanggalSurat">Tanggal Surat:</label>
+                            <input 
+                                type="date"
+                                name="tanggalSurat"
+                                class="form-control"
+                                formControlName="tanggalSurat">
+                        </div>
+                        <small 
+                            class="text-alert" 
+                            *ngIf="suratKeluarForm.get('tanggalSurat')?.errors?.['required'] && 
+                                   suratKeluarForm.get('tanggalSurat')?.touched">
+                                Wajib diisi!!!</small>
+                        <small 
+                            class="text-alert" 
+                            *ngIf="suratKeluarForm.get('tanggalSurat')?.errors?.['minlength'] && 
+                                    suratKeluarForm.get('tanggalSurat')?.touched">
+                                Tanggal harus sesuai!!!</small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label for="nomorSurat">Nomor Surat:</label>
+                            <input 
+                                type="text" 
+                                name="nomorSurat" 
+                                class="form-control"
+                                formControlName="nomorSurat">
+                        </div>
+                        <small 
+                            class="text-alert" 
+                            *ngIf="suratKeluarForm.get('nomorSurat')?.errors?.['required'] && 
+                                    suratKeluarForm.get('nomorSurat')?.touched">
+                                Wajib diisi!!!</small>
+                        <small 
+                            class="text-alert" 
+                            *ngIf="suratKeluarForm.get('nomorSurat')?.errors?.['minlength'] && 
+                                    suratKeluarForm.get('nomorSurat')?.touched">
+                                    Minimal 5 karakter!!!</small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-xl-12">
+                        <div class="form-group">
+                            <label for="kepada">Kepada:</label>
+                            <textarea 
+                                rows="3"
+                                type="text" 
+                                name="kepada" 
+                                class="form-control"
+                                formControlName="kepada"></textarea>
+                        </div>
+                        <small 
+                            class="text-alert" 
+                            *ngIf="suratKeluarForm.get('kepada')?.errors?.['required'] && 
+                                    suratKeluarForm.get('kepada')?.touched">
+                                Wajib diisi!!!</small>
+                        <small 
+                            class="text-alert" 
+                            *ngIf="suratKeluarForm.get('kepada')?.errors?.['minlength'] && 
+                                    suratKeluarForm.get('kepada')?.touched">
+                                Minimal 3 karakter!!!</small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-xl-12">
+                        <div class="form-group">
+                            <label for="perihal">Perihal:</label>
+                            <textarea
+                                rows="3"
+                                type="text" 
+                                name="perihal" 
+                                class="form-control"
+                                formControlName="perihal"></textarea>
+                        </div>
+                        <small 
+                            class="text-alert" 
+                            *ngIf="suratKeluarForm.get('perihal')?.errors?.['required'] && 
+                                    suratKeluarForm.get('perihal')?.touched">
+                                Wajib diisi!!!</small>
+                        <small 
+                            class="text-alert" 
+                            *ngIf="suratKeluarForm.get('perihal')?.errors?.['minlength'] && 
+                                    suratKeluarForm.get('perihal')?.touched">
+                                Minimal 5 karakter!!!</small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-xl-12">
+                        <div class="form-group">
+                            <label for="lampiran">Lampiran:</label>
+                            <textarea
+                                rows="3"
+                                name="lampiran" 
+                                class="form-control"
+                                formControlName="lampiran"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-xl-12">
+                        <div class="form-group">
+                            <label for="keterangan">Keterangan:</label>
+                            <textarea
+                                rows="3"
+                                name="keterangan" 
+                                class="form-control"
+                                formControlName="keterangan"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <app-danger-alert [message]="error" *ngIf="error"></app-danger-alert>
+                <div class="mt-4" *ngIf="isLoading">
+                    <app-loading-spinner></app-loading-spinner>
+                </div>
+                <div *ngIf="!isLoading">
+                    <div class="d-flex justify-content-between">
+                        <div class="p-2">
+                            <button
+                                class="btn btn-success"
+                                type="submit"
+                                [disabled]="!suratKeluarForm.valid"><i class="bi bi-save-fill"></i> Simpan</button>
+                        </div>
+                        <div class="p-2">
+                            <button
+                                class="btn btn-danger"
+                                type="button"
+                                (click)="onCancel()"><i class="bi bi-backspace-fill"></i> Batal</button> 
+                        </div>
+                    </div>  
+                </div>       
+            </form>
+        </div>
+    </div>
+</div>

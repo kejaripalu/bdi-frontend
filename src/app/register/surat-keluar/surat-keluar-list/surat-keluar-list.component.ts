@@ -72,10 +72,10 @@ export class SuratKeluarListComponent implements OnInit, OnDestroy {
   onNewSuratKeluar() {
     let jenisSrt = null as any;
     switch (this.jenisSurat) {
-      case 'BIASA':
+      case 'B':
         jenisSrt = 'biasa';
         break;
-      case 'RAHASIA':
+      case 'R':
         jenisSrt = 'rahasia';
         break;
       default:

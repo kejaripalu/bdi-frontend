@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { SuratKeluarFormComponent } from "./register/surat-keluar/surat-keluar-form/surat-keluar-form.component";
 import { SuratKeluarListComponent } from "./register/surat-keluar/surat-keluar-list/surat-keluar-list.component";
 import { SuratKeluarComponent } from "./register/surat-keluar/surat-keluar.component";
 import { SuratMasukDetailComponent } from "./register/surat-masuk/surat-masuk-detail/surat-masuk-detail.component";
@@ -25,6 +26,9 @@ const appRoutes: Routes = [
     { path: 'surat-keluar', component: SuratKeluarComponent, children: [
         { path: '', redirectTo: '/surat-keluar/biasa', pathMatch: 'full' },
         { path: 'biasa', component: SuratKeluarListComponent },
+        { path: 'biasa/form', component: SuratKeluarFormComponent },
+        { path: 'rahasia', component: SuratKeluarListComponent },
+        { path: 'rahasia/form', component: SuratKeluarFormComponent },
     ]}
 ];
 

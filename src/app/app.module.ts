@@ -20,6 +20,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SuratKeluarComponent } from './register/surat-keluar/surat-keluar.component';
 import { SuratMasukHelpComponent } from './register/surat-masuk/surat-masuk-help/surat-masuk-help.component';
 import { SuratKeluarListComponent } from './register/surat-keluar/surat-keluar-list/surat-keluar-list.component';
+import { SuratKeluarFormComponent } from './register/surat-keluar/surat-keluar-form/surat-keluar-form.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { SuratKeluarListComponent } from './register/surat-keluar/surat-keluar-l
     DangerAlertComponent,
     SuratKeluarComponent,
     SuratMasukHelpComponent,
-    SuratKeluarListComponent
+    SuratKeluarListComponent,
+    SuratKeluarFormComponent
   ],
   imports: [
     BrowserModule,
