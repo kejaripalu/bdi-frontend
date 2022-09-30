@@ -169,14 +169,20 @@
                     <app-loading-spinner></app-loading-spinner>
                 </div>
                 <div *ngIf="!isLoading">
-                    <button
-                    class="btn btn-success"
-                    type="submit"
-                    [disabled]="!suratMasukForm.valid"><i class="bi bi-save-fill"></i> Simpan</button>
-                <button
-                    class="btn btn-danger"
-                    type="button"
-                    (click)="onCancel()"><i class="bi bi-backspace-fill"></i> Batal</button>   
+                    <div class="d-flex justify-content-between">
+                        <div class="p-2">
+                            <button
+                                class="btn btn-success"
+                                type="submit"
+                                [disabled]="!suratMasukForm.valid"><i class="bi bi-save-fill"></i> Simpan</button>
+                        </div>
+                        <div class="p-2">
+                            <button
+                                class="btn btn-danger"
+                                type="button"
+                                (click)="onCancel()"><i class="bi bi-backspace-fill"></i> Batal</button>  
+                        </div>
+                    </div> 
                 </div>       
             </form>
         </div>

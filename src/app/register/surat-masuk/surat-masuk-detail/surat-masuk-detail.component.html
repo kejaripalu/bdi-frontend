@@ -4,8 +4,7 @@
 <div class="alert alert-danger mt-4" *ngIf="error" role="alert">
     {{ error }} 
     <br>
-    <a 
-        [routerLink]="['/surat-masuk', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa']"
+    <a  [routerLink]="['/surat-masuk', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa']"
         [queryParams]="{edit: 1, jenisSurat: jenisSurat}" 
         class="alert-link">Kembali</a>
 </div>
@@ -14,103 +13,119 @@
         <div class="col-sm-10 col-md-10 col-xl-10 offset-sm-1 offset-md-1 offset-xl-1">
             <div class="row">
                 <div class="col-sm-12 col-md-12 col-xl-12" style="margin-bottom: 20px;">
-                    <button type="button" class="btn btn-danger" style="margin-right: 15px;" (click)="onCancel()">
-                        <i class="bi bi-backspace-fill"></i> Kembali</button>
-                    <button type="button" class="btn btn-warning"
+                    <div class="d-flex justify-content-between">
+                        <div class="p-2">
+                            <button type="button" class="btn btn-danger" style="margin-right: 15px;" (click)="onCancel()">
+                                <i class="bi bi-backspace-fill"></i> Kembali</button>
+                        </div>
+                        <div class="p-2">
+                            <button type="button" class="btn btn-warning"
                             [routerLink]="['/surat-masuk', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa', suratMasuk.id, 'form']"
                             [queryParams]="{edit: 1, jenisSurat: jenisSurat}"><i class="bi bi-pencil-square"></i> Ubah</button>
+                        </div>
+                    </div>
                 </div>
                 <hr>
                 <div class="col-sm-12 col-md-12 col-xl-12">
                     <h4 class="text-primary">Rincian Surat Masuk</h4>
                 </div>
             </div>
-            <hr>
-            <div class="row">
-                <div class="col-sm-4 col-md-4 col-xl-4">
-                    <h5>Jenis Surat</h5>
-                </div>
-                <div class="col-sm-8 col-md-8 col-xl-8">
-                    : <strong 
-                        [ngClass]="{biasa: suratMasuk.jenisSurat === 'BIASA',
-                                    rahasia: suratMasuk.jenisSurat === 'RAHASIA'}">{{ suratMasuk.jenisSurat }}</strong>             
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-sm-4 col-md-4 col-xl-4">
-                    <h5>Waktu Penerimaan Surat</h5>
-                </div>
-                <div class="col-sm-8 col-md-8 col-xl-8">
-                    : {{ suratMasuk.tanggalPenerimaanSurat | date:'dd-MM-yyyy'}} {{ suratMasuk.jamPenerimaanSurat }}
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-sm-4 col-md-4 col-xl-4">
-                    <h5>Nomor & Tanggal Surat</h5>
-                </div>
-                <div class="col-sm-8 col-md-8 col-xl-8">
-                    : {{ suratMasuk.nomorSurat }} tgl. {{ suratMasuk.tanggalSurat | date:'dd-MM-yyyy' }}
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-sm-4 col-md-4 col-xl-4">
-                    <h5>Asal Surat</h5>
-                </div>
-                <div class="col-sm-8 col-md-8 col-xl-8">
-                    : {{ suratMasuk.asal }}
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-sm-4 col-md-4 col-xl-4">
-                    <h5>Perihal</h5>
-                </div>
-                <div class="col-sm-8 col-md-8 col-xl-8">
-                    : {{ suratMasuk.perihal }}
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-sm-4 col-md-4 col-xl-4">
-                    <h5>Isi Disposisi</h5>
-                </div>
-                <div class="col-sm-8 col-md-8 col-xl-8">
-                    : {{ suratMasuk.isiDisposisi }}
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-sm-4 col-md-4 col-xl-4">
-                    <h5>Tindak Lanjut</h5>
-                </div>
-                <div class="col-sm-8 col-md-8 col-xl-8">
-                    : {{ suratMasuk.tindakLanjutDisposisi }}
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-sm-4 col-md-4 col-xl-4">
-                    <h5>Keterangan</h5>
-                </div>
-                <div class="col-sm-8 col-md-8 col-xl-8">
-                    : {{ suratMasuk.keterangan }}
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-sm-4 col-md-4 col-xl-4">
-                    <h5>URL File</h5>
-                </div>
-                <div class="col-sm-8 col-md-8 col-xl-8">
-                    : <a href="{{ suratMasuk.urlFile }}" 
-                        target="_blank"
-                        *ngIf="suratMasuk.urlFile">{{ suratMasuk.nomorSurat }}</a>
-                </div>
-            </div>
-            <hr>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-xl-4">
+                            <p class="fw-bold">Jenis Surat</p>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-xl-8">
+                            : <strong 
+                                [ngClass]="{biasa: suratMasuk.jenisSurat === 'BIASA',
+                                            rahasia: suratMasuk.jenisSurat === 'RAHASIA'}">{{ suratMasuk.jenisSurat }}</strong>             
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-xl-4">
+                            <p class="fw-bold">Waktu Penerimaan Surat</p>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-xl-8">
+                            : {{ suratMasuk.tanggalPenerimaanSurat | date:'dd-MM-yyyy'}} {{ suratMasuk.jamPenerimaanSurat }}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-xl-4">
+                            <p class="fw-bold">Nomor & Tanggal Surat</p>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-xl-8">
+                            : {{ suratMasuk.nomorSurat }} tgl. {{ suratMasuk.tanggalSurat | date:'dd-MM-yyyy' }}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-xl-4">
+                            <p class="fw-bold">Asal Surat</p>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-xl-8">
+                            : {{ suratMasuk.asal }}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-xl-4">
+                            <p class="fw-bold">Perihal</p>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-xl-8">
+                            : {{ suratMasuk.perihal }}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-xl-4">
+                            <p class="fw-bold">Isi Disposisi</p>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-xl-8">
+                            : {{ suratMasuk.isiDisposisi }}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-xl-4">
+                            <p class="fw-bold">Tindak Lanjut</p>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-xl-8">
+                            : {{ suratMasuk.tindakLanjutDisposisi }}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-xl-4">
+                            <p class="fw-bold">Keterangan</p>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-xl-8">
+                            : {{ suratMasuk.keterangan }}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-xl-4">
+                            <p class="fw-bold">URL File</p>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-xl-8">
+                            : <a href="{{ suratMasuk.urlFile }}" 
+                                target="_blank"
+                                *ngIf="suratMasuk.urlFile">{{ suratMasuk.nomorSurat }}</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
