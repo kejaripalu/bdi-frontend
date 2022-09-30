@@ -28,9 +28,11 @@ const appRoutes: Routes = [
         { path: '', redirectTo: '/surat-keluar/biasa', pathMatch: 'full' },
         { path: 'biasa', component: SuratKeluarListComponent },
         { path: 'biasa/form', component: SuratKeluarFormComponent },
+        { path: 'biasa/:id/form', component: SuratKeluarFormComponent },
         { path: 'biasa/:id/detail', component: SuratKeluarDetailComponent },
         { path: 'rahasia', component: SuratKeluarListComponent },
         { path: 'rahasia/form', component: SuratKeluarFormComponent },
+        { path: 'rahasia/:id/form', component: SuratKeluarFormComponent },
         { path: 'rahasia/:id/detail', component: SuratKeluarDetailComponent },
     ]}
 ];

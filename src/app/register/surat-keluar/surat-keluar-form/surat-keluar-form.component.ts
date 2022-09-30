@@ -64,6 +64,29 @@ export class SuratKeluarFormComponent implements OnInit, OnDestroy {
       'lampiran': new FormControl(lampiran),
       'keterangan': new FormControl(keterangan)
     });
+
+    if (this.isEditMode) {
+      this.isLoadingEditForm = true;
+      this.suratKeluarSub = this.suratKeluarService.getOneSuratKeluar(this.id).subscribe({
+        next: (suratKeluar) => {
+          this.suratKeluarForm = new FormGroup({
+            'tanggalSurat': new FormControl(suratKeluar.tanggalSurat, [Validators.required, Validators.minLength(8)]),
+            'nomorSurat': new FormControl(suratKeluar.nomorSurat, [Validators.required, Validators.minLength(5)]),
+            'kepada': new FormControl(suratKeluar.kepada, [Validators.required, Validators.minLength(3)]),
+            'perihal': new FormControl(suratKeluar.perihal, [Validators.required, Validators.minLength(5)]),
+            'lampiran': new FormControl(suratKeluar.lampiran),
+            'keterangan': new FormControl(suratKeluar.keterangan)
+          });
+          this.isLoadingEditForm = false;
+          this.editModeError = false;
+        },
+        error: (errorMessage) => {
+          this.isLoadingEditForm = false;
+          this.error = errorMessage;
+          this.editModeError = true;
+        }
+      });
+    }
   }
 
   onSubmit() {
@@ -80,6 +103,18 @@ export class SuratKeluarFormComponent implements OnInit, OnDestroy {
       suratKeluar.lampiran = this.suratKeluarForm.value['lampiran'];
       suratKeluar.keterangan = this.suratKeluarForm.value['keterangan'];
       suratKeluar.jenisSurat = this.jenisSurat;
+
+      this.suratKeluarSub = this.suratKeluarService.updateSuratKeluar(suratKeluar).subscribe({
+        next: () => {
+          this.isLoading = false;
+          this.onCancel();
+          alert('Asiappp... berhasil update data!!!')
+        },
+        error: (errorMessage) => {
+          this.error = errorMessage;
+          this.isLoading = false;
+        }
+      });
     } else {
       const suratKeluar = new SuratKeluar();
       suratKeluar.tanggalSurat = this.suratKeluarForm.value['tanggalSurat'];

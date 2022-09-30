@@ -64,6 +64,26 @@ export class SuratKeluarService {
             );
     }
 
+    updateSuratKeluar(suratKeluar: SuratKeluar) {
+        const putEndPoint = `${this.endPoint}/${suratKeluar.id}`;
+        return this.httpClient.put<SuratKeluar>(putEndPoint, suratKeluar)
+            .pipe(catchError(errorResponse => {
+                let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
+                if (!errorResponse.error) {
+                    return throwError(() => errorMessage);
+                }
+                switch (errorResponse.error.message) {
+                    case 'ID_NOT_FOUND':
+                        errorMessage = 'Bro... Data tidak ditemukan!!!'
+                        break;
+                    case 'DUPLICATE_DATA_FIELD':
+                        errorMessage = 'Bro.. Data ini sudah pernah diinput!!!';
+                        break;
+                }
+                return throwError(() => errorMessage);
+            }));
+    }
+
 }
 
 interface ResponseSuratKeluar {

@@ -62,7 +62,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let sk of suratKeluar">
-                    <td class="align-top">{{ sk.tanggalSurat }} {{ sk.nomorSurat }}</td>
+                    <td class="align-top">{{ sk.tanggalSurat | date: 'dd-MM-yyyy' }} <br> {{ sk.nomorSurat }}</td>
                     <td class="align-top">{{ sk.kepada }}</td>
                     <td class="align-top">{{ sk.perihal }}</td>
                     <td class="align-top">{{ sk.lampiran }}</td>
@@ -72,7 +72,7 @@
                                         [routerLink]="['/surat-keluar', jenisSurat === 'R' ? 'rahasia' : 'biasa', sk.id, 'detail']"
                                         [queryParams]="{jenisSurat: jenisSurat}"><i class="bi bi-list-check"></i> Detail</a>                   
                         <a class="dropdown-item text-success"
-                                        [routerLink]="['/surat-masuk', jenisSurat === 'R' ? 'rahasia' : 'biasa', sk.id, 'form']"
+                                        [routerLink]="['/surat-keluar', jenisSurat === 'R' ? 'rahasia' : 'biasa', sk.id, 'form']"
                                         [queryParams]="{edit: 1, jenisSurat: jenisSurat}">
                                         <i class="bi bi-pencil-square"></i> Ubah</a>
                         <a class="dropdown-item text-danger" (click)="onDeleteSuratKeluar(sk.id)" style="cursor: pointer;"><i
