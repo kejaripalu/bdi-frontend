@@ -84,6 +84,23 @@ export class SuratKeluarService {
             }));
     }
 
+    deleteSuratKeluar(id: string) {
+        const deleteEndPoint = `${this.endPoint}/${id}`;
+        return this.httpClient.delete<SuratKeluar>(deleteEndPoint)
+            .pipe(catchError(errorResponse => {
+                let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
+                if (!errorResponse.error) {
+                    return throwError(() => errorMessage);
+                }
+                switch (errorResponse.error.message) {
+                    case 'ID_NOT_FOUND':
+                        errorMessage = 'Bro... Data tidak ditemukan!!!'
+                        break;
+                }
+                return throwError(() => errorMessage);
+            }));
+    }
+
 }
 
 interface ResponseSuratKeluar {

@@ -120,7 +120,21 @@ export class SuratKeluarListComponent implements OnInit, OnDestroy {
   }
 
   onDeleteSuratKeluar(id: string) {
-
+    if (confirm('Yakin ente mau hapus data ini?')) {
+      this.isLoading = true;
+      this.suratKeluarSub = this.suratKeluarService.deleteSuratKeluar(id)
+        .subscribe({
+          next: () => {
+            this.isLoading = false;
+            this.loadDataSuratKeluar();
+            alert('Asiaapp... Sukses hapus data!!!');
+          },
+          error: (errorMessage) => {
+            this.error = errorMessage;
+            this.isLoading = false;
+          }
+        });
+    }
   }
 
   ngOnDestroy(): void {
