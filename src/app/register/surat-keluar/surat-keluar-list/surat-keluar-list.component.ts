@@ -36,7 +36,7 @@ export class SuratKeluarListComponent implements OnInit, OnDestroy {
     this.getYear();
     this.suratKeluarQueryParamSub = this.route.queryParams
       .subscribe((queryParams: Params) => {
-        this.jenisSurat = queryParams['jenisSurat']?.toUpperCase() !== 'R' ? 'B' : 'R';
+        this.jenisSurat = queryParams['jenisSurat']?.toUpperCase() !== 'R' ? 'BIASA' : 'RAHASIA';
       });
       this.loadDataSuratKeluar();
   }
@@ -72,17 +72,17 @@ export class SuratKeluarListComponent implements OnInit, OnDestroy {
   onNewSuratKeluar() {
     let jenisSrt = null as any;
     switch (this.jenisSurat) {
-      case 'B':
+      case 'BIASA':
         jenisSrt = 'biasa';
         break;
-      case 'R':
+      case 'RAHASIA':
         jenisSrt = 'rahasia';
         break;
       default:
         jenisSrt = 'biasa';
     }
     this.router.navigate(['/surat-keluar', jenisSrt, 'form'], {
-      queryParams: {jenisSurat: this.jenisSurat}
+      queryParams: {jenisSurat: this.jenisSurat === 'RAHASIA' ? 'R' : 'B'}
     });
   }
 

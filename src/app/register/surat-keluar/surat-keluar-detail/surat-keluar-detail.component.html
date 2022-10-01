@@ -20,8 +20,8 @@
                         </div>
                         <div class="p-2">
                             <button type="button" class="btn btn-warning"
-                            [routerLink]="['/surat-masuk', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa', suratKeluar.id, 'form']"
-                            [queryParams]="{edit: 1, jenisSurat: jenisSurat}"><i class="bi bi-pencil-square"></i> Ubah</button>
+                            [routerLink]="['/surat-keluar', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa', suratKeluar.id, 'form']"
+                            [queryParams]="{edit: 1, jenisSurat: jenisSurat === 'RAHASIA' ? 'R' : 'B'}"><i class="bi bi-pencil-square"></i> Ubah</button>
                         </div>
                     </div>
                 </div>
