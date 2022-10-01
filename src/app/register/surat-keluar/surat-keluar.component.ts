@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SuratKeluarHelpComponent } from './surat-keluar-help/surat-keluar-help.component';
 
 @Component({
   selector: 'app-surat-keluar',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SuratKeluarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
+  }
+
+  onOpenHelp() {
+    const modalHelp = this.modalService.open(SuratKeluarHelpComponent, { size: 'xl' });
   }
 
 }
