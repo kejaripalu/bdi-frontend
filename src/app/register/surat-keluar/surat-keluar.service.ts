@@ -101,6 +101,19 @@ export class SuratKeluarService {
             }));
     }
 
+    getSearchSuratKeluar(value: string, page: number, size: number, jenisSurat: string, tahun: string) {
+        const startDate = tahun + '-01-01';        
+        const endDate = tahun + '-12-31';    
+        const getEndPoint = `${this.endPoint}/search?pages=${page}&sizes=${size}&jenisSurat=${jenisSurat}&` +
+            `startDate=${startDate}&endDate=${endDate}&value=${value}`;  
+        return this.httpClient.get<ResponseSuratKeluar>(getEndPoint)
+            .pipe(
+                map(response => {
+                    return response;
+                })
+            );
+    }
+
 }
 
 interface ResponseSuratKeluar {
