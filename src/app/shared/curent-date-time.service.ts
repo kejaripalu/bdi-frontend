@@ -26,4 +26,15 @@ export class CurrentDateTimeService {
         }
         return hours + ':' + minutes;
     }
+
+    getConvertCurrentDate(year: string | number, month: string | number, day: string | number) {
+        if (month < 10) {
+            month = '0' + month;
+        }
+        if (day < 10) {
+            day = '0' + day;
+        }
+        return year + '-' + month + '-' + day;
+    }
+
 }

@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { NgbCalendar, NgbDate, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { CurrentDateTimeService } from 'src/app/shared/curent-date-time.service';
 import { SuratKeluar } from '../surat-keluar.model';
@@ -24,15 +25,19 @@ export class SuratKeluarFormComponent implements OnInit, OnDestroy {
   private suratKeluarQueryParamSub!: Subscription;
   private id: string = null as any;
   jenisSurat: string = null as any;
+  
+  modelDate: NgbDateStruct = null as any; // model date NgBootstrap
 
   constructor(private suratKeluarService: SuratKeluarService,
               private route: ActivatedRoute, 
               private router: Router,
+              private calendar: NgbCalendar, // service calendar NgBootStrap
               private currentDateTimeService: CurrentDateTimeService) { }
             
   ngOnInit(): void {
     this.isLoading = false;
     this.isLoadingEditForm = false;
+    this.modelDate = this.calendar.getToday();
     this.suratKeluarParamSub = this.route.params
       .subscribe((params: Params) => {
           this.isEditMode = params['id'] != null;
@@ -49,7 +54,6 @@ export class SuratKeluarFormComponent implements OnInit, OnDestroy {
   }
 
   initForm() {
-    let tanggalSurat = this.currentDateTimeService.getCurrentDate();
     let nomorSurat = null as any;
     let kepada = null as any;
     let perihal = null as any;
@@ -57,7 +61,7 @@ export class SuratKeluarFormComponent implements OnInit, OnDestroy {
     let keterangan = null as any;
 
     this.suratKeluarForm = new FormGroup({
-      'tanggalSurat': new FormControl(tanggalSurat,  [Validators.required, Validators.minLength(8)]),
+      'tanggalSurat': new FormControl(this.modelDate,  [Validators.required, Validators.minLength(8)]),
       'nomorSurat': new FormControl(nomorSurat,  [Validators.required, Validators.minLength(5)]),
       'kepada': new FormControl(kepada,  [Validators.required, Validators.minLength(3)]),
       'perihal': new FormControl(perihal,  [Validators.required, Validators.minLength(5)]),
@@ -69,8 +73,12 @@ export class SuratKeluarFormComponent implements OnInit, OnDestroy {
       this.isLoadingEditForm = true;
       this.suratKeluarSub = this.suratKeluarService.getOneSuratKeluar(this.id).subscribe({
         next: (suratKeluar) => {
+          this.modelDate = {year: +suratKeluar.tanggalSurat.slice(0, 4), 
+                            month: +suratKeluar.tanggalSurat.slice(5, 7), 
+                            day: +suratKeluar.tanggalSurat.slice(8, 10)};
+          
           this.suratKeluarForm = new FormGroup({
-            'tanggalSurat': new FormControl(suratKeluar.tanggalSurat, [Validators.required, Validators.minLength(8)]),
+            'tanggalSurat': new FormControl(this.modelDate, [Validators.required, Validators.minLength(8)]),
             'nomorSurat': new FormControl(suratKeluar.nomorSurat, [Validators.required, Validators.minLength(5)]),
             'kepada': new FormControl(suratKeluar.kepada, [Validators.required, Validators.minLength(3)]),
             'perihal': new FormControl(suratKeluar.perihal, [Validators.required, Validators.minLength(5)]),
@@ -95,8 +103,11 @@ export class SuratKeluarFormComponent implements OnInit, OnDestroy {
 
     if(this.isEditMode) {
       const suratKeluar = new SuratKeluar();
+      const date = this.currentDateTimeService.getConvertCurrentDate(
+                    this.modelDate.year, this.modelDate.month, this.modelDate.day);
+
       suratKeluar.id = this.id;
-      suratKeluar.tanggalSurat = this.suratKeluarForm.value['tanggalSurat'];
+      suratKeluar.tanggalSurat = date;
       suratKeluar.nomorSurat = this.suratKeluarForm.value['nomorSurat'];
       suratKeluar.kepada = this.suratKeluarForm.value['kepada'];
       suratKeluar.perihal = this.suratKeluarForm.value['perihal'];
@@ -117,7 +128,10 @@ export class SuratKeluarFormComponent implements OnInit, OnDestroy {
       });
     } else {
       const suratKeluar = new SuratKeluar();
-      suratKeluar.tanggalSurat = this.suratKeluarForm.value['tanggalSurat'];
+      const date = this.currentDateTimeService.getConvertCurrentDate(
+                      this.modelDate.year, this.modelDate.month, this.modelDate.day);
+      
+      suratKeluar.tanggalSurat = date;
       suratKeluar.nomorSurat = this.suratKeluarForm.value['nomorSurat'];
       suratKeluar.kepada = this.suratKeluarForm.value['kepada'];
       suratKeluar.perihal = this.suratKeluarForm.value['perihal'];
@@ -137,6 +151,10 @@ export class SuratKeluarFormComponent implements OnInit, OnDestroy {
         }
       });
     }
+  }
+
+  onDateSelect(date: NgbDate) {
+    this.modelDate = date;
   }
 
   onCancel() {
