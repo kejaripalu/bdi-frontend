@@ -3,16 +3,14 @@
         <div class="d-flex bd-highlight">
             <div class="p-2 w-100 bd-highlight">
                 <h2 class="mt-4">
-                    <button type="button" 
-                            class="btn btn-outline-secondary" 
-                            placement="top" 
-                            ngbTooltip="Petunjuk"
-                            (click)="onOpenHelp()">
-                        <i class="bi bi-layout-text-sidebar-reverse"></i>
-                    </button> Register Surat Masuk</h2>
+                    <i class="bi bi-layout-text-sidebar-reverse"></i> Register Surat Masuk</h2>
             </div>
             <div class="p-2 flex-shrink-1 bd-highlight">
-                <h4 class="mt-4 text-success" placement="start" ngbTooltip="Register Surat Masuk Biasa / Rahasia">R.IN.1</h4>
+                <h4 class="mt-4 text-success" 
+                    placement="start" 
+                    ngbTooltip="Register Surat Masuk Biasa / Rahasia"
+                    (click)="onOpenHelp()"
+                    style="cursor: pointer;">R.IN.1</h4>
             </div>
         </div>
         <hr>
