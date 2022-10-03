@@ -15,7 +15,7 @@ export class SuratMasukComponent implements OnInit {
   }
 
   onOpenHelp() {
-    const modalHelp = this.modalService.open(SuratMasukHelpComponent, { size: 'xl' });
+    const modalHelp = this.modalService.open(SuratMasukHelpComponent, { size: 'xl', scrollable: true });
   }
 
 }

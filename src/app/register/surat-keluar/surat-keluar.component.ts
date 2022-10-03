@@ -15,7 +15,7 @@ export class SuratKeluarComponent implements OnInit {
   }
 
   onOpenHelp() {
-    const modalHelp = this.modalService.open(SuratKeluarHelpComponent, { size: 'xl' });
+    const modalHelp = this.modalService.open(SuratKeluarHelpComponent, { size: 'xl', scrollable: true });
   }
 
 }
