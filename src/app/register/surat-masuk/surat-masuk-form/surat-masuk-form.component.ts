@@ -25,6 +25,7 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
   private suratMasukQueryParamSub!: Subscription;
   private id: string = null as any;
   jenisSurat: string = null as any;
+  message: string = null as any;
 
   modelDateTanggalPenerimaanSurat: NgbDateStruct = null as any; // model date NgBootstrap
   modelDateTanggalSurat: NgbDateStruct = null as any; // model date NgBootstrap
@@ -86,8 +87,8 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
       this.suratMasukSub = this.suratMasukService.updateSuratMasuk(suratMasuk).subscribe({
         next: () => {
           this.isLoading = false;
+          this.message = 'UpdateSukses';
           this.onCancel();
-          alert('Asiappp... berhasil update data!!!')
         },
         error: (errorMessage) => {
           this.error = errorMessage;
@@ -114,8 +115,8 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
         next: () => {
           // console.log(responseData);
           this.isLoading = false;
+          this.message = 'SimpanSukses';
           this.onCancel();
-          alert('Asiappp... berhasil simpan data!!!')
         },
         error: (errorMessage) => {
           this.error = errorMessage;
@@ -128,9 +129,9 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
   onCancel() {
     this.suratMasukForm.reset();
     if (this.jenisSurat === 'RAHASIA') {
-        this.router.navigate(['/surat-masuk', 'rahasia'], {queryParams: {jenisSurat: 'RAHASIA'}});
+        this.router.navigate(['/surat-masuk', 'rahasia'], {queryParams: {jenisSurat: 'RAHASIA', message: this.message}});
     } else {
-        this.router.navigate(['/surat-masuk', 'biasa'], {queryParams: {jenisSurat: 'BIASA'}});
+        this.router.navigate(['/surat-masuk', 'biasa'], {queryParams: {jenisSurat: 'BIASA', message: this.message}});
     }   
   }
 

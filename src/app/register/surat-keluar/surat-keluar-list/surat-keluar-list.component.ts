@@ -48,10 +48,10 @@ export class SuratKeluarListComponent implements OnInit, OnDestroy {
     this.suratKeluarQueryParamSub = this.route.queryParams
       .subscribe((queryParams: Params) => {
           if (queryParams['message'] === 'SimpanSukses') {
-            this.toastService.show('Ashiiap.... Berhasil Input Data!', 
+            this.toastService.show('Ashiiap.... Berhasil Input Data Surat Keluar!', 
                                     { classname: 'bg-success text-light', delay: 5000 });
           } else if (queryParams['message'] === 'UpdateSukses') {
-            this.toastService.show('Ashiiap.... Berhasil Update Data!', 
+            this.toastService.show('Ashiiap.... Berhasil Update Data Surat Keluar!', 
                                     { classname: 'bg-success text-light', delay: 5000 });
           } else {
             return;
@@ -169,7 +169,7 @@ export class SuratKeluarListComponent implements OnInit, OnDestroy {
           next: () => {
             this.isLoading = false;
             this.loadDataSuratKeluar();
-            this.toastService.show('Ashiiap.... Berhasil Hapus Data!', 
+            this.toastService.show('Ashiiap.... Berhasil Hapus Data Surat Keluar!', 
                                     { classname: 'bg-success text-light', delay: 5000 });
           },
           error: (errorMessage) => {
