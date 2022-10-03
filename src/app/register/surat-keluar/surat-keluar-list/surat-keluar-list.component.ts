@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Month } from 'src/app/shared/month';
+import { ToastService } from 'src/app/shared/toast.service';
 import { SuratKeluar } from '../surat-keluar.model';
 import { SuratKeluarService } from '../surat-keluar.service';
 
@@ -28,17 +29,34 @@ export class SuratKeluarListComponent implements OnInit, OnDestroy {
 
   constructor(private suratKeluarService: SuratKeluarService,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              public toastService: ToastService) { }
 
   ngOnInit(): void {
     this.error = false as any;
     this.isLoading = true;
     this.getYear();
+    this.checkMessage();
     this.suratKeluarQueryParamSub = this.route.queryParams
       .subscribe((queryParams: Params) => {
         this.jenisSurat = queryParams['jenisSurat']?.toUpperCase() !== 'R' ? 'BIASA' : 'RAHASIA';
       });
       this.loadDataSuratKeluar();
+  }
+  
+  checkMessage() {
+    this.suratKeluarQueryParamSub = this.route.queryParams
+      .subscribe((queryParams: Params) => {
+          if (queryParams['message'] === 'SimpanSukses') {
+            this.toastService.show('Ashiiap.... Berhasil Input Data!', 
+                                    { classname: 'bg-success text-light', delay: 5000 });
+          } else if (queryParams['message'] === 'UpdateSukses') {
+            this.toastService.show('Ashiiap.... Berhasil Update Data!', 
+                                    { classname: 'bg-success text-light', delay: 5000 });
+          } else {
+            return;
+          }
+    });
   }
 
   loadDataSuratKeluar() {
@@ -151,7 +169,8 @@ export class SuratKeluarListComponent implements OnInit, OnDestroy {
           next: () => {
             this.isLoading = false;
             this.loadDataSuratKeluar();
-            alert('Asiaapp... Sukses hapus data!!!');
+            this.toastService.show('Ashiiap.... Berhasil Hapus Data!', 
+                                    { classname: 'bg-success text-light', delay: 5000 });
           },
           error: (errorMessage) => {
             this.error = errorMessage;
@@ -168,6 +187,7 @@ export class SuratKeluarListComponent implements OnInit, OnDestroy {
     if (this.suratKeluarQueryParamSub) {
       this.suratKeluarQueryParamSub.unsubscribe();
     }
+    this.toastService.clear();
   }
 
 }

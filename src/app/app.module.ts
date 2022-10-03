@@ -23,6 +23,7 @@ import { SuratKeluarListComponent } from './register/surat-keluar/surat-keluar-l
 import { SuratKeluarFormComponent } from './register/surat-keluar/surat-keluar-form/surat-keluar-form.component';
 import { SuratKeluarDetailComponent } from './register/surat-keluar/surat-keluar-detail/surat-keluar-detail.component';
 import { SuratKeluarHelpComponent } from './register/surat-keluar/surat-keluar-help/surat-keluar-help.component';
+import { ToastComponent } from './shared/toast/toast.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { SuratKeluarHelpComponent } from './register/surat-keluar/surat-keluar-h
     SuratKeluarListComponent,
     SuratKeluarFormComponent,
     SuratKeluarDetailComponent,
-    SuratKeluarHelpComponent
+    SuratKeluarHelpComponent,
+    ToastComponent
   ],
   imports: [
     BrowserModule,

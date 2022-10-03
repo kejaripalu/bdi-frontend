@@ -4,6 +4,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NgbCalendar, NgbDate, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { CurrentDateTimeService } from 'src/app/shared/curent-date-time.service';
+import { ToastService } from 'src/app/shared/toast.service';
 import { SuratKeluar } from '../surat-keluar.model';
 import { SuratKeluarService } from '../surat-keluar.service';
 
@@ -25,6 +26,7 @@ export class SuratKeluarFormComponent implements OnInit, OnDestroy {
   private suratKeluarQueryParamSub!: Subscription;
   private id: string = null as any;
   jenisSurat: string = null as any;
+  message: string = null as any;
   
   modelDate: NgbDateStruct = null as any; // model date NgBootstrap
 
@@ -118,8 +120,8 @@ export class SuratKeluarFormComponent implements OnInit, OnDestroy {
       this.suratKeluarSub = this.suratKeluarService.updateSuratKeluar(suratKeluar).subscribe({
         next: () => {
           this.isLoading = false;
+          this.message = 'UpdateSukses';
           this.onCancel();
-          alert('Asiappp... berhasil update data!!!')
         },
         error: (errorMessage) => {
           this.error = errorMessage;
@@ -142,8 +144,8 @@ export class SuratKeluarFormComponent implements OnInit, OnDestroy {
       this.suratKeluarSub = this.suratKeluarService.createSuratKeluar(suratKeluar).subscribe({
         next: () => {
           this.isLoading = false;
+          this.message = 'SimpanSukses';
           this.onCancel();
-          alert('Asiappp... berhasil simpan data!!!')
         },
         error: (errorMessage) => {
           this.error = errorMessage;
@@ -160,9 +162,9 @@ export class SuratKeluarFormComponent implements OnInit, OnDestroy {
   onCancel() {
     this.suratKeluarForm.reset();
     if (this.jenisSurat === 'RAHASIA') {
-        this.router.navigate(['/surat-keluar', 'rahasia'], {queryParams: {jenisSurat: 'R'}});
+        this.router.navigate(['/surat-keluar', 'rahasia'], {queryParams: {jenisSurat: 'R', message: this.message}});
     } else {
-        this.router.navigate(['/surat-keluar', 'biasa'], {queryParams: {jenisSurat: 'B'}});
+        this.router.navigate(['/surat-keluar', 'biasa'], {queryParams: {jenisSurat: 'B', message: this.message}});
     }   
   }
 
