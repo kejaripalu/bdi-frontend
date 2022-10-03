@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { NgbCalendar, NgbDate, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { min, Subscription } from 'rxjs';
 import { CurrentDateTimeService } from 'src/app/shared/curent-date-time.service';
 import { SuratMasuk } from '../surat-masuk.model';
@@ -25,14 +26,20 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
   private id: string = null as any;
   jenisSurat: string = null as any;
 
+  modelDateTanggalPenerimaanSurat: NgbDateStruct = null as any; // model date NgBootstrap
+  modelDateTanggalSurat: NgbDateStruct = null as any; // model date NgBootstrap
+
   constructor(private suratMasukService: SuratMasukService,
               private route: ActivatedRoute, 
               private router: Router,
+              private calendar: NgbCalendar, // service calendar NgBootStrap
               private currentDateTimeService: CurrentDateTimeService) { }
 
   ngOnInit(): void {
     this.isLoading = false;
     this.isLoadingEditForm = false;
+    this.modelDateTanggalPenerimaanSurat = this.calendar.getToday();
+    this.modelDateTanggalSurat = this.calendar.getToday();
     this.suratMasukParamSub = this.route.params
       .subscribe((params: Params) => {
           this.isEditMode = params['id'] != null;
@@ -51,17 +58,24 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.isLoading = true;
     this.error = null as any;
+    const dateTanggalPenerimaanSurat = this.currentDateTimeService.getConvertCurrentDate(
+      this.modelDateTanggalPenerimaanSurat.year,
+      this.modelDateTanggalPenerimaanSurat.month,
+      this.modelDateTanggalPenerimaanSurat.day);
+    const dateTanggalSurat = this.currentDateTimeService.getConvertCurrentDate(
+      this.modelDateTanggalSurat.year,
+      this.modelDateTanggalSurat.month,
+      this.modelDateTanggalSurat.day);
        
     if (this.isEditMode) {
-      // console.log(this.suratMasukForm);
       const suratMasuk = new SuratMasuk();
-
+    
       suratMasuk.id = this.id;
-      suratMasuk.tanggalPenerimaanSurat = this.suratMasukForm.value['tanggalPenerimaanSurat'];
+      suratMasuk.tanggalPenerimaanSurat = dateTanggalPenerimaanSurat;
       suratMasuk.jamPenerimaanSurat = this.suratMasukForm.value['jamPenerimaanSurat'];
       suratMasuk.asal = this.suratMasukForm.value['asal'];
       suratMasuk.nomorSurat = this.suratMasukForm.value['nomorSurat'];
-      suratMasuk.tanggalSurat = this.suratMasukForm.value['tanggalSurat'];
+      suratMasuk.tanggalSurat = dateTanggalSurat;
       suratMasuk.perihal = this.suratMasukForm.value['perihal'];
       suratMasuk.jenisSurat = this.jenisSurat;
       suratMasuk.isiDisposisi = this.suratMasukForm.value['isiDisposisi'];
@@ -84,11 +98,11 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
       // console.log(this.suratMasukForm);
       const suratMasuk = new SuratMasuk();
      
-      suratMasuk.tanggalPenerimaanSurat = this.suratMasukForm.value['tanggalPenerimaanSurat'];
+      suratMasuk.tanggalPenerimaanSurat = dateTanggalPenerimaanSurat;
       suratMasuk.jamPenerimaanSurat = this.suratMasukForm.value['jamPenerimaanSurat'];
       suratMasuk.asal = this.suratMasukForm.value['asal'];
       suratMasuk.nomorSurat = this.suratMasukForm.value['nomorSurat'];
-      suratMasuk.tanggalSurat = this.suratMasukForm.value['tanggalSurat'];
+      suratMasuk.tanggalSurat = dateTanggalSurat;
       suratMasuk.perihal = this.suratMasukForm.value['perihal'];
       suratMasuk.jenisSurat = this.jenisSurat;
       suratMasuk.isiDisposisi = this.suratMasukForm.value['isiDisposisi'];
@@ -121,24 +135,22 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
   }
 
   private initForm() {
-    let tanggalPenerimaanSurat = this.currentDateTimeService.getCurrentDate();
     let jamPenerimaanSurat = this.currentDateTimeService.getCurrentTime();    
     let asal = null as any;
     let nomorSurat = null as any;
     let perihal = null as any;
-    let tanggalSurat = this.currentDateTimeService.getCurrentDate();
     let isiDisposisi = null as any;
     let tindakLanjutDisposisi = null as any;
     let keterangan = null as any;
     let urlFile = null as any;
 
     this.suratMasukForm = new FormGroup({
-      'tanggalPenerimaanSurat': new FormControl(tanggalPenerimaanSurat, [Validators.required, Validators.minLength(10)]),
+      'tanggalPenerimaanSurat': new FormControl(this.modelDateTanggalPenerimaanSurat, [Validators.required, Validators.minLength(10)]),
       'jamPenerimaanSurat': new FormControl(jamPenerimaanSurat, [Validators.required, Validators.minLength(5)]),
       'asal': new FormControl(asal, [Validators.required, Validators.minLength(5)]),
       'nomorSurat': new FormControl(nomorSurat, Validators.required),
       'perihal': new FormControl(perihal, [Validators.required, Validators.minLength(5)]),
-      'tanggalSurat': new FormControl(tanggalSurat, [Validators.required]),
+      'tanggalSurat': new FormControl(this.modelDateTanggalSurat, [Validators.required]),
       'isiDisposisi': new FormControl(isiDisposisi),
       'tindakLanjutDisposisi': new FormControl(tindakLanjutDisposisi),
       'keterangan': new FormControl(keterangan),
@@ -149,13 +161,21 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
       this.isLoadingEditForm = true;
       this.suratMasukSub = this.suratMasukService.getOneSuratMasuk(this.id).subscribe({
         next: (suratMasuk) => {
+          this.modelDateTanggalPenerimaanSurat = {year: +suratMasuk.tanggalPenerimaanSurat.slice(0, 4), 
+            month: +suratMasuk.tanggalPenerimaanSurat.slice(5, 7), 
+            day: +suratMasuk.tanggalPenerimaanSurat.slice(8, 10)};      
+          this.modelDateTanggalSurat = {year: +suratMasuk.tanggalSurat.slice(0, 4), 
+            month: +suratMasuk.tanggalSurat.slice(5, 7), 
+            day: +suratMasuk.tanggalSurat.slice(8, 10)};
+          
+          
           this.suratMasukForm = new FormGroup({
-            'tanggalPenerimaanSurat': new FormControl(suratMasuk.tanggalPenerimaanSurat, [Validators.required, Validators.minLength(10)]),
+            'tanggalPenerimaanSurat': new FormControl(this.modelDateTanggalPenerimaanSurat, [Validators.required, Validators.minLength(10)]),
             'jamPenerimaanSurat': new FormControl(suratMasuk.jamPenerimaanSurat, [Validators.required, Validators.minLength(5)]),
             'asal': new FormControl(suratMasuk.asal, [Validators.required, Validators.minLength(3)]),
             'nomorSurat': new FormControl(suratMasuk.nomorSurat, Validators.required),
             'perihal': new FormControl(suratMasuk.perihal, [Validators.required, Validators.minLength(5)]),
-            'tanggalSurat': new FormControl(suratMasuk.tanggalSurat, [Validators.required]),
+            'tanggalSurat': new FormControl(this.modelDateTanggalSurat, [Validators.required]),
             'isiDisposisi': new FormControl(suratMasuk.isiDisposisi),
             'tindakLanjutDisposisi': new FormControl(suratMasuk.tindakLanjutDisposisi),
             'keterangan': new FormControl(suratMasuk.keterangan),
@@ -171,6 +191,14 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
         }
       });
     }
+  }
+
+  onDateTanggalPenerimaanSelect(date: NgbDate) {
+    this.modelDateTanggalPenerimaanSurat = date;
+  }
+
+  onDateTanggalSuratSelect(date: NgbDate) {
+    this.modelDateTanggalSurat = date;
   }
 
   ngOnDestroy(): void {

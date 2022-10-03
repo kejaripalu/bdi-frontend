@@ -17,14 +17,28 @@
             <hr>
             <form [formGroup]="suratMasukForm" (ngSubmit)="onSubmit()">
                 <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-sm-auto">
                         <div class="form-group">
                             <label for="tanggalPenerimaanSurat">Tanggal Penerimaan Surat:</label>
-                            <input 
+                            <!-- <input 
                                 type="date"
                                 name="tanggalPenerimaanSurat"
                                 class="form-control"
-                                formControlName="tanggalPenerimaanSurat">
+                                formControlName="tanggalPenerimaanSurat"> -->
+                                <div class="input-group">
+                                    <input
+                                        type="text"
+                                        name="tanggalPenerimaanSurat"
+                                        class="form-control"
+                                        placeholder="yyyy-mm-dd"
+                                        formControlName="tanggalPenerimaanSurat"
+                                        #dps="ngbDatepicker"
+                                        ngbDatepicker
+                                        (dateSelect)="onDateTanggalPenerimaanSelect($event)">
+                                    <button class="btn btn-outline-secondary" type="button" (click)="dps.toggle()">
+                                        <i class="bi bi-calendar3"></i>
+                                    </button>
+                                </div>                        
                         </div>
                         <small 
                             class="text-alert" 
@@ -37,7 +51,7 @@
                                     suratMasukForm.get('tanggalPenerimaanSurat')?.touched">
                                 Minimal 10 karakter!!!</small>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-auto">
                         <div class="form-group">
                             <label for="jamPenerimaanSurat">Jam Penerimaan Surat:</label>
                             <input 
@@ -58,24 +72,29 @@
                                 Minimal 5 karakter!!!</small>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="asal">Asal Surat:</label>
-                    <input 
-                        type="text" 
-                        name="asal" 
-                        class="form-control"
-                        formControlName="asal">
-                </div>
-                <small 
-                    class="text-alert" 
-                    *ngIf="suratMasukForm.get('asal')?.errors?.['required'] && 
-                            suratMasukForm.get('asal')?.touched">
-                        Wajib diisi!!!</small>
-                <small 
-                    class="text-alert" 
-                    *ngIf="suratMasukForm.get('asal')?.errors?.['minlength'] && 
-                           suratMasukForm.get('asal')?.touched">
-                        Minimal 3 karakter!!!</small>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="asal">Asal Surat:</label>
+                            <textarea
+                                rows="3"
+                                type="text" 
+                                name="asal" 
+                                class="form-control"
+                                formControlName="asal"></textarea>
+                        </div>
+                        <small 
+                            class="text-alert" 
+                            *ngIf="suratMasukForm.get('asal')?.errors?.['required'] && 
+                                    suratMasukForm.get('asal')?.touched">
+                                Wajib diisi!!!</small>
+                        <small 
+                            class="text-alert" 
+                            *ngIf="suratMasukForm.get('asal')?.errors?.['minlength'] && 
+                                   suratMasukForm.get('asal')?.touched">
+                                Minimal 3 karakter!!!</small>
+                    </div>                  
+                </div>              
                 <div class="row">
                     <div class="col-sm-8">
                         <div class="form-group">
@@ -93,24 +112,42 @@
                                 Wajib diisi!!!</small>
                     </div>
                     <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="tanggalSurat">Tanggal Surat:</label>
-                            <input 
-                                type="date" 
-                                name="tanggalSurat" 
-                                class="form-control"
-                                formControlName="tanggalSurat">
+                        <div class="row">
+                            <div class="col-sm-auto">
+                                <div class="form-group">
+                                    <label for="tanggalSurat">Tanggal Surat:</label>
+                                    <!-- <input 
+                                        type="date" 
+                                        name="tanggalSurat" 
+                                        class="form-control"
+                                        formControlName="tanggalSurat"> -->
+                                        <div class="input-group">
+                                            <input
+                                                type="text"
+                                                name="tanggalSurat"
+                                                class="form-control"
+                                                placeholder="yyyy-mm-dd"
+                                                formControlName="tanggalSurat"
+                                                #d="ngbDatepicker"
+                                                ngbDatepicker
+                                                (dateSelect)="onDateTanggalSuratSelect($event)">
+                                            <button class="btn btn-outline-secondary" type="button" (click)="d.toggle()">
+                                                <i class="bi bi-calendar3"></i>
+                                            </button>
+                                        </div>
+                                </div>
+                                <small 
+                                    class="text-alert" 
+                                    *ngIf="suratMasukForm.get('tanggalSurat')?.errors?.['required'] && 
+                                            suratMasukForm.get('tanggalSurat')?.touched">
+                                        Wajib diisi!!!</small>
+                                <small 
+                                    class="text-alert" 
+                                    *ngIf="suratMasukForm.get('tanggalSurat')?.errors?.['minlength'] && 
+                                            suratMasukForm.get('tanggalSurat')?.touched">
+                                        Minimal 10 karakter dengan format yyyy-MM-dd!!!</small>
+                            </div>
                         </div>
-                        <small 
-                            class="text-alert" 
-                            *ngIf="suratMasukForm.get('tanggalSurat')?.errors?.['required'] && 
-                                    suratMasukForm.get('tanggalSurat')?.touched">
-                                Wajib diisi!!!</small>
-                        <small 
-                            class="text-alert" 
-                            *ngIf="suratMasukForm.get('tanggalSurat')?.errors?.['minlength'] && 
-                                    suratMasukForm.get('tanggalSurat')?.touched">
-                                Minimal 10 karakter dengan format yyyy-MM-dd!!!</small>
                     </div>
                 </div>
                 <div class="form-group">
@@ -158,11 +195,11 @@
                 </div>
                 <div class="form-group">
                     <label for="urlFile">Link File:</label>
-                    <input
-                        type="text" 
+                    <textarea
+                        rows="3"
                         name="urlFile" 
                         class="form-control"
-                        formControlName="urlFile">
+                        formControlName="urlFile"></textarea>
                 </div>
                 <app-danger-alert [message]="error" *ngIf="error"></app-danger-alert>
                 <div class="mt-4" *ngIf="isLoading">
@@ -174,13 +211,15 @@
                             <button
                                 class="btn btn-success"
                                 type="submit"
-                                [disabled]="!suratMasukForm.valid"><i class="bi bi-save-fill"></i> Simpan</button>
+                                [disabled]="!suratMasukForm.valid"
+                                style="margin-top: 20px;"><i class="bi bi-save-fill"></i> Simpan</button>
                         </div>
                         <div class="p-2">
                             <button
                                 class="btn btn-danger"
                                 type="button"
-                                (click)="onCancel()"><i class="bi bi-backspace-fill"></i> Batal</button>  
+                                (click)="onCancel()"
+                                style="margin-top: 20px;"><i class="bi bi-backspace-fill"></i> Batal</button>  
                         </div>
                     </div> 
                 </div>       

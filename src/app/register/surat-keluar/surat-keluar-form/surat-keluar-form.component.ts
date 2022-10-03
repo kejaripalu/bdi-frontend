@@ -102,11 +102,11 @@ export class SuratKeluarFormComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.isLoading = true;
     this.error = null as any;
+    const date = this.currentDateTimeService.getConvertCurrentDate(
+                  this.modelDate.year, this.modelDate.month, this.modelDate.day);
 
     if(this.isEditMode) {
       const suratKeluar = new SuratKeluar();
-      const date = this.currentDateTimeService.getConvertCurrentDate(
-                    this.modelDate.year, this.modelDate.month, this.modelDate.day);
 
       suratKeluar.id = this.id;
       suratKeluar.tanggalSurat = date;
@@ -130,9 +130,7 @@ export class SuratKeluarFormComponent implements OnInit, OnDestroy {
       });
     } else {
       const suratKeluar = new SuratKeluar();
-      const date = this.currentDateTimeService.getConvertCurrentDate(
-                      this.modelDate.year, this.modelDate.month, this.modelDate.day);
-      
+
       suratKeluar.tanggalSurat = date;
       suratKeluar.nomorSurat = this.suratKeluarForm.value['nomorSurat'];
       suratKeluar.kepada = this.suratKeluarForm.value['kepada'];
