@@ -26,6 +26,7 @@ import { SuratKeluarHelpComponent } from './register/surat-keluar/surat-keluar-h
 import { ToastComponent } from './shared/toast/toast.component';
 import { RkiComponent } from './register/rki/rki.component';
 import { RkiListComponent } from './register/rki/rki-list/rki-list.component';
+import { RkiDetailComponent } from './register/rki/rki-detail/rki-detail.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { RkiListComponent } from './register/rki/rki-list/rki-list.component';
     SuratKeluarHelpComponent,
     ToastComponent,
     RkiComponent,
-    RkiListComponent
+    RkiListComponent,
+    RkiDetailComponent
   ],
   imports: [
     BrowserModule,

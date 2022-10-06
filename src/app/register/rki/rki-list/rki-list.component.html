@@ -69,7 +69,7 @@
                     <td class="align-top">{{ r.uraianPeristiwaMasalah }}</td>
                     <td class="align-top">
                         <a class="dropdown-item text-primary"
-                                        [routerLink]="['/rki', namaBidang, r.id, 'detail']"
+                                        [routerLink]="['/rki', 'list', r.id, 'detail']"
                                         [queryParams]="{ bidang: namaBidang }"><i class="bi bi-list-check"></i> Detail</a>                   
                         <a class="dropdown-item text-success"
                                         [routerLink]="['/rki', namaBidang, r.id, 'form']"
