@@ -24,6 +24,8 @@ import { SuratKeluarFormComponent } from './register/surat-keluar/surat-keluar-f
 import { SuratKeluarDetailComponent } from './register/surat-keluar/surat-keluar-detail/surat-keluar-detail.component';
 import { SuratKeluarHelpComponent } from './register/surat-keluar/surat-keluar-help/surat-keluar-help.component';
 import { ToastComponent } from './shared/toast/toast.component';
+import { RkiComponent } from './register/rki/rki.component';
+import { RkiListComponent } from './register/rki/rki-list/rki-list.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { ToastComponent } from './shared/toast/toast.component';
     SuratKeluarFormComponent,
     SuratKeluarDetailComponent,
     SuratKeluarHelpComponent,
-    ToastComponent
+    ToastComponent,
+    RkiComponent,
+    RkiListComponent
   ],
   imports: [
     BrowserModule,

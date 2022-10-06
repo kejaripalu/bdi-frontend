@@ -17,11 +17,13 @@
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link" routerLinkActive="active" 
                             [routerLink]="['/surat-masuk', 'biasa']"
-                            [queryParams]="{jenisSurat: 'BIASA'}">Surat Masuk</a>
+                            [queryParams]="{ jenisSurat: 'BIASA' }">Surat Masuk</a>
                         <a class="nav-link" routerLinkActive="active" 
                             [routerLink]="['/surat-keluar', 'biasa']"
-                            [queryParams]="{jenisSurat: 'B'}">Surat Keluar</a>
-                        <a class="nav-link" href="#">RKI</a>
+                            [queryParams]="{ jenisSurat: 'B' }">Surat Keluar</a>
+                        <a class="nav-link" routerLinkActive="active" 
+                            [routerLink]="['/rki', 'list']"
+                            [queryParams]="{ bidang: 'IPOLHANKAM' }">RKI</a>
                         <a class="nav-link" href="#">Ekspedisi</a>
                         <a class="nav-link" href="#">Produk Intelijen</a>
                         <a class="nav-link" href="#">Arsip</a>                   
