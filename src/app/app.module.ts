@@ -27,6 +27,7 @@ import { ToastComponent } from './shared/toast/toast.component';
 import { RkiComponent } from './register/rki/rki.component';
 import { RkiListComponent } from './register/rki/rki-list/rki-list.component';
 import { RkiDetailComponent } from './register/rki/rki-detail/rki-detail.component';
+import { RkiFormComponent } from './register/rki/rki-form/rki-form.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { RkiDetailComponent } from './register/rki/rki-detail/rki-detail.compone
     ToastComponent,
     RkiComponent,
     RkiListComponent,
-    RkiDetailComponent
+    RkiDetailComponent,
+    RkiFormComponent
   ],
   imports: [
     BrowserModule,

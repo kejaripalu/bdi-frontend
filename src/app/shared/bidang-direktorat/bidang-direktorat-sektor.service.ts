@@ -10,116 +10,101 @@ export class BidangDirektoratSektorService {
         const bidang: Bidang[] = [
             { namaBidang: BidangDirektorat[BidangDirektorat.IPOLHANKAM], deskripsiBidang: BidangDirektoratLabel.get(BidangDirektorat.IPOLHANKAM) },
             { namaBidang: BidangDirektorat[BidangDirektorat.SOSBUDMAS], deskripsiBidang: BidangDirektoratLabel.get(BidangDirektorat.SOSBUDMAS) },
-            { namaBidang:  BidangDirektorat[BidangDirektorat.EKOKEU], deskripsiBidang: BidangDirektoratLabel.get(BidangDirektorat.EKOKEU) },
+            { namaBidang: BidangDirektorat[BidangDirektorat.EKOKEU], deskripsiBidang: BidangDirektoratLabel.get(BidangDirektorat.EKOKEU) },
             { namaBidang: BidangDirektorat[BidangDirektorat.PAMSTRA], deskripsiBidang: BidangDirektoratLabel.get(BidangDirektorat.PAMSTRA) },
             { namaBidang: BidangDirektorat[BidangDirektorat.TIPRODIN], deskripsiBidang: BidangDirektoratLabel.get(BidangDirektorat.TIPRODIN) }     
         ];
         return bidang;
     }
 
-    // Ideologi, Politik, Pertahanan dan Keamanan
-    getIpolhankam() {
-        return [
-            new Sektor('PENGAMANAN_PANCASILA', 'Pengamanan Pancasila', BidangDirektorat.IPOLHANKAM),
-            new Sektor('KESATUAN_PERSATUAN_BANGSA', 'Kesatuan dan Persatuan Bangsa', BidangDirektorat.IPOLHANKAM),
-            new Sektor('GERAKAN_SEPARATIS', 'Gerakan Separatis', BidangDirektorat.IPOLHANKAM),
-            new Sektor('PENYELENGGARAAN_PEMERINTAHAN', 'Penyelenggaraan Pemerintahan', BidangDirektorat.IPOLHANKAM),
-            new Sektor('PARPOL', 'Partai Politik', BidangDirektorat.IPOLHANKAM),
-            new Sektor('PEMILU_PILKADA', 'Pemilihan Umum dan Pemilihan Kepala Daerah', BidangDirektorat.IPOLHANKAM),
-            new Sektor('GERAKAN_TERORIS_RADIKAL', 'Gerakan Teroris dan Radikal', BidangDirektorat.IPOLHANKAM),
-            new Sektor('PENGAMANAN_WILAYAH_TERITORIAL', 'Pengamanan wilayah Teritorial', BidangDirektorat.IPOLHANKAM),
-            new Sektor('KEJAHATAN_SIBER', 'Kejahatan Siber', BidangDirektorat.IPOLHANKAM),
-            new Sektor('CEGAH_TANGKAL', 'Cegah Tangkal', BidangDirektorat.IPOLHANKAM),
-            new Sektor('PENGAWASAN_ORANG_ASING', 'Pengawasan Orang Asing', BidangDirektorat.IPOLHANKAM),
-            new Sektor('PENGAMANAN_SUMBER_DAYA_ORGANISASI_KEJAKSAAN', 'Pengamanan Sumber Daya Organisasi Kejaksaan', BidangDirektorat.IPOLHANKAM),
-            new Sektor('PENGAMANAN_PENANGANAN_PERKARA', 'Pengamanan Penanganan Perkara', BidangDirektorat.IPOLHANKAM)
-        ];
-    }
+    getSektor() {
+        const sektor: Sektor[] = [
+            // Ideologi, Politik, Pertahanan dan Keamanan
+            { namaSektor: 'PENGAMANAN_PANCASILA', deskripsiSektor: 'Pengamanan Pancasila', bidangDirektorat: BidangDirektorat[BidangDirektorat.IPOLHANKAM] },
+            { namaSektor: 'KESATUAN_PERSATUAN_BANGSA', deskripsiSektor: 'Kesatuan dan Persatuan Bangsa', bidangDirektorat: BidangDirektorat[BidangDirektorat.IPOLHANKAM] },
+            { namaSektor: 'GERAKAN_SEPARATIS', deskripsiSektor: 'Gerakan Separatis', bidangDirektorat: BidangDirektorat[BidangDirektorat.IPOLHANKAM] },
+            { namaSektor: 'PENYELENGGARAAN_PEMERINTAHAN', deskripsiSektor: 'Penyelenggaraan Pemerintahan', bidangDirektorat: BidangDirektorat[BidangDirektorat.IPOLHANKAM] },
+            { namaSektor: 'PARPOL', deskripsiSektor: 'Partai Politik', bidangDirektorat: BidangDirektorat[BidangDirektorat.IPOLHANKAM] },
+            { namaSektor: 'PEMILU_PILKADA', deskripsiSektor: 'Pemilihan Umum dan Pemilihan Kepala Daerah', bidangDirektorat: BidangDirektorat[BidangDirektorat.IPOLHANKAM] },
+            { namaSektor: 'GERAKAN_TERORIS_RADIKAL', deskripsiSektor: 'Gerakan Teroris dan Radikal', bidangDirektorat: BidangDirektorat[BidangDirektorat.IPOLHANKAM] },
+            { namaSektor: 'PENGAMANAN_WILAYAH_TERITORIAL', deskripsiSektor: 'Pengamanan wilayah Teritorial', bidangDirektorat: BidangDirektorat[BidangDirektorat.IPOLHANKAM] },
+            { namaSektor: 'KEJAHATAN_SIBER', deskripsiSektor: 'Kejahatan Siber', bidangDirektorat: BidangDirektorat[BidangDirektorat.IPOLHANKAM] },
+            { namaSektor: 'CEGAH_TANGKAL', deskripsiSektor: 'Cegah Tangkal', bidangDirektorat: BidangDirektorat[BidangDirektorat.IPOLHANKAM] },
+            { namaSektor: 'PENGAWASAN_ORANG_ASING', deskripsiSektor: 'Pengawasan Orang Asing', bidangDirektorat: BidangDirektorat[BidangDirektorat.IPOLHANKAM] },
+            { namaSektor: 'PENGAMANAN_SUMBER_DAYA_ORGANISASI_KEJAKSAAN', deskripsiSektor: 'Pengamanan Sumber Daya Organisasi Kejaksaan', bidangDirektorat: BidangDirektorat[BidangDirektorat.IPOLHANKAM] },
+            { namaSektor: 'PENGAMANAN_PENANGANAN_PERKARA', deskripsiSektor: 'Pengamanan Penanganan Perkara', bidangDirektorat: BidangDirektorat[BidangDirektorat.IPOLHANKAM] },
+        
+            // Sosial, Budaya, dan Kemasyarakatan
+            { namaSektor: 'PENGAWASAN_BARCET_DALAM_NEGERI', deskripsiSektor: 'Pengawasan Peredaran Barang Cetakan Dalam Negeri', bidangDirektorat: BidangDirektorat[BidangDirektorat.SOSBUDMAS] },
+            { namaSektor: 'PENGAWASAN_BARCET_IMPORT', deskripsiSektor: 'Pengawasan Peredaran Import Barang Cetakan', bidangDirektorat: BidangDirektorat[BidangDirektorat.SOSBUDMAS] },
+            { namaSektor: 'PENGAWASAN_SISTEM_PEMBUKUAN', deskripsiSektor: 'Pengawasan Sistem Pembukuan', bidangDirektorat: BidangDirektorat[BidangDirektorat.SOSBUDMAS] },
+            { namaSektor: 'PENGAWASAN_MEDIA_KOMUNIKASI', deskripsiSektor: 'Pengawasan Media Komunikasi', bidangDirektorat: BidangDirektorat[BidangDirektorat.SOSBUDMAS] },
+            { namaSektor: 'PAKEM', deskripsiSektor: 'Pengawasan Aliran Kepercayaan dan Keagamaan dalam Masyarakat', bidangDirektorat: BidangDirektorat[BidangDirektorat.SOSBUDMAS] },
+            { namaSektor: 'PENCEGAHAN_PENYALAHGUNAAN_PENODAAN_AGAMA', deskripsiSektor: 'Pencegahan Penyalahgunaan dan/atau Penodaan Agama', bidangDirektorat: BidangDirektorat[BidangDirektorat.SOSBUDMAS] },
+            { namaSektor: 'KETAHANAN_BUDAYA', deskripsiSektor: 'Ketahanan Budaya', bidangDirektorat: BidangDirektorat[BidangDirektorat.SOSBUDMAS] },
+            { namaSektor: 'PEMBERDAYAAN_MASYARAKAT_DESA', deskripsiSektor: 'Pemberdayaan Masyarakat Desa', bidangDirektorat: BidangDirektorat[BidangDirektorat.SOSBUDMAS] },
+            { namaSektor: 'PENGAWASAN_ORMAS_LSM', deskripsiSektor: 'Pengawasan Organisasi Masyarakat dan Lembaga Swadaya Masyarakat', bidangDirektorat: BidangDirektorat[BidangDirektorat.SOSBUDMAS] },
+            { namaSektor: 'PENCEGAHAN_KONFLIK_SOSIAL', deskripsiSektor: 'Pencegahan Konflik Sosial', bidangDirektorat: BidangDirektorat[BidangDirektorat.SOSBUDMAS] },
+            { namaSektor: 'KETERTIBAN_KETENTRAMAN_UMUM', deskripsiSektor: 'Ketertiban dan Ketentraman Umum', bidangDirektorat: BidangDirektorat[BidangDirektorat.SOSBUDMAS] },
+            { namaSektor: 'PEMBINAAN_MASYARAKAT_TAAT_HUKUM', deskripsiSektor: 'Pembinaan Masyarakat Taat Hukum', bidangDirektorat: BidangDirektorat[BidangDirektorat.SOSBUDMAS] },
 
-    // Sosial, Budaya, dan Kemasyarakatan
-    getSosbudmas() {
-        return [
-            new Sektor('PENGAWASAN_BARCET_DALAM_NEGERI', 'Pengawasan Peredaran Barang Cetakan Dalam Negeri', BidangDirektorat.SOSBUDMAS),
-            new Sektor('PENGAWASAN_BARCET_IMPORT', 'Pengawasan Peredaran Import Barang Cetakan', BidangDirektorat.SOSBUDMAS),
-            new Sektor('PENGAWASAN_SISTEM_PEMBUKUAN', 'Pengawasan Sistem Pembukuan', BidangDirektorat.SOSBUDMAS),
-            new Sektor('PENGAWASAN_MEDIA_KOMUNIKASI', 'Pengawasan Media Komunikasi', BidangDirektorat.SOSBUDMAS),
-            new Sektor('PAKEM', 'Pengawasan Aliran Kepercayaan dan Keagamaan dalam Masyarakat', BidangDirektorat.SOSBUDMAS),
-            new Sektor('PENCEGAHAN_PENYALAHGUNAAN_PENODAAN_AGAMA', 'Pencegahan Penyalahgunaan dan/atau Penodaan Agama', BidangDirektorat.SOSBUDMAS),
-            new Sektor('KETAHANAN_BUDAYA', 'Ketahanan Budaya', BidangDirektorat.SOSBUDMAS),
-            new Sektor('PEMBERDAYAAN_MASYARAKAT_DESA', 'Pemberdayaan Masyarakat Desa', BidangDirektorat.SOSBUDMAS),
-            new Sektor('PENGAWASAN_ORMAS_LSM', 'Pengawasan Organisasi Masyarakat dan Lembaga Swadaya Masyarakat', BidangDirektorat.SOSBUDMAS),
-            new Sektor('PENCEGAHAN_KONFLIK_SOSIAL', 'Pencegahan Konflik Sosial', BidangDirektorat.SOSBUDMAS),
-            new Sektor('KETERTIBAN_KETENTRAMAN_UMUM', 'Ketertiban dan Ketentraman Umum', BidangDirektorat.SOSBUDMAS),
-            new Sektor('PEMBINAAN_MASYARAKAT_TAAT_HUKUM', 'Pembinaan Masyarakat Taat Hukum', BidangDirektorat.SOSBUDMAS)
-        ];
-    }
+            // Ekonomi dan Keuangan
+            { namaSektor: 'LEMBAGA_KEUANGAN', deskripsiSektor: 'Lembaga Keuangan', bidangDirektorat: BidangDirektorat[BidangDirektorat.EKOKEU] },
+            { namaSektor: 'KEUANGAN_NEGARA', deskripsiSektor: 'Keuangan Negara', bidangDirektorat: BidangDirektorat[BidangDirektorat.EKOKEU] },
+            { namaSektor: 'MONETER', deskripsiSektor: 'Moneter', bidangDirektorat: BidangDirektorat[BidangDirektorat.EKOKEU] },
+            { namaSektor: 'PENELUSURAN_ASET', deskripsiSektor: 'Penelusuran Aset', bidangDirektorat: BidangDirektorat[BidangDirektorat.EKOKEU] },
+            { namaSektor: 'INVESTASI_PENANAMAN_MODAL', deskripsiSektor: 'Investasi / Penanaman Modal', bidangDirektorat: BidangDirektorat[BidangDirektorat.EKOKEU] },
+            { namaSektor: 'PERPAJAKAN', deskripsiSektor: 'Perpajakan', bidangDirektorat: BidangDirektorat[BidangDirektorat.EKOKEU] },
+            { namaSektor: 'KEPABEANAN', deskripsiSektor: 'Kepabeanan', bidangDirektorat: BidangDirektorat[BidangDirektorat.EKOKEU] },
+            { namaSektor: 'CUKAI', deskripsiSektor: 'Cukai', bidangDirektorat: BidangDirektorat[BidangDirektorat.EKOKEU] },
+            { namaSektor: 'PERDAGANGAN', deskripsiSektor: 'Perdagangan', bidangDirektorat: BidangDirektorat[BidangDirektorat.EKOKEU] },
+            { namaSektor: 'PERINDUSTRIAN', deskripsiSektor: 'Perindustrian', bidangDirektorat: BidangDirektorat[BidangDirektorat.EKOKEU] },
+            { namaSektor: 'KETENAGAKERJAAN', deskripsiSektor: 'Ketenagakerjaan', bidangDirektorat: BidangDirektorat[BidangDirektorat.EKOKEU] },
+            { namaSektor: 'PERKEBUNAN', deskripsiSektor: 'Perkebunan', bidangDirektorat: BidangDirektorat[BidangDirektorat.EKOKEU] },
+            { namaSektor: 'KEHUTANAN', deskripsiSektor: 'Kehutanan', bidangDirektorat: BidangDirektorat[BidangDirektorat.EKOKEU] },
+            { namaSektor: 'LINGKUNGAN_HIDUP', deskripsiSektor: 'Lingkungan Hidup', bidangDirektorat: BidangDirektorat[BidangDirektorat.EKOKEU] },
+            { namaSektor: 'PERIKANAN', deskripsiSektor: 'Perikanan', bidangDirektorat: BidangDirektorat[BidangDirektorat.EKOKEU] },
+            { namaSektor: 'AGRARIA_TATARUANG', deskripsiSektor: 'Agraria / Tataruang', bidangDirektorat: BidangDirektorat[BidangDirektorat.EKOKEU] },
 
-    // Ekonomi dan Keuangan
-    getEkokeu() {
-        return [
-            new Sektor('LEMBAGA_KEUANGAN', 'Lembaga Keuangan', BidangDirektorat.EKOKEU),
-            new Sektor('KEUANGAN_NEGARA', 'Keuangan Negara', BidangDirektorat.EKOKEU),
-            new Sektor('MONETER', 'Moneter', BidangDirektorat.EKOKEU),
-            new Sektor('PENELUSURAN_ASET', 'Penelusuran Aset', BidangDirektorat.EKOKEU),
-            new Sektor('INVESTASI_PENANAMAN_MODAL', 'Investasi / Penanaman Modal', BidangDirektorat.EKOKEU),
-            new Sektor('PERPAJAKAN','Perpajakan', BidangDirektorat.EKOKEU),
-            new Sektor('KEPABEANAN', 'Kepabeanan', BidangDirektorat.EKOKEU),
-            new Sektor('KEPABEANAN', 'Cukai', BidangDirektorat.EKOKEU),
-            new Sektor('PERDAGANGAN','Perdagangan', BidangDirektorat.EKOKEU),
-            new Sektor('PERINDUSTRIAN', 'Perindustrian', BidangDirektorat.EKOKEU),
-            new Sektor('KETENAGAKERJAAN', 'Ketenagakerjaan', BidangDirektorat.EKOKEU),
-            new Sektor('PERKEBUNAN','Perkebunan', BidangDirektorat.EKOKEU),
-            new Sektor('KEHUTANAN', 'Kehutanan', BidangDirektorat.EKOKEU),
-            new Sektor('LINGKUNGAN_HIDUP', 'Lingkungan Hidup', BidangDirektorat.EKOKEU),
-            new Sektor('PERIKANAN', 'Perikanan', BidangDirektorat.EKOKEU),
-            new Sektor('AGRARIA_TATARUANG','Agraria / Tataruang', BidangDirektorat.EKOKEU)
+            // Pengamanan Pembangunan Strategis
+            { namaSektor: 'INFRASTRUKTUR_JALAN', deskripsiSektor: 'Infrastruktur Jalan', bidangDirektorat: BidangDirektorat[BidangDirektorat.PAMSTRA] },
+            { namaSektor: 'INFRASTRUKTUR_PERKERETAAPIAN', deskripsiSektor: 'Infrastruktur Perkeretaapian', bidangDirektorat: BidangDirektorat[BidangDirektorat.PAMSTRA] },
+            { namaSektor: 'INFRASTRUKTUR_KEBANDARUDARAAN', deskripsiSektor: 'Infrastruktur Kebandarudaraan', bidangDirektorat: BidangDirektorat[BidangDirektorat.PAMSTRA] },
+            { namaSektor: 'INFRASTRUKTUR_TELEKOMUNIKASI', deskripsiSektor: 'Infrastruktur Telekomunikasi', bidangDirektorat: BidangDirektorat[BidangDirektorat.PAMSTRA] },
+            { namaSektor: 'INFRASTRUKTUR_KEPELABUHAN', deskripsiSektor: 'Infrastruktur Kepelabuhan', bidangDirektorat: BidangDirektorat[BidangDirektorat.PAMSTRA] },
+            { namaSektor: 'SMELTER', deskripsiSektor: 'Smelter', bidangDirektorat: BidangDirektorat[BidangDirektorat.PAMSTRA] },
+            { namaSektor: 'INFRASTRUKTUR_PENGOLAHAN_AIR', deskripsiSektor: 'Infrastruktur Pengolahan Air', bidangDirektorat: BidangDirektorat[BidangDirektorat.PAMSTRA] },
+            { namaSektor: 'TANGGUL', deskripsiSektor: 'Tanggul', bidangDirektorat: BidangDirektorat[BidangDirektorat.PAMSTRA] },
+            { namaSektor: 'BENDUNGAN', deskripsiSektor: 'Bendungan', bidangDirektorat: BidangDirektorat[BidangDirektorat.PAMSTRA] },
+            { namaSektor: 'PERTANIAN', deskripsiSektor: 'Pertanian', bidangDirektorat: BidangDirektorat[BidangDirektorat.PAMSTRA] },
+            { namaSektor: 'KELAUTAN', deskripsiSektor: 'Kelautan', bidangDirektorat: BidangDirektorat[BidangDirektorat.PAMSTRA] },
+            { namaSektor: 'KETENAGALISTRIKAN', deskripsiSektor: 'Ketenagalistrikan', bidangDirektorat: BidangDirektorat[BidangDirektorat.PAMSTRA] },
+            { namaSektor: 'ENERGI_ALTERNATIF', deskripsiSektor: 'Energi Alternatif', bidangDirektorat: BidangDirektorat[BidangDirektorat.PAMSTRA] },
+            { namaSektor: 'MINYAK_GAS_BUMI', deskripsiSektor: 'Minyak dan Gas Bumi', bidangDirektorat: BidangDirektorat[BidangDirektorat.PAMSTRA] },
+            { namaSektor: 'IPTEK', deskripsiSektor: 'Ilmu Pengetahuan dan Teknologi', bidangDirektorat: BidangDirektorat[BidangDirektorat.PAMSTRA] },
+            { namaSektor: 'PERUMAHAN', deskripsiSektor: 'Perumahan', bidangDirektorat: BidangDirektorat[BidangDirektorat.PAMSTRA] },
+            { namaSektor: 'PARIWISATA', deskripsiSektor: 'Pariwisata', bidangDirektorat: BidangDirektorat[BidangDirektorat.PAMSTRA] },
+            { namaSektor: 'KAWASAN_INDUSTRI_PRIORITAS_KEK', deskripsiSektor: 'Kawasan Industri Prioritas / Kawasan Ekonomi Khusus', bidangDirektorat: BidangDirektorat[BidangDirektorat.PAMSTRA] },
+            { namaSektor: 'POS_LINTAS_BATAS_NEGARA_SARANA_PENUNJANG', deskripsiSektor: 'Pos Lintas Batas Negara dan Sarana Penunjang', bidangDirektorat: BidangDirektorat[BidangDirektorat.PAMSTRA] },
+            { namaSektor: 'SEKTOR_LAINNYA', deskripsiSektor: 'Sektor Lainnya', bidangDirektorat: BidangDirektorat[BidangDirektorat.PAMSTRA] },
+        
+            // Teknologi Informasi, dan Produksi Intelijen
+            { namaSektor: 'PRODUKSI_INTELIJEN', deskripsiSektor: 'Produksi Intelijen', bidangDirektorat: BidangDirektorat[BidangDirektorat.TIPRODIN] },
+            { namaSektor: 'PEMANTAUAN', deskripsiSektor: 'Pemantauan', bidangDirektorat: BidangDirektorat[BidangDirektorat.TIPRODIN] },
+            { namaSektor: 'INTELIJEN_SINYAL', deskripsiSektor: 'Intelijen Sinyal', bidangDirektorat: BidangDirektorat[BidangDirektorat.TIPRODIN] },
+            { namaSektor: 'INTELIJEN_SIBER', deskripsiSektor: 'Intelijen Siber', bidangDirektorat: BidangDirektorat[BidangDirektorat.TIPRODIN] },
+            { namaSektor: 'KLANDESTINE', deskripsiSektor: 'Klandestine', bidangDirektorat: BidangDirektorat[BidangDirektorat.TIPRODIN] },
+            { namaSektor: 'DIGITAL_FORENSIK', deskripsiSektor: 'Digital Forensik', bidangDirektorat: BidangDirektorat[BidangDirektorat.TIPRODIN] },
+            { namaSektor: 'TRANSMISI_BERITA_SANDI', deskripsiSektor: 'Transmisi Berita Sandi', bidangDirektorat: BidangDirektorat[BidangDirektorat.TIPRODIN] },
+            { namaSektor: 'KONTRA_PENGINDERAAN', deskripsiSektor: 'Kontra Penginderaan', bidangDirektorat: BidangDirektorat[BidangDirektorat.TIPRODIN] },
+            { namaSektor: 'AUDIT_PENGUJIAN_SISTEM_KEAMANAN_INFORMASI', deskripsiSektor: 'Audit dan Pengujian Sistem Keamanan Informasi', bidangDirektorat: BidangDirektorat[BidangDirektorat.TIPRODIN] },
+            { namaSektor: 'PENGAMANAN_SINYAL', deskripsiSektor: 'Pengamanan Sinyal', bidangDirektorat: BidangDirektorat[BidangDirektorat.TIPRODIN] },
+            { namaSektor: 'PENGEMBANGAN_SDM_SANDI', deskripsiSektor: 'Pengembangan SDM dan Sandi', bidangDirektorat: BidangDirektorat[BidangDirektorat.TIPRODIN] },
+            { namaSektor: 'PENGEMBANGAN_SDM_INTELIJEN_LAINNYA', deskripsiSektor: 'Pengembangan SDM Intelijen Lainnya', bidangDirektorat: BidangDirektorat[BidangDirektorat.TIPRODIN] },
+            { namaSektor: 'PENGEMBANGAN_TEKNOLOGI', deskripsiSektor: 'Pengembangan Teknologi', bidangDirektorat: BidangDirektorat[BidangDirektorat.TIPRODIN] },
+            { namaSektor: 'PENGEMBANGAN_PROSEDUR_APLIKASI', deskripsiSektor: 'Pengembangan Prosedur dan Aplikasi', bidangDirektorat: BidangDirektorat[BidangDirektorat.TIPRODIN] }
         ];
-    }
-
-    // Pengamanan Pembangunan Strategis
-    getPamstra() {
-        return [
-            new Sektor('INFRASTRUKTUR_JALAN', 'Infrastruktur Jalan', BidangDirektorat.PAMSTRA),
-            new Sektor('INFRASTRUKTUR_PERKERETAAPIAN', 'Infrastruktur Perkeretaapian', BidangDirektorat.PAMSTRA),
-            new Sektor('INFRASTRUKTUR_KEBANDARUDARAAN', 'Infrastruktur Kebandarudaraan', BidangDirektorat.PAMSTRA),
-            new Sektor('INFRASTRUKTUR_TELEKOMUNIKASI','Infrastruktur Telekomunikasi', BidangDirektorat.PAMSTRA),
-            new Sektor('INFRASTRUKTUR_KEPELABUHAN', 'Infrastruktur Kepelabuhan', BidangDirektorat.PAMSTRA),
-            new Sektor('SMELTER', 'Smelter', BidangDirektorat.PAMSTRA),
-            new Sektor('INFRASTRUKTUR_PENGOLAHAN_AIR', 'Infrastruktur Pengolahan Air', BidangDirektorat.PAMSTRA),
-            new Sektor('TANGGUL', 'Tanggul', BidangDirektorat.PAMSTRA),
-            new Sektor('BENDUNGAN', 'Bendungan', BidangDirektorat.PAMSTRA),
-            new Sektor('PERTANIAN', 'Pertanian', BidangDirektorat.PAMSTRA),
-            new Sektor('KELAUTAN', 'Kelautan', BidangDirektorat.PAMSTRA),
-            new Sektor('KETENAGALISTRIKAN', 'Ketenagalistrikan', BidangDirektorat.PAMSTRA),
-            new Sektor('ENERGI_ALTERNATIF', 'Energi Alternatif', BidangDirektorat.PAMSTRA),
-            new Sektor('MINYAK_GAS_BUMI', 'Minyak dan Gas Bumi', BidangDirektorat.PAMSTRA),
-            new Sektor('IPTEK', 'Ilmu Pengetahuan dan Teknologi', BidangDirektorat.PAMSTRA),
-            new Sektor('PERUMAHAN', 'Perumahan', BidangDirektorat.PAMSTRA),
-            new Sektor('PARIWISATA', 'Pariwisata', BidangDirektorat.PAMSTRA),
-            new Sektor('KAWASAN_INDUSTRI_PRIORITAS_KEK', 'Kawasan Industri Prioritas / Kawasan Ekonomi Khusus', BidangDirektorat.PAMSTRA),
-            new Sektor('POS_LINTAS_BATAS_NEGARA_SARANA_PENUNJANG', 'Pos Lintas Batas Negara dan Sarana Penunjang', BidangDirektorat.PAMSTRA),
-            new Sektor('SEKTOR_LAINNYA', 'Sektor Lainnya', BidangDirektorat.PAMSTRA)
-        ];    
-    }
-
-    // Teknologi Informasi, dan Produksi Intelijen
-    getTiprodin() {
-        return [
-            new Sektor('PRODUKSI_INTELIJEN', 'Produksi Intelijen', BidangDirektorat.TIPRODIN),
-            new Sektor('PEMANTAUAN', 'Pemantauan', BidangDirektorat.TIPRODIN),
-            new Sektor('INTELIJEN_SINYAL', 'Intelijen Sinyal', BidangDirektorat.TIPRODIN),
-            new Sektor('INTELIJEN_SIBER', 'Intelijen Siber', BidangDirektorat.TIPRODIN),
-            new Sektor('KLANDESTINE', 'Klandestine', BidangDirektorat.TIPRODIN),
-            new Sektor('DIGITAL_FORENSIK', 'Digital Forensik', BidangDirektorat.TIPRODIN),
-            new Sektor('TRANSMISI_BERITA_SANDI', 'Transmisi Berita Sandi', BidangDirektorat.TIPRODIN),
-            new Sektor('KONTRA_PENGINDERAAN', 'Kontra Penginderaan', BidangDirektorat.TIPRODIN),
-            new Sektor('AUDIT_PENGUJIAN_SISTEM_KEAMANAN_INFORMASI', 'Audit dan Pengujian Sistem Keamanan Informasi', BidangDirektorat.TIPRODIN),
-            new Sektor('PENGAMANAN_SINYAL', 'Pengamanan Sinyal', BidangDirektorat.TIPRODIN),
-            new Sektor('PENGEMBANGAN_SDM_SANDI', 'Pengembangan SDM dan Sandi', BidangDirektorat.TIPRODIN),
-            new Sektor('PENGEMBANGAN_SDM_INTELIJEN_LAINNYA', 'Pengembangan SDM Intelijen Lainnya', BidangDirektorat.TIPRODIN),
-            new Sektor('PENGEMBANGAN_TEKNOLOGI', 'Pengembangan Teknologi', BidangDirektorat.TIPRODIN),
-            new Sektor('PENGEMBANGAN_PROSEDUR_APLIKASI', 'Pengembangan Prosedur dan Aplikasi', BidangDirektorat.TIPRODIN)
-        ];
+        return sektor;
     }
 
 }

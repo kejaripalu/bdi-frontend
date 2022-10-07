@@ -16,7 +16,9 @@ export class RkiDetailComponent implements OnInit, OnDestroy {
   error: string = null as any;
   id!: string;
   namaBidang: string = null as any;
+  namaSektor: string = null as any;
   indexBidang!: number;
+  indexSektor!: number;
   private rkiChangeSub!: Subscription;
   private rkiParamSub!: Subscription;
   private rkiQueryParamSub!: Subscription;
@@ -45,11 +47,16 @@ export class RkiDetailComponent implements OnInit, OnDestroy {
           if (this.indexBidang < 0) {
             this.indexBidang = 0;
           }       
-          this.namaBidang = this.bidangDirektoratSektorService.getBidangDirektori()[this.indexBidang].namaBidang!;          
+          this.namaBidang = this.bidangDirektoratSektorService.getBidangDirektori()[this.indexBidang].namaBidang!;  
     });
-    this.rkiChangeSub = this.rkiService.getOneRki(this.id).subscribe({
+    this.rkiChangeSub = this.rkiService.getOneRKI(this.id).subscribe({
       next: (responseData) => {
         this.rki = responseData;
+        this.indexSektor = this.bidangDirektoratSektorService.getSektor()
+            .findIndex(obj => {
+              return obj.namaSektor === this.rki.sektor;
+            });
+        this.namaSektor = this.bidangDirektoratSektorService.getSektor()[this.indexSektor].deskripsiSektor!;
         this.isLoading = false;
       },
       error: (errorMessage) => {
@@ -73,6 +80,6 @@ export class RkiDetailComponent implements OnInit, OnDestroy {
     if (this.rkiQueryParamSub) {
         this.rkiQueryParamSub.unsubscribe()
     }
-}
+  }
 
 }

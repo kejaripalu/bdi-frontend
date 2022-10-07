@@ -12,4 +12,5 @@ export class RegisterKerjaIntelijen {
     keterangan!: string;
     urlFile!: string;
     bidangDirektorat!: string;
+    sektor!: string;
 }

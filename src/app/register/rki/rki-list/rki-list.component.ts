@@ -83,22 +83,28 @@ export class RkiListComponent implements OnInit, OnDestroy {
   checkMessage() {
     this.rkiQueryParamSub = this.route.queryParams
     .subscribe((queryParams: Params) => {
-        if (queryParams['message'] === 'SimpanSukses') {
-          this.toastService.show('Ashiiap.... Berhasil Input Data RKI!', 
-                                  { classname: 'bg-success text-light', delay: 5000 });
-        } else if (queryParams['message'] === 'UpdateSukses') {
-          this.toastService.show('Ashiiap.... Berhasil Update Data RKI!', 
-                                  { classname: 'bg-success text-light', delay: 5000 });
-        } else {
-          return;
-        }
+      if (queryParams['message'] === 'SimpanSukses') {
+        this.toastService.show('Ashiiap.... Berhasil Input Data RKI!', 
+          { classname: 'bg-success text-light', delay: 5000 });
+      } else if (queryParams['message'] === 'UpdateSukses') {
+        this.toastService.show('Ashiiap.... Berhasil Update Data RKI!', 
+          { classname: 'bg-success text-light', delay: 5000 });
+      } else {
+        return;
+      }
     });  
   }
-
+  
   getYear() {
     for (let startYear = 2019; startYear <= this.currentYear; startYear++) {
       this.year.push(startYear);
     }
+  }
+  
+  onNewRKI() {
+    this.router.navigate(['/rki', 'list', 'form'], {
+      queryParams: { bidang: this.namaBidang }
+    });
   }
 
   updatePageSize(arg0: any) {
@@ -128,15 +134,15 @@ export class RkiListComponent implements OnInit, OnDestroy {
   updateMonthSelected(arg0: any) {
     throw new Error('Method not implemented.');
   }
-  
-  onNewRKI() {
-    throw new Error('Method not implemented.');
-  }
 
   ngOnDestroy(): void {
     if (this.rkiQueryParamSub) {
       this.rkiQueryParamSub.unsubscribe();
     }
+    if (this.rkiSub) {
+      this.rkiSub.unsubscribe();
+    }
+    this.toastService.clear();
   }
 
 }
