@@ -20,7 +20,7 @@
                         <div class="form-group">
                             <label for="tanggalWaktuDiterima">Sektor:</label>
                                 <div class="input-group">
-                                    <div class="col-sm-auto col-md-12 col-xl-12 col-xxl-12 mb-3">
+                                    <div class="col-sm-auto mb-3">
                                         <select (change)="sektorChange($any($event.target).value)" class="form-select">
                                             <option
                                                 *ngFor="let s of sektorList" 
@@ -34,7 +34,7 @@
                 <div class="row">
                     <div class="col-sm-auto">
                         <div class="form-group">
-                            <label for="tanggalWaktuDiterima">Tanggal Waktu Diterima:</label>
+                            <label for="tanggalWaktuDiterima">Tanggal Diterima Informasi:</label>
                                 <div class="input-group">
                                     <input
                                         type="text"
@@ -63,7 +63,7 @@
                     </div>
                     <div class="col-sm-auto">
                         <div class="form-group">
-                            <label for="jamWaktuDiterima">Jam Waktu Diterima:</label>
+                            <label for="jamWaktuDiterima">Jam Diterima Informasi:</label>
                             <input 
                                 type="time"
                                 name="jamWaktuDiterima"
@@ -91,7 +91,8 @@
                                 type="text" 
                                 name="asal" 
                                 class="form-control"
-                                formControlName="sumberBapul"></textarea>
+                                formControlName="sumberBapul"
+                                placement="top" ngbTooltip="Diisi sumber data / informasi dan/atau badan pengumpul (orang yang memperoleh / mengumpulkan data / informasi)"></textarea>
                         </div>
                         <small 
                             class="text-alert" 
@@ -146,7 +147,8 @@
                         rows="3"
                         name="uraianPeristiwaMasalah" 
                         class="form-control"
-                        formControlName="uraianPeristiwaMasalah"></textarea>
+                        formControlName="uraianPeristiwaMasalah"
+                        placement="top" ngbTooltip='Diisi uraian peristiwa / masalah secara ringkas, mengandung unsur-unsur "Siabidibam" (Siapa, Apa, Bilamana, Dimana, Bagaimana dan Mengapa) atau 5W + IH.'></textarea>
                 </div>
                 <small 
                     class="text-alert" 
@@ -164,7 +166,8 @@
                         rows="3"
                         name="catatan" 
                         class="form-control"
-                        formControlName="catatan"></textarea>
+                        formControlName="catatan"
+                        placement="top" ngbTooltip='Diisi catatan hasil tindakan bilamana ada hal-hal lain yang sejenis dengan informasi yang diperoleh, atau informasi lain sehubungan dengan informasi tersebut. Contoh: "Telah dicek dari data ternyata benar ada hubungannya dengan nomor ........."'></textarea>
                 </div>
                 <div class="form-group">
                     <label for="disposisiTindakan">Disposisi Tindakan:</label>
@@ -172,15 +175,31 @@
                         rows="3"
                         name="disposisiTindakan" 
                         class="form-control"
-                        formControlName="disposisiTindakan"></textarea>
+                        formControlName="disposisiTindakan"
+                        placement="top" ngbTooltip='Diisi disposisi Kasubdit / Asintel / Kasi Intel / Kepala Cabang Kejaksaan Negeri untuk menentukan bahwa informasi itu perlu / tidak dilaporkan kepada Direktur / Kajati/ Kajari tindak lanjutnya'></textarea>
                 </div>
                 <div class="form-group">
                     <label for="tindakLanjut">Tindak Lanjut:</label>
+                    <div class="input-group">
+                        <div class="col-sm-auto col-md-12 col-xl-12 col-xxl-12 mb-3">
+                            <select (change)="tindakLanjutChange($any($event.target).value)" class="form-select">
+                                <option value="0">-- Pilih --</option>
+                                <option value="Jadikan produk intelijen">Jadikan produk intelijen</option>
+                                <option value="Kartukan">Kartukan</option>
+                                <option value="Gunakan sebagai bahan koordinasi">Gunakan sebagai bahan koordinasi</option>
+                                <option value="Buat Sprintug untuk menindaklanjuti informasi ini">Buat Sprintug untuk menindaklanjuti informasi ini</option>
+                                <option value="Laksanakan Lid untuk melengkapi informasi ini">Laksanakan Lid untuk menindaklanjuti informasi ini</option>
+                                <option value="lainnya">Lainnya...</option>
+                            </select>
+                        </div>
+                    </div>  
                     <textarea
+                        *ngIf="isSelectTindakLanjut"
                         rows="3"
                         name="tindakLanjut" 
                         class="form-control"
-                        formControlName="tindakLanjut"></textarea>
+                        formControlName="tindakLanjut"
+                        placeholder="Isi tindak lanjut secara manual"></textarea>  
                 </div>
                 <div class="form-group">
                     <label for="keterangan">Keterangan:</label>
@@ -188,7 +207,8 @@
                         rows="3"
                         name="keterangan" 
                         class="form-control"
-                        formControlName="keterangan"></textarea>
+                        formControlName="keterangan"
+                        placement="top" ngbTooltip='Diisi nama sektor/subdit sesuai informasi diterima atau hal penting lainnya'></textarea>
                 </div>
                 <div class="form-group">
                     <label for="urlFile">Link File:</label>
@@ -196,7 +216,8 @@
                         rows="3"
                         name="urlFile" 
                         class="form-control"
-                        formControlName="urlFile"></textarea>
+                        formControlName="urlFile"
+                        ></textarea>
                 </div>
                 <app-danger-alert [message]="error" *ngIf="error"></app-danger-alert>
                 <div class="mt-4" *ngIf="isLoading">

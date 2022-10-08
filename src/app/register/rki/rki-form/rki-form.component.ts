@@ -35,7 +35,8 @@ export class RkiFormComponent implements OnInit, OnDestroy {
   sektorList: Sektor[] = [];
   namaSektorSelected: string = null as any;
   deskripsiSektorSelected: string = null as any;
-  sektorSelected: any = {};
+  tindakLanjutSelected: string = null as any;
+  isSelectTindakLanjut: boolean = false;
 
   modelDateTanggalWaktuDiterima: NgbDateStruct = null as any; // model date NgBootstrap
 
@@ -81,8 +82,8 @@ export class RkiFormComponent implements OnInit, OnDestroy {
     let sumberBapul = null as any;
     let uraianPeristiwaMasalah = null as any;
     let catatan = null as any;
-    let disposisiTindakan = null as any;
     let tindakLanjut = null as any;
+    let disposisiTindakan = null as any;
     let keterangan = null as any;
     let urlFile = null as any;
 
@@ -92,8 +93,8 @@ export class RkiFormComponent implements OnInit, OnDestroy {
       'sumberBapul': new FormControl(sumberBapul, [Validators.required, Validators.minLength(5)]),
       'uraianPeristiwaMasalah': new FormControl(uraianPeristiwaMasalah, [Validators.required, Validators.minLength(10)]),
       'catatan': new FormControl(catatan),
-      'disposisiTindakan': new FormControl(disposisiTindakan),
       'tindakLanjut': new FormControl(tindakLanjut),
+      'disposisiTindakan': new FormControl(disposisiTindakan),
       'keterangan': new FormControl(keterangan),
       'urlFile': new FormControl(urlFile)
     });
@@ -166,7 +167,11 @@ export class RkiFormComponent implements OnInit, OnDestroy {
       rki.uraianPeristiwaMasalah = this.rkiForm.value['uraianPeristiwaMasalah'];
       rki.catatan = this.rkiForm.value['catatan'];
       rki.disposisiTindakan = this.rkiForm.value['disposisiTindakan'];
-      rki.tindakLanjut = this.rkiForm.value['tindakLanjut'];
+      if (this.isSelectTindakLanjut) {
+        rki.tindakLanjut = this.rkiForm.value['tindakLanjut'];
+      } else {
+        rki.tindakLanjut = this.tindakLanjutSelected;
+      }
       rki.keterangan = this.rkiForm.value['keterangan'];
       rki.urlFile = this.rkiForm.value['urlFile'];
       rki.bidangDirektorat = this.namaBidang;
@@ -201,7 +206,18 @@ export class RkiFormComponent implements OnInit, OnDestroy {
 
   sektorChange(value: string) {
     this.namaSektorSelected = value;
-    // this.deskripsiSektorSelected = this.sektors.nativeElement.value;    
+  }
+
+  tindakLanjutChange(value: string) {
+    if (value === '0') {
+      this.tindakLanjutSelected = null as any;
+      this.isSelectTindakLanjut = false;
+    } else if (value === 'lainnya') {
+      this.isSelectTindakLanjut = true;
+    }else {
+      this.tindakLanjutSelected = value;
+      this.isSelectTindakLanjut = false;
+    }
   }
 
   onCancel() {

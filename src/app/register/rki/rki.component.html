@@ -20,8 +20,7 @@
             </div>
             <div class="col-md-8 col-xl-6 col-xxl-4">
                 <select (change)="onBidangChange($any($event.target).value)"
-                        class="form-select"
-                        aria-label="Default select example">
+                        class="form-select">
                     <option 
                         *ngFor="let b of bidang"
                         [value]="b.namaBidang"
