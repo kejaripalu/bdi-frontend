@@ -42,6 +42,8 @@ export class RegisterKerjaIntelijenService {
                         case 'ID_NOT_FOUND':
                             errorMessage = 'Bro... Data tidak ditemukan!!!'
                             break;
+                        default:
+                            errorMessage = 'GAGAL menampilkan data!!!';
                     }
                     return throwError(() => errorMessage);
                 })
@@ -59,6 +61,8 @@ export class RegisterKerjaIntelijenService {
                     case 'DUPLICATE_DATA_FIELD':
                       errorMessage = 'Bro.. Data ini sudah pernah diinput!!!';
                       break;
+                    default:
+                      errorMessage = 'GAGAL Simpan data!!!';
                   }
                 return throwError(() => errorMessage);
         }));
@@ -79,6 +83,27 @@ export class RegisterKerjaIntelijenService {
                     case 'DUPLICATE_DATA_FIELD':
                         errorMessage = 'Bro.. Data ini sudah pernah diinput!!!';
                         break;
+                    default:
+                        errorMessage = 'GAGAL Update data!!!';
+                }
+                return throwError(() => errorMessage);
+        }));
+    }
+
+    deleteRKI(id: string) {
+        const deleteEndPoint = `${this.endPoint}/${id}`;
+        return this.httpClient.delete<RegisterKerjaIntelijen>(deleteEndPoint)
+            .pipe(catchError(errorResponse => {
+                let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
+                if (!errorResponse.error) {
+                    return throwError(() => errorMessage);
+                }
+                switch (errorResponse.error.message) {
+                    case 'ID_NOT_FOUND':
+                        errorMessage = 'Bro... Data tidak ditemukan!!!'
+                        break;
+                    default:
+                        errorMessage = 'GAGAL menghapus data!!!';
                 }
                 return throwError(() => errorMessage);
         }));

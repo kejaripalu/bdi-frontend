@@ -114,8 +114,23 @@ export class RkiListComponent implements OnInit, OnDestroy {
     this.loadDataRKI();
   }
   
-  onDeleteSuratMasuk(arg0: string) {
-    throw new Error('Method not implemented.');
+  onDeleteSuratMasuk(id: string) {
+    if (confirm('Yakin ente mau hapus data ini?')) {
+      this.isLoading = true;
+      this.rkiSub = this.rkiService.deleteRKI(id)
+        .subscribe({
+          next: () => {
+            this.isLoading = false;
+            this.loadDataRKI();
+            this.toastService.show('Ashiiap.... Berhasil Hapus Data Surat Masuk!', 
+                                    { classname: 'bg-success text-light', delay: 5000 });
+          },
+          error: (errorMessage) => {
+            this.error = errorMessage;
+            this.isLoading = false;
+          }
+        });
+    }
   }
   
   onDateTimeShowData() {
@@ -133,7 +148,7 @@ export class RkiListComponent implements OnInit, OnDestroy {
     this.loadDataRKI();
   }
   
-  searchingRKI(arg0: string) {
+  searchingRKI(value: string) {
     throw new Error('Method not implemented.');
   }
   
