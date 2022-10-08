@@ -149,7 +149,31 @@ export class RkiListComponent implements OnInit, OnDestroy {
   }
   
   searchingRKI(value: string) {
-    throw new Error('Method not implemented.');
+    if (value.trim() === '') {
+      return;
+    }
+    this.isLoading = true;
+    this.pageNumber = 1;
+    this.rkiSub = this.rkiService.getSearchRKI(
+      value,
+      this.pageNumber - 1, 
+      this.pageSize, 
+      this.namaBidang, 
+      this.currentYear.toString())
+        .subscribe({
+          next: (responseData) => {
+            // console.log(responseData);
+            this.rki = responseData.content;
+            this.pageNumber = responseData.number + 1;
+            this.pageSize = responseData.size;
+            this.totalElements = responseData.totalElements;
+            this.isLoading = false;
+          },
+          error: () => {
+            this.error = 'Aduh... Gagal ambil data dari server!!!';
+            this.isLoading = false;
+          }
+        });
   }
   
   updateMonthSelected(month: number) {

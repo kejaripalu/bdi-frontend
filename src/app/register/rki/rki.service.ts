@@ -109,6 +109,19 @@ export class RegisterKerjaIntelijenService {
         }));
     }
 
+    getSearchRKI(value: string, page: number, size: number, bidang: string, tahun: string) {
+        const startDate = tahun + '-01-01';        
+        const endDate = tahun + '-12-31';    
+        const getEndPoint = `${this.endPoint}/search?pages=${page}&sizes=${size}&bidangDirektorat=${bidang}&` +
+            `startDate=${startDate}&endDate=${endDate}&value=${value}`;  
+        return this.httpClient.get<ResponseRKI>(getEndPoint)
+            .pipe(
+                map(response => {
+                    return response;
+                })
+            );
+    }
+
 }
 
 interface ResponseRKI {
