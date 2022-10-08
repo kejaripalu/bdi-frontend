@@ -23,7 +23,7 @@ export class RegisterKerjaIntelijenService {
                 map(response => {
                     return response;
                 })
-            );
+        );
     }
 
     getOneRKI(id: string) {
@@ -45,7 +45,7 @@ export class RegisterKerjaIntelijenService {
                     }
                     return throwError(() => errorMessage);
                 })
-            );
+        );
     }
 
     createRKI(rki: RegisterKerjaIntelijen) {
@@ -61,7 +61,27 @@ export class RegisterKerjaIntelijenService {
                       break;
                   }
                 return throwError(() => errorMessage);
-            }));
+        }));
+    }
+
+    updateRKI(rki: RegisterKerjaIntelijen) {
+        const putEndPoint = `${this.endPoint}/${rki.id}`;
+        return this.httpClient.put<RegisterKerjaIntelijen>(putEndPoint, rki)
+            .pipe(catchError(errorResponse => {
+                let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
+                if (!errorResponse.error) {
+                    return throwError(() => errorMessage);
+                }
+                switch (errorResponse.error.message) {
+                    case 'ID_NOT_FOUND':
+                        errorMessage = 'Bro... Data tidak ditemukan!!!'
+                        break;
+                    case 'DUPLICATE_DATA_FIELD':
+                        errorMessage = 'Bro.. Data ini sudah pernah diinput!!!';
+                        break;
+                }
+                return throwError(() => errorMessage);
+        }));
     }
 
 }

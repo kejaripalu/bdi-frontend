@@ -24,7 +24,8 @@
                                         <select (change)="sektorChange($any($event.target).value)" class="form-select">
                                             <option
                                                 *ngFor="let s of sektorList" 
-                                                [value]="s.namaSektor">{{ s.deskripsiSektor }}</option>
+                                                [value]="s.namaSektor" 
+                                                [selected]="s.namaSektor === namaSektorSelected">{{ s.deskripsiSektor }}</option>
                                         </select>
                                     </div>
                                 </div>                        
@@ -184,12 +185,18 @@
                         <div class="col-sm-auto col-md-12 col-xl-12 col-xxl-12 mb-3">
                             <select (change)="tindakLanjutChange($any($event.target).value)" class="form-select">
                                 <option value="0">-- Pilih --</option>
-                                <option value="Jadikan produk intelijen">Jadikan produk intelijen</option>
-                                <option value="Kartukan">Kartukan</option>
-                                <option value="Gunakan sebagai bahan koordinasi">Gunakan sebagai bahan koordinasi</option>
-                                <option value="Buat Sprintug untuk menindaklanjuti informasi ini">Buat Sprintug untuk menindaklanjuti informasi ini</option>
-                                <option value="Laksanakan Lid untuk melengkapi informasi ini">Laksanakan Lid untuk menindaklanjuti informasi ini</option>
-                                <option value="lainnya">Lainnya...</option>
+                                <option value="Jadikan produk intelijen"
+                                        [selected]="tindakLanjutSelected === 'Jadikan produk intelijen'">Jadikan produk intelijen</option>
+                                <option value="Kartukan" 
+                                        [selected]="tindakLanjutSelected === 'Kartukan'">Kartukan</option>
+                                <option value="Gunakan sebagai bahan koordinasi" 
+                                        [selected]="tindakLanjutSelected === 'Gunakan sebagai bahan koordinasi'">Gunakan sebagai bahan koordinasi</option>
+                                <option value="Buat Sprintug untuk menindaklanjuti informasi ini"
+                                        [selected]="tindakLanjutSelected === 'Buat Sprintug untuk menindaklanjuti informasi ini'">Buat Sprintug untuk menindaklanjuti informasi ini</option>
+                                <option value="Laksanakan Lid untuk melengkapi informasi ini"
+                                        [selected]="tindakLanjutSelected === 'Laksanakan Lid untuk melengkapi informasi ini'">Laksanakan Lid untuk menindaklanjuti informasi ini</option>
+                                <option value="lainnya"
+                                        [selected]="tindakLanjutSelected === 'lainnya'">Lainnya...</option>
                             </select>
                         </div>
                     </div>  

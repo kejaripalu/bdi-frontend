@@ -77,7 +77,7 @@ export class RkiFormComponent implements OnInit, OnDestroy {
     );
   }
 
-  initForm() {
+  private initForm() {
     let jamWaktuDiterima = this.currentDateTimeService.getCurrentTime();
     let sumberBapul = null as any;
     let uraianPeristiwaMasalah = null as any;
@@ -145,6 +145,49 @@ export class RkiFormComponent implements OnInit, OnDestroy {
       this.namaSektorSelected = this.sektorList[0].namaSektor!;
       this.deskripsiSektorSelected = this.sektorList[0].deskripsiSektor!;
     }
+
+    if (this.isEditMode) {
+      this.isLoadingEditForm = true;
+      this.rkiSub = this.rkiService.getOneRKI(this.id).subscribe({
+        next: (rki) => {
+          this.modelDateTanggalWaktuDiterima = {year: +rki.tanggalWaktuDiterima.slice(0, 4), 
+            month: +rki.tanggalWaktuDiterima.slice(5, 7), 
+            day: +rki.tanggalWaktuDiterima.slice(8, 10)};      
+          
+          this.rkiForm = new FormGroup({
+            'tanggalWaktuDiterima': new FormControl(this.modelDateTanggalWaktuDiterima, [Validators.required, Validators.minLength(10)]),
+            'jamWaktuDiterima': new FormControl(rki.jamWaktuDiterima, [Validators.required, Validators.minLength(5)]),
+            'sumberBapul': new FormControl(rki.sumberBapul, [Validators.required, Validators.minLength(5)]),
+            'uraianPeristiwaMasalah': new FormControl(rki.uraianPeristiwaMasalah, [Validators.required, Validators.minLength(10)]),
+            'catatan': new FormControl(rki.catatan),
+            'tindakLanjut': new FormControl(rki.tindakLanjut),
+            'disposisiTindakan': new FormControl(rki.disposisiTindakan),
+            'keterangan': new FormControl(rki.keterangan),
+            'urlFile': new FormControl(rki.urlFile)
+          });
+    
+          if (rki.tindakLanjut === 'Jadikan produk intelijen' || 
+            rki.tindakLanjut === 'Kartukan' ||
+            rki.tindakLanjut === 'Gunakan sebagai bahan koordinasi' ||
+            rki.tindakLanjut === 'Buat Sprintug untuk menindaklanjuti informasi ini' ||
+            rki.tindakLanjut === 'Laksanakan Lid untuk melengkapi informasi ini') {
+            this.tindakLanjutSelected = rki.tindakLanjut;
+          } else {
+            this.tindakLanjutSelected = 'lainnya';
+            this.isSelectTindakLanjut = true;
+          }
+          
+          this.namaSektorSelected = rki.sektor;
+          this.isLoadingEditForm = false;
+          this.editModeError = false;
+        },
+        error: (errorMessage) => {
+          this.isLoadingEditForm = false;
+          this.error = errorMessage;
+          this.editModeError = true;
+        }
+      });
+    }
   }
 
   onSubmit() {
@@ -156,7 +199,37 @@ export class RkiFormComponent implements OnInit, OnDestroy {
       this.modelDateTanggalWaktuDiterima.day);
     
     if (this.isEditMode) {
-      // TODO...
+      const rki = new RegisterKerjaIntelijen();
+    
+      rki.id = this.id;
+      rki.tanggalWaktuDiterima = dateTanggalWaktuDiterima;
+      rki.jamWaktuDiterima = this.rkiForm.value['jamWaktuDiterima'];
+      rki.sumberBapul = this.rkiForm.value['sumberBapul'];
+      rki.nilaiDataInformasi = this.nilaiSumberInformasi + this.nilaiIsiInformasi;
+      rki.uraianPeristiwaMasalah = this.rkiForm.value['uraianPeristiwaMasalah'];
+      rki.catatan = this.rkiForm.value['catatan'];
+      rki.disposisiTindakan = this.rkiForm.value['disposisiTindakan'];
+      if (this.isSelectTindakLanjut) {
+        rki.tindakLanjut = this.rkiForm.value['tindakLanjut'];
+      } else {
+        rki.tindakLanjut = this.tindakLanjutSelected;
+      }
+      rki.keterangan = this.rkiForm.value['keterangan'];
+      rki.urlFile = this.rkiForm.value['urlFile'];
+      rki.bidangDirektorat = this.namaBidang;
+      rki.sektor = this.namaSektorSelected;
+
+      this.rkiSub = this.rkiService.updateRKI(rki).subscribe({
+        next: () => {
+          this.isLoading = false;
+          this.message = 'UpdateSukses';
+          this.onCancel();
+        },
+        error: (errorMessage) => {
+          this.error = errorMessage;
+          this.isLoading = false;
+        }
+      });
     } else {
       const rki = new RegisterKerjaIntelijen();
 

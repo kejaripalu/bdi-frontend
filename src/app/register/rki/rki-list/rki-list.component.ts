@@ -107,8 +107,11 @@ export class RkiListComponent implements OnInit, OnDestroy {
     });
   }
 
-  updatePageSize(arg0: any) {
-    throw new Error('Method not implemented.');
+  updatePageSize(pageSize: number) {
+    this.pageSize = pageSize;
+    this.pageNumber = 1;
+    this.isLoading = true;
+    this.loadDataRKI();
   }
   
   onDeleteSuratMasuk(arg0: string) {
@@ -116,23 +119,29 @@ export class RkiListComponent implements OnInit, OnDestroy {
   }
   
   onDateTimeShowData() {
-    throw new Error('Method not implemented.');
+    this.isSearching = false;
   }
   
   onSearchingMode() {
-    throw new Error('Method not implemented.');
+    this.isSearching = true;
   }
   
-  updateYearSelected(arg0: any) {
-    throw new Error('Method not implemented.');
+  updateYearSelected(year: number) {
+    this.currentYear = +year;
+    this.pageNumber = 1;
+    this.isLoading = true;
+    this.loadDataRKI();
   }
   
   searchingRKI(arg0: string) {
     throw new Error('Method not implemented.');
   }
   
-  updateMonthSelected(arg0: any) {
-    throw new Error('Method not implemented.');
+  updateMonthSelected(month: number) {
+    this.currentMonth = +month;
+    this.pageNumber = 1;
+    this.isLoading = true;
+    this.loadDataRKI();
   }
 
   ngOnDestroy(): void {
