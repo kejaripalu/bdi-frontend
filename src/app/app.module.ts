@@ -28,6 +28,7 @@ import { RkiComponent } from './register/rki/rki.component';
 import { RkiListComponent } from './register/rki/rki-list/rki-list.component';
 import { RkiDetailComponent } from './register/rki/rki-detail/rki-detail.component';
 import { RkiFormComponent } from './register/rki/rki-form/rki-form.component';
+import { RkiHelpComponent } from './register/rki/rki-help/rki-help.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { RkiFormComponent } from './register/rki/rki-form/rki-form.component';
     RkiComponent,
     RkiListComponent,
     RkiDetailComponent,
-    RkiFormComponent
+    RkiFormComponent,
+    RkiHelpComponent
   ],
   imports: [
     BrowserModule,

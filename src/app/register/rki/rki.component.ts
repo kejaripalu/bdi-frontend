@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { Bidang } from 'src/app/shared/bidang-direktorat/bidang';
 import { BidangDirektorat, BidangDirektoratLabel } from 'src/app/shared/bidang-direktorat/bidang-direktorat';
 import { BidangDirektoratSektorService } from 'src/app/shared/bidang-direktorat/bidang-direktorat-sektor.service';
+import { RkiHelpComponent } from './rki-help/rki-help.component';
 
 @Component({
   selector: 'app-rki',
@@ -17,7 +19,8 @@ export class RkiComponent implements OnInit {
 
   constructor(private bidangDirektoratSektorService: BidangDirektoratSektorService,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.rkiQueryParamSub = this.route.queryParams
@@ -42,7 +45,7 @@ export class RkiComponent implements OnInit {
   }
 
   onOpenHelp() {
-
+    const modalHelp = this.modalService.open(RkiHelpComponent, { size: 'xl', scrollable: true });
   }
 
 }
