@@ -6,7 +6,7 @@
     <div class="d-flex bd-highlight">
         <div class="p-2 w-100 bd-highlight">
             <button type="button" class="btn btn-success" (click)="onNewEkspedisi()">
-                <i class="bi bi-window-plus"></i> Tambah Surat Masuk</button>
+                <i class="bi bi-window-plus"></i> Tambah Data</button>
         </div>
         <div class="p-2 w-100 bd-highlight">
             <div class="row">
@@ -67,10 +67,10 @@
                     <td class="align-top">{{ ex.tanggalTandaTerima }}<br>{{ ex.jamTandaTerima }}</td>
                     <td class="align-top">
                         <a class="dropdown-item text-primary"
-                                        [routerLink]="['/surat-masuk', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa', ex.id, 'detail']"
+                                        [routerLink]="['/ekspedisi', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa', ex.id, 'detail']"
                                         [queryParams]="{jenisSurat: jenisSurat}"><i class="bi bi-list-check"></i> Detail</a>                   
                         <a class="dropdown-item text-success"
-                                        [routerLink]="['/surat-masuk', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa', ex.id, 'form']"
+                                        [routerLink]="['/ekspedisi', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa', ex.id, 'form']"
                                         [queryParams]="{edit: 1, jenisSurat: jenisSurat}">
                                         <i class="bi bi-pencil-square"></i> Ubah</a>
                         <a class="dropdown-item text-danger" (click)="onDeleteEkspedisi(ex.id)" style="cursor: pointer;"><i

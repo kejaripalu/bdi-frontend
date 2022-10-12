@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { EkspedisiDetailComponent } from "./register/ekspedisi/ekspedisi-detail/ekspedisi-detail.component";
 import { EkspedisiFormComponent } from "./register/ekspedisi/ekspedisi-form/ekspedisi-form.component";
 import { EkspedisiListComponent } from "./register/ekspedisi/ekspedisi-list/ekspedisi-list.component";
 import { EkspedisiComponent } from "./register/ekspedisi/ekspedisi.component";
@@ -53,6 +54,7 @@ const appRoutes: Routes = [
         { path: '', redirectTo: '/ekspedisi/biasa', pathMatch: 'full' },
         { path: 'biasa', component: EkspedisiListComponent },
         { path: 'biasa/form', component: EkspedisiFormComponent },
+        { path: 'biasa/:id/detail', component: EkspedisiDetailComponent },
     ]}
 ];
 
