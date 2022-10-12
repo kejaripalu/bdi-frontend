@@ -5,7 +5,7 @@
     {{ error }} 
     <br>
     <a 
-        [routerLink]="['/surat-masuk', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa']"
+        [routerLink]="['/ekspedisi', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa']"
         [queryParams]="{edit: 1, jenisSurat: jenisSurat}" 
         class="alert-link">Kembali</a>
 </div>
@@ -35,7 +35,7 @@
                             class="text-alert" 
                             *ngIf="ekspedisiForm.get('nomorSurat')?.errors?.['maxlength'] && 
                                     ekspedisiForm.get('nomorSurat')?.touched">
-                                Maksimal 255 karakter!!!</small>
+                                Tidak boleh lebih dari 255 karakter!!!</small>
                     </div>
                 </div>
                 <div class="col-sm-4">
@@ -91,12 +91,12 @@
                             class="text-alert" 
                             *ngIf="ekspedisiForm.get('kepada')?.errors?.['minlength'] && 
                                     ekspedisiForm.get('kepada')?.touched">
-                                Minimal 3 karakter!!!</small>
+                                Minimal 5 karakter!!!</small>
                         <small 
                             class="text-alert" 
                             *ngIf="ekspedisiForm.get('kepada')?.errors?.['maxlength'] && 
                                     ekspedisiForm.get('kepada')?.touched">
-                                Maksimal 255 karakter!!!</small>
+                                Tidak boleh lebih dari 255 karakter!!!</small>
                     </div>                  
                 </div>
                 <div class="row">
@@ -124,7 +124,7 @@
                             class="text-alert" 
                             *ngIf="ekspedisiForm.get('perihal')?.errors?.['maxlength'] && 
                                     ekspedisiForm.get('perihal')?.touched">
-                                Maksimal 255 karakter!!!</small>
+                                Tidak boleh lebih dari 255 karakter!!!</small>
                     </div>
                 </div>
                 <div class="row">
@@ -141,7 +141,7 @@
                             class="text-alert" 
                             *ngIf="ekspedisiForm.get('lampiran')?.errors?.['maxlength'] && 
                                     ekspedisiForm.get('lampiran')?.touched">
-                                Maksimal 255 karakter!!!</small>
+                                Tidak boleh lebih dari 255 karakter!!!</small>
                     </div>
                 </div>     
                 <div class="row">
@@ -205,11 +205,6 @@
                                 class="form-control"
                                 formControlName="namaDanParaf"></textarea>
                         </div>
-                        <small 
-                            class="text-alert" 
-                            *ngIf="ekspedisiForm.get('namaDanParaf')?.errors?.['maxlength'] && 
-                                    ekspedisiForm.get('namaDanParaf')?.touched">
-                                Maksimal 255 karakter!!!</small>
                     </div>
                 </div>
                 <div class="row">
@@ -226,7 +221,7 @@
                             class="text-alert" 
                             *ngIf="ekspedisiForm.get('keterangan')?.errors?.['maxlength'] && 
                                     ekspedisiForm.get('keterangan')?.touched">
-                                Maksimal 255 karakter!!!</small>
+                                Tidak boleh lebih dari 255 karakter!!!</small>
                     </div>
                 </div>
                 <div class="row">
@@ -238,12 +233,7 @@
                                 name="urlFile" 
                                 class="form-control"
                                 formControlName="urlFile"></textarea>
-                        </div>
-                        <small 
-                            class="text-alert" 
-                            *ngIf="ekspedisiForm.get('urlFile')?.errors?.['maxlength'] && 
-                                    ekspedisiForm.get('urlFile')?.touched">
-                                Maksimal 255 karakter!!!</small>
+                        </div>                       
                     </div>
                 </div>    
                 <app-danger-alert [message]="error" *ngIf="error"></app-danger-alert>

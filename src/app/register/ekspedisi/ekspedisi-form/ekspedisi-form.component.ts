@@ -74,9 +74,9 @@ export class EkspedisiFormComponent implements OnInit, OnDestroy {
       'lampiran': new FormControl(lampiran, Validators.maxLength(255)),
       'tanggalTandaTerima': new FormControl(this.modelDateTanggalTerimaSurat, [Validators.required, Validators.minLength(10)]),
       'jamTandaTerima': new FormControl(jamTandaTerima, [Validators.required, Validators.minLength(5)]),
-      'namaDanParaf': new FormControl(namaDanParaf, Validators.maxLength(255)),
+      'namaDanParaf': new FormControl(namaDanParaf),
       'keterangan': new FormControl(keterangan, Validators.maxLength(255)),
-      'urlFile': new FormControl(urlFile, Validators.maxLength(255))
+      'urlFile': new FormControl(urlFile)
     });
 
     if (this.isEditMode) {
