@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { map } from "rxjs";
+import { catchError, map, throwError } from "rxjs";
 import { MonthConverterService } from "src/app/shared/month-converter.service";
 import { environment } from "src/environments/environment";
 import { Ekspedisi } from "./ekspedisi.model";
@@ -25,7 +25,24 @@ export class EkspedisiService {
                 })
         );
     }
-
+    
+    createEkspedisi(ekspedisi: Ekspedisi) {
+        return this.httpClient.post<Ekspedisi>(this.endPoint, ekspedisi)
+            .pipe(catchError(errorResponse => {
+                let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
+                if (!errorResponse.error) {
+                    return throwError(() => errorMessage);
+                }
+                switch (errorResponse.error.message) {
+                    case 'DUPLICATE_DATA_FIELD':
+                      errorMessage = 'Bro.. Data ini sudah pernah diinput!!!';
+                      break;
+                    default:
+                      errorMessage = 'GAGAL Simpan data!!!';
+                  }
+                return throwError(() => errorMessage);
+            }));
+    }
 }
 
 interface ResponseEkspedisi {

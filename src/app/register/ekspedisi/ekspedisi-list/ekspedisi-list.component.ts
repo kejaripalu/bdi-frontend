@@ -77,10 +77,10 @@ export class EkspedisiListComponent implements OnInit, OnDestroy {
     this.ekspedisiQueryParamSub = this.route.queryParams
       .subscribe((queryParams: Params) => {
           if (queryParams['message'] === 'SimpanSukses') {
-            this.toastService.show('Ashiiap.... Berhasil Input Data Surat Masuk!', 
+            this.toastService.show('Ashiiap.... Berhasil Input Data Ekspedisi Surat!', 
                                     { classname: 'bg-success text-light', delay: 5000 });
           } else if (queryParams['message'] === 'UpdateSukses') {
-            this.toastService.show('Ashiiap.... Berhasil Update Data Surat Masuk!', 
+            this.toastService.show('Ashiiap.... Berhasil Update Data Ekspedisi Surat!', 
                                     { classname: 'bg-success text-light', delay: 5000 });
           } else {
             return;
@@ -89,7 +89,20 @@ export class EkspedisiListComponent implements OnInit, OnDestroy {
   }
   
   onNewEkspedisi() {
-    throw new Error('Method not implemented.');
+    let jenisSrt = null as any;
+    switch (this.jenisSurat) {
+      case 'BIASA':
+        jenisSrt = 'biasa';
+        break;
+      case 'RAHASIA':
+        jenisSrt = 'rahasia';
+        break;
+      default:
+        jenisSrt = 'biasa';
+    }
+    this.router.navigate(['/ekspedisi', jenisSrt, 'form'], {
+      queryParams: {jenisSurat: this.jenisSurat}
+    });
   }
 
   searchingEkspedisi(arg0: string) {
