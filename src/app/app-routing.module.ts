@@ -1,5 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { EkspedisiListComponent } from "./register/ekspedisi/ekspedisi-list/ekspedisi-list.component";
+import { EkspedisiComponent } from "./register/ekspedisi/ekspedisi.component";
 import { RkiDetailComponent } from "./register/rki/rki-detail/rki-detail.component";
 import { RkiFormComponent } from "./register/rki/rki-form/rki-form.component";
 import { RkiListComponent } from "./register/rki/rki-list/rki-list.component";
@@ -37,7 +39,7 @@ const appRoutes: Routes = [
         { path: 'rahasia', component: SuratKeluarListComponent },
         { path: 'rahasia/form', component: SuratKeluarFormComponent },
         { path: 'rahasia/:id/form', component: SuratKeluarFormComponent },
-        { path: 'rahasia/:id/detail', component: SuratKeluarDetailComponent },
+        { path: 'rahasia/:id/detail', component: SuratKeluarDetailComponent }
     ]},
     { path: 'rki', component: RkiComponent, children: [
         { path: '', redirectTo: '/rki/list', pathMatch: 'full' },
@@ -45,6 +47,10 @@ const appRoutes: Routes = [
         { path: 'list/:id/detail', component: RkiDetailComponent },
         { path: 'list/form', component: RkiFormComponent },
         { path: 'list/:id/form', component: RkiFormComponent }
+    ]},
+    { path: 'ekspedisi', component: EkspedisiComponent, children: [
+        { path: '', redirectTo: '/ekspedisi/biasa', pathMatch: 'full' },
+        { path: 'biasa', component: EkspedisiListComponent },
     ]}
 ];
 

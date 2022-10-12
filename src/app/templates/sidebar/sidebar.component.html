@@ -24,14 +24,16 @@
                         <a class="nav-link" routerLinkActive="active" 
                             [routerLink]="['/rki', 'list']"
                             [queryParams]="{ bidang: 'IPOLHANKAM' }">RKI</a>
-                        <a class="nav-link" href="#">Ekspedisi</a>
+                        <a class="nav-link" routerLinkActive="active" 
+                            [routerLink]="['/ekspedisi', 'biasa']"
+                            [queryParams]="{ jenisSurat: 'BIASA' }">Ekspedisi</a>
                         <a class="nav-link" href="#">Produk Intelijen</a>
                         <a class="nav-link" href="#">Arsip</a>                   
                     </nav>
                 </div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseKegiatan" aria-expanded="false" aria-controls="collapseKegiatan">
                     <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                    Kegiatan
+                    Kegiatan Intelijen
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseKegiatan" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
