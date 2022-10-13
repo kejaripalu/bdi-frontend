@@ -68,6 +68,27 @@ export class EkspedisiService {
             );
     }
 
+    updateEkspedisi(ekspedisi: Ekspedisi) {
+        const putEndPoint = `${this.endPoint}/${ekspedisi.id}`;
+        return this.httpClient.put<Ekspedisi>(putEndPoint, ekspedisi)
+            .pipe(catchError(errorResponse => {
+                let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
+                if (!errorResponse.error) {
+                    return throwError(() => errorMessage);
+                }
+                switch (errorResponse.error.message) {
+                    case 'ID_NOT_FOUND':
+                        errorMessage = 'Bro... Data tidak ditemukan!!!'
+                        break;
+                    case 'DUPLICATE_DATA_FIELD':
+                        errorMessage = 'Bro.. Data ini sudah pernah diinput!!!';
+                        break;
+                    default:
+                        errorMessage = 'GAGAL Update data!!!';
+                }
+                return throwError(() => errorMessage);
+            }));
+    }
 
 }
 

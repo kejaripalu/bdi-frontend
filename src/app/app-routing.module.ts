@@ -54,6 +54,7 @@ const appRoutes: Routes = [
         { path: '', redirectTo: '/ekspedisi/biasa', pathMatch: 'full' },
         { path: 'biasa', component: EkspedisiListComponent },
         { path: 'biasa/form', component: EkspedisiFormComponent },
+        { path: 'biasa/:id/form', component: EkspedisiFormComponent },
         { path: 'biasa/:id/detail', component: EkspedisiDetailComponent },
     ]}
 ];

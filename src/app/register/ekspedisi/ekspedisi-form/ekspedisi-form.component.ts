@@ -80,7 +80,37 @@ export class EkspedisiFormComponent implements OnInit, OnDestroy {
     });
 
     if (this.isEditMode) {
-      // TO DO NEXT..
+      this.isLoadingEditForm = true;
+      this.ekspedisiSub = this.ekspedisiService.getOneEkspedisi(this.id).subscribe({
+        next: (ekspedisi) => {
+          this.modelDateTanggalSurat = {year: +ekspedisi.tanggalSurat.slice(0, 4), 
+            month: +ekspedisi.tanggalSurat.slice(5, 7), 
+            day: +ekspedisi.tanggalSurat.slice(8, 10)};
+          this.modelDateTanggalTerimaSurat = {year: +ekspedisi.tanggalTandaTerima.slice(0, 4), 
+            month: +ekspedisi.tanggalTandaTerima.slice(5, 7), 
+            day: +ekspedisi.tanggalTandaTerima.slice(8, 10)}; 
+          
+          this.ekspedisiForm = new FormGroup({
+            'nomorSurat': new FormControl(ekspedisi.nomorSurat, [Validators.required, Validators.maxLength(255)]),
+            'tanggalSurat': new FormControl(this.modelDateTanggalSurat, [Validators.required, Validators.minLength(10)]),
+            'kepada': new FormControl(ekspedisi.kepada, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
+            'perihal': new FormControl(ekspedisi.perihal, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
+            'lampiran': new FormControl(ekspedisi.lampiran, Validators.maxLength(255)),
+            'tanggalTandaTerima': new FormControl(this.modelDateTanggalTerimaSurat, [Validators.required, Validators.minLength(10)]),
+            'jamTandaTerima': new FormControl(ekspedisi.jamTandaTerima, [Validators.required, Validators.minLength(5)]),
+            'namaDanParaf': new FormControl(ekspedisi.namaDanParaf),
+            'keterangan': new FormControl(ekspedisi.keterangan, Validators.maxLength(255)),
+            'urlFile': new FormControl(ekspedisi.urlFile)
+          });
+          this.isLoadingEditForm = false;
+          this.editModeError = false;
+        },
+        error: (errorMessage) => {
+          this.isLoadingEditForm = false;
+          this.error = errorMessage;
+          this.editModeError = true;
+        }
+      });
     }
   }
 
@@ -97,9 +127,33 @@ export class EkspedisiFormComponent implements OnInit, OnDestroy {
       this.modelDateTanggalTerimaSurat.day);
        
     if (this.isEditMode) {
-      // TO DO NEXT...
+      const ekspedisi = new Ekspedisi();
+    
+      ekspedisi.id = this.id;
+      ekspedisi.nomorSurat = this.ekspedisiForm.value['nomorSurat'];
+      ekspedisi.tanggalSurat = dateTanggalSurat;
+      ekspedisi.kepada = this.ekspedisiForm.value['kepada'];
+      ekspedisi.perihal = this.ekspedisiForm.value['perihal'];
+      ekspedisi.lampiran = this.ekspedisiForm.value['lampiran'];
+      ekspedisi.tanggalTandaTerima = dateTanggalTandaTerima;
+      ekspedisi.jamTandaTerima = this.ekspedisiForm.value['jamTandaTerima'];
+      ekspedisi.jenisSurat = this.jenisSurat;
+      ekspedisi.namaDanParaf = this.ekspedisiForm.value['namaDanParaf'];
+      ekspedisi.keterangan = this.ekspedisiForm.value['keterangan'];
+      ekspedisi.urlFile = this.ekspedisiForm.value['urlFile'];
+
+      this.ekspedisiSub = this.ekspedisiService.updateEkspedisi(ekspedisi).subscribe({
+        next: () => {
+          this.isLoading = false;
+          this.message = 'UpdateSukses';
+          this.onCancel();
+        },
+        error: (errorMessage) => {
+          this.error = errorMessage;
+          this.isLoading = false;
+        }
+      });
     } else {
-      // console.log(this.suratMasukForm);
       const ekspedisi = new Ekspedisi();
      
       ekspedisi.nomorSurat = this.ekspedisiForm.value['nomorSurat'];
