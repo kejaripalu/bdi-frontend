@@ -189,6 +189,6 @@ export class EkspedisiListComponent implements OnInit, OnDestroy {
         this.ekspedisiQueryParamSub.unsubscribe();
     }
     this.toastService.clear();
-}
+  }
   
 }
