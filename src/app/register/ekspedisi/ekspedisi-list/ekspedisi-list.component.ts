@@ -105,31 +105,65 @@ export class EkspedisiListComponent implements OnInit, OnDestroy {
     });
   }
 
-  searchingEkspedisi(arg0: string) {
-    throw new Error('Method not implemented.');
+  searchingEkspedisi(value: string) {
+    if (value.trim() === '') {
+      return;
+    }
+    this.isLoading = true;
+    this.pageNumber = 1;
+    this.ekspedisiSub = this.ekspedisiService.getSearchEkspedisi(
+      value,
+      this.pageNumber - 1, 
+      this.pageSize, 
+      this.jenisSurat, 
+      this.currentYear.toString())
+        .subscribe({
+          next: (responseData) => {
+            // console.log(responseData);
+            this.ekspedisi = responseData.content;
+            this.pageNumber = responseData.number + 1;
+            this.pageSize = responseData.size;
+            this.totalElements = responseData.totalElements;
+            this.isLoading = false;
+          },
+          error: () => {
+            this.error = 'Aduh... Gagal ambil data dari server!!!';
+            this.isLoading = false;
+          }
+      });
   }
   
   onDeleteEkspedisi(arg0: string) {
     throw new Error('Method not implemented.');
   }
   
-  updatePageSize(arg0: any) {
-    throw new Error('Method not implemented.');
+  updatePageSize(pageSize: number) {
+    this.pageSize = pageSize;
+    this.pageNumber = 1;
+    this.isLoading = true;
+    this.loadDataEkspedisi();
   }
   
-  onDateTimeShowData() {
-    throw new Error('Method not implemented.');
-  }
-
   onSearchingMode() {
-    throw new Error('Method not implemented.');
+    this.isSearching = true;
   }
 
-  updateYearSelected(arg0: any) {
-    throw new Error('Method not implemented.');
+  onDateTimeShowData() {
+    this.isSearching = false;
   }
-  updateMonthSelected(arg0: any) {
-    throw new Error('Method not implemented.');
+
+  updateYearSelected(year: number) {
+    this.currentYear = +year;
+    this.pageNumber = 1;
+    this.isLoading = true;
+    this.loadDataEkspedisi();
+  }
+
+  updateMonthSelected(month: number) {
+    this.currentMonth = +month;
+    this.pageNumber = 1;
+    this.isLoading = true;
+    this.loadDataEkspedisi();
   }
 
   ngOnDestroy(): void {

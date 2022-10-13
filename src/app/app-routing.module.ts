@@ -56,6 +56,10 @@ const appRoutes: Routes = [
         { path: 'biasa/form', component: EkspedisiFormComponent },
         { path: 'biasa/:id/form', component: EkspedisiFormComponent },
         { path: 'biasa/:id/detail', component: EkspedisiDetailComponent },
+        { path: 'rahasia', component: EkspedisiListComponent },
+        { path: 'rahasia/form', component: EkspedisiFormComponent },
+        { path: 'rahasia/:id/form', component: EkspedisiFormComponent },
+        { path: 'rahasia/:id/detail', component: EkspedisiDetailComponent }
     ]}
 ];
 
