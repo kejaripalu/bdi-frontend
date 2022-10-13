@@ -103,6 +103,25 @@ export class EkspedisiService {
             );
     }
 
+    deleteEkspedisi(id: string) {
+        const deleteEndPoint = `${this.endPoint}/${id}`;
+        return this.httpClient.delete<Ekspedisi>(deleteEndPoint)
+            .pipe(catchError(errorResponse => {
+                let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
+                if (!errorResponse.error) {
+                    return throwError(() => errorMessage);
+                }
+                switch (errorResponse.error.message) {
+                    case 'ID_NOT_FOUND':
+                        errorMessage = 'Bro... Data tidak ditemukan!!!'
+                        break;
+                    default:
+                        errorMessage = 'GAGAL menghapus data!!!';
+                }
+                return throwError(() => errorMessage);
+        }));
+    }
+
 }
 
 interface ResponseEkspedisi {

@@ -133,8 +133,23 @@ export class EkspedisiListComponent implements OnInit, OnDestroy {
       });
   }
   
-  onDeleteEkspedisi(arg0: string) {
-    throw new Error('Method not implemented.');
+  onDeleteEkspedisi(id: string) {
+    if (confirm('Yakin ente mau hapus data ini?')) {
+      this.isLoading = true;
+      this.ekspedisiSub = this.ekspedisiService.deleteEkspedisi(id)
+        .subscribe({
+          next: () => {
+            this.isLoading = false;
+            this.loadDataEkspedisi();
+            this.toastService.show('Ashiiap.... Berhasil Hapus Data Surat Masuk!', 
+                                    { classname: 'bg-success text-light', delay: 5000 });
+          },
+          error: (errorMessage) => {
+            this.error = errorMessage;
+            this.isLoading = false;
+          }
+        });
+    }
   }
   
   updatePageSize(pageSize: number) {
