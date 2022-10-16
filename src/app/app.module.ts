@@ -34,6 +34,8 @@ import { EkspedisiListComponent } from './register/ekspedisi/ekspedisi-list/eksp
 import { EkspedisiFormComponent } from './register/ekspedisi/ekspedisi-form/ekspedisi-form.component';
 import { EkspedisiDetailComponent } from './register/ekspedisi/ekspedisi-detail/ekspedisi-detail.component';
 import { EkspedisiHelpComponent } from './register/ekspedisi/ekspedisi-help/ekspedisi-help.component';
+import { ProdinComponent } from './register/prodin/prodin.component';
+import { ProdinListComponent } from './register/prodin/prodin-list/prodin-list.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +67,9 @@ import { EkspedisiHelpComponent } from './register/ekspedisi/ekspedisi-help/eksp
     EkspedisiListComponent,
     EkspedisiFormComponent,
     EkspedisiDetailComponent,
-    EkspedisiHelpComponent
+    EkspedisiHelpComponent,
+    ProdinComponent,
+    ProdinListComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { ProdinListComponent } from "./register/prodin/prodin-list/prodin-list.component";
+import { ProdinComponent } from "./register/prodin/prodin.component";
 import { EkspedisiDetailComponent } from "./register/ekspedisi/ekspedisi-detail/ekspedisi-detail.component";
 import { EkspedisiFormComponent } from "./register/ekspedisi/ekspedisi-form/ekspedisi-form.component";
 import { EkspedisiListComponent } from "./register/ekspedisi/ekspedisi-list/ekspedisi-list.component";
@@ -60,6 +62,10 @@ const appRoutes: Routes = [
         { path: 'rahasia/form', component: EkspedisiFormComponent },
         { path: 'rahasia/:id/form', component: EkspedisiFormComponent },
         { path: 'rahasia/:id/detail', component: EkspedisiDetailComponent }
+    ]},
+    { path: 'prodin', component: ProdinComponent, children:[
+        { path: '', redirectTo: '/prodin/list', pathMatch: 'full' },
+        { path: 'list', component: ProdinListComponent },
     ]}
 ];
 
