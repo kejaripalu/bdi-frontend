@@ -11,5 +11,5 @@ export const BidangDirektoratLabel = new Map<number, string>([
     [BidangDirektorat.SOSBUDMAS, 'Sosial, Budaya, dan Kemasyarakatan'],
     [BidangDirektorat.EKOKEU, 'Ekonomi dan Keuangan'],
     [BidangDirektorat.PAMSTRA, 'Pengamanan Pembangunan Strategis'],
-    [BidangDirektorat.TIPRODIN, 'Teknologi Informasi, dan Produksi Intelijen']
+    [BidangDirektorat.TIPRODIN, 'Teknologi Informasi dan Produksi Intelijen']
 ]);

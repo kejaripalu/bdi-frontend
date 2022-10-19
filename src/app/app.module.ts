@@ -37,6 +37,7 @@ import { EkspedisiHelpComponent } from './register/ekspedisi/ekspedisi-help/eksp
 import { ProdinComponent } from './register/prodin/prodin.component';
 import { ProdinListComponent } from './register/prodin/prodin-list/prodin-list.component';
 import { SektorPipe } from './shared/bidang-direktorat/sektor.pipe';
+import { ProdinPipe } from './shared/prodin/prodin.pipe';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { SektorPipe } from './shared/bidang-direktorat/sektor.pipe';
     EkspedisiHelpComponent,
     ProdinComponent,
     ProdinListComponent,
-    SektorPipe
+    SektorPipe,
+    ProdinPipe
   ],
   imports: [
     BrowserModule,
