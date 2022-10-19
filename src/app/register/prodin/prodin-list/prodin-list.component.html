@@ -63,7 +63,7 @@
                 <tr *ngFor="let p of prodin">
                     <td class="align-top">{{ p.jenisProdukIntelijen }}</td>
                     <td class="align-top">{{ p.nomorProduk }} <br>{{ p.tanggalProduk }}</td>
-                    <td class="align-top" style="text-align: center;">{{ p.bidang }}</td>
+                    <td class="align-top" style="text-align: center;">{{ p.sektor | sektorPipe }}<br>({{ p.sektor | sektorPipe: 'bidang' }})</td>
                     <td class="align-top">{{ p.perihal }}</td>
                     <td class="align-top">
                         <a class="dropdown-item text-primary"
