@@ -38,6 +38,7 @@ import { ProdinComponent } from './register/prodin/prodin.component';
 import { ProdinListComponent } from './register/prodin/prodin-list/prodin-list.component';
 import { SektorPipe } from './shared/bidang-direktorat/sektor.pipe';
 import { ProdinPipe } from './shared/prodin/prodin.pipe';
+import { ProdinDetailComponent } from './register/prodin/prodin-detail/prodin-detail.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { ProdinPipe } from './shared/prodin/prodin.pipe';
     ProdinComponent,
     ProdinListComponent,
     SektorPipe,
-    ProdinPipe
+    ProdinPipe,
+    ProdinDetailComponent
   ],
   imports: [
     BrowserModule,

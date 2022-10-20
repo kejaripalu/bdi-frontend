@@ -5,7 +5,6 @@ export class ProdukIntelijen {
     nomorProduk!: string;
     tanggalProduk!: string;
     sektor!: string;
-    deskripsiBidang!: string;
     perihal!: string;
     disposisiPimpinan!: string;
     keterangan!: string;

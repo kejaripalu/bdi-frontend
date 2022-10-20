@@ -19,6 +19,7 @@ import { SuratMasukFormComponent } from "./register/surat-masuk/surat-masuk-form
 import { SuratMasukListComponent } from "./register/surat-masuk/surat-masuk-list/surat-masuk-list.component";
 import { SuratMasukComponent } from "./register/surat-masuk/surat-masuk.component";
 import { DashboardComponent } from "./templates/dashboard/dashboard.component";
+import { ProdinDetailComponent } from "./register/prodin/prodin-detail/prodin-detail.component";
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -66,6 +67,7 @@ const appRoutes: Routes = [
     { path: 'prodin', component: ProdinComponent, children:[
         { path: '', redirectTo: '/prodin/list', pathMatch: 'full' },
         { path: 'list', component: ProdinListComponent },
+        { path: 'list/:id/detail', component: ProdinDetailComponent },
     ]}
 ];
 
