@@ -31,7 +31,6 @@ export class ProdinListComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router,
               private route: ActivatedRoute,
-              private bidangDirektoratSektorService: BidangDirektoratSektorService,
               private prodinService: ProdukIntelijenService,
               public toastService: ToastService) { }
 
@@ -109,24 +108,61 @@ export class ProdinListComponent implements OnInit, OnDestroy {
     }
   }
 
-  updatePageSize(arg0: any) {
-    throw new Error('Method not implemented.');
+  updatePageSize(pageSize: number) {
+    this.pageSize = pageSize;
+    this.pageNumber = 1;
+    this.isLoading = true;
+    this.loadData();
+  }
+
+  onDateTimeShowData() {
+    this.isSearching = false;
+  }
+  onSearchingMode() {
+    this.isSearching = true;
+  }
+
+  updateYearSelected(year: number) {
+    this.currentYear = +year;
+    this.pageNumber = 1;
+    this.isLoading = true;
+    this.loadData();  
+  }
+
+  searchingProdin(value: string) {
+    if (value.trim() === '') {
+      return;
     }
-    onDateTimeShowData() {
-    throw new Error('Method not implemented.');
-    }
-    onSearchingMode() {
-    throw new Error('Method not implemented.');
-    }
-    updateYearSelected(arg0: any) {
-    throw new Error('Method not implemented.');
-    }
-    searchingProdin(arg0: string) {
-    throw new Error('Method not implemented.');
-    }
-    updateMonthSelected(arg0: any) {
-    throw new Error('Method not implemented.');
-    }
+    this.isLoading = true;
+    this.pageNumber = 1;
+    this.prodinSub = this.prodinService.getSearchProdin(
+      value,
+      this.pageNumber - 1, 
+      this.pageSize, 
+      this.namaBidang, 
+      this.currentYear.toString())
+        .subscribe({
+          next: (responseData) => {
+            // console.log(responseData);
+            this.prodin = responseData.content;
+            this.pageNumber = responseData.number + 1;
+            this.pageSize = responseData.size;
+            this.totalElements = responseData.totalElements;
+            this.isLoading = false;
+          },
+          error: () => {
+            this.error = 'Aduh... Gagal ambil data dari server!!!';
+            this.isLoading = false;
+          }
+        });
+  }
+
+  updateMonthSelected(month: number) {
+    this.currentMonth = +month;
+    this.pageNumber = 1;
+    this.isLoading = true;
+    this.loadData();
+  }
 
   ngOnDestroy(): void {
     if (this.prodinQueryParamSub) {
