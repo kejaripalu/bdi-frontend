@@ -122,7 +122,7 @@ export class RkiListComponent implements OnInit, OnDestroy {
           next: () => {
             this.isLoading = false;
             this.loadDataRKI();
-            this.toastService.show('Ashiiap.... Berhasil Hapus Data Surat Masuk!', 
+            this.toastService.show('Ashiiap.... Berhasil Hapus Data RKI!', 
                                     { classname: 'bg-success text-light', delay: 5000 });
           },
           error: (errorMessage) => {

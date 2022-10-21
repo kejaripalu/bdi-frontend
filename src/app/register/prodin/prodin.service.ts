@@ -90,6 +90,38 @@ export class ProdukIntelijenService {
         }));
     }
 
+    deleteProdin(id: string) {
+        const deleteEndPoint = `${this.endPoint}/${id}`;
+        return this.httpClient.delete<ProdukIntelijen>(deleteEndPoint)
+            .pipe(catchError(errorResponse => {
+                let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
+                if (!errorResponse.error) {
+                    return throwError(() => errorMessage);
+                }
+                switch (errorResponse.error.message) {
+                    case 'ID_NOT_FOUND':
+                        errorMessage = 'Bro... Data tidak ditemukan!!!'
+                        break;
+                    default:
+                        errorMessage = 'GAGAL menghapus data!!!';
+                }
+                return throwError(() => errorMessage);
+        }));
+    }
+
+    getSearchProdin(value: string, page: number, size: number, bidang: string, tahun: string) {
+        const startDate = tahun + '-01-01';        
+        const endDate = tahun + '-12-31';    
+        const getEndPoint = `${this.endPoint}/search?pages=${page}&sizes=${size}&bidangDirektorat=${bidang}&` +
+            `startDate=${startDate}&endDate=${endDate}&value=${value}`;  
+        return this.httpClient.get<ResponseProdin>(getEndPoint)
+            .pipe(
+                map(response => {
+                    return response;
+                })
+            );
+    }
+
 }
 
 interface ResponseProdin {

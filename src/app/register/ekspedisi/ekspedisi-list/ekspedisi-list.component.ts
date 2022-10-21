@@ -141,7 +141,7 @@ export class EkspedisiListComponent implements OnInit, OnDestroy {
           next: () => {
             this.isLoading = false;
             this.loadDataEkspedisi();
-            this.toastService.show('Ashiiap.... Berhasil Hapus Data Surat Masuk!', 
+            this.toastService.show('Ashiiap.... Berhasil Hapus Data Ekspedisi Surat!', 
                                     { classname: 'bg-success text-light', delay: 5000 });
           },
           error: (errorMessage) => {

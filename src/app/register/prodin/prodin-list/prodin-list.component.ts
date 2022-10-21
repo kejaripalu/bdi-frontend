@@ -69,10 +69,10 @@ export class ProdinListComponent implements OnInit, OnDestroy {
     this.prodinQueryParamSub = this.route.queryParams
     .subscribe((queryParams: Params) => {
       if (queryParams['message'] === 'SimpanSukses') {
-        this.toastService.show('Ashiiap.... Berhasil Input Data RKI!', 
+        this.toastService.show('Ashiiap.... Berhasil Input Data Produksi Intelijen!', 
           { classname: 'bg-success text-light', delay: 5000 });
       } else if (queryParams['message'] === 'UpdateSukses') {
-        this.toastService.show('Ashiiap.... Berhasil Update Data RKI!', 
+        this.toastService.show('Ashiiap.... Berhasil Update Data Produksi Intelijen!', 
           { classname: 'bg-success text-light', delay: 5000 });
       } else {
         return;
@@ -89,11 +89,27 @@ export class ProdinListComponent implements OnInit, OnDestroy {
   onNewProdin() {
     this.router.navigate(['/prodin', 'list', 'form']);
   }
+  
+  onDeleteProdin(id: string) {
+    if (confirm('Yakin ente mau hapus data ini?')) {
+      this.isLoading = true;
+      this.prodinSub = this.prodinService.deleteProdin(id)
+        .subscribe({
+          next: () => {
+            this.isLoading = false;
+            this.loadData();
+            this.toastService.show('Ashiiap.... Berhasil Hapus Data Produksi Intelijen!', 
+                                    { classname: 'bg-success text-light', delay: 5000 });
+          },
+          error: (errorMessage) => {
+            this.error = errorMessage;
+            this.isLoading = false;
+          }
+        });
+    }
+  }
 
   updatePageSize(arg0: any) {
-    throw new Error('Method not implemented.');
-    }
-    onDeleteProdin(arg0: any) {
     throw new Error('Method not implemented.');
     }
     onDateTimeShowData() {
