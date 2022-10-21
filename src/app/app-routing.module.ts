@@ -20,6 +20,7 @@ import { SuratMasukListComponent } from "./register/surat-masuk/surat-masuk-list
 import { SuratMasukComponent } from "./register/surat-masuk/surat-masuk.component";
 import { DashboardComponent } from "./templates/dashboard/dashboard.component";
 import { ProdinDetailComponent } from "./register/prodin/prodin-detail/prodin-detail.component";
+import { ProdinFormComponent } from "./register/prodin/prodin-form/prodin-form.component";
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -68,6 +69,7 @@ const appRoutes: Routes = [
         { path: '', redirectTo: '/prodin/list', pathMatch: 'full' },
         { path: 'list', component: ProdinListComponent },
         { path: 'list/:id/detail', component: ProdinDetailComponent },
+        { path: 'list/form', component: ProdinFormComponent },
     ]}
 ];
 

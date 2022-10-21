@@ -50,6 +50,24 @@ export class ProdukIntelijenService {
         );
     }
 
+    createProdin(rki: ProdukIntelijen) {
+        return this.httpClient.post<ProdukIntelijen>(this.endPoint, rki)
+            .pipe(catchError(errorResponse => {
+                let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
+                if (!errorResponse.error) {
+                    return throwError(() => errorMessage);
+                }
+                switch (errorResponse.error.message) {
+                    case 'DUPLICATE_DATA_FIELD':
+                      errorMessage = 'Bro.. Data ini sudah pernah diinput!!!';
+                      break;
+                    default:
+                      errorMessage = 'GAGAL Simpan data!!!';
+                  }
+                return throwError(() => errorMessage);
+        }));
+    }
+
 }
 
 interface ResponseProdin {

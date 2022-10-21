@@ -86,6 +86,9 @@ export class ProdinListComponent implements OnInit, OnDestroy {
     }
   }
 
+  onNewProdin() {
+    this.router.navigate(['/prodin', 'list', 'form']);
+  }
 
   updatePageSize(arg0: any) {
     throw new Error('Method not implemented.');
@@ -106,9 +109,6 @@ export class ProdinListComponent implements OnInit, OnDestroy {
     throw new Error('Method not implemented.');
     }
     updateMonthSelected(arg0: any) {
-    throw new Error('Method not implemented.');
-    }
-    onNewProdin() {
     throw new Error('Method not implemented.');
     }
 

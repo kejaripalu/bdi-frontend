@@ -3,10 +3,7 @@ import { Prodin } from "./prodin";
 
 @Injectable({ providedIn: "root" })
 export class ProdinService {
-    getOneProdin(id: string) {
-      throw new Error('Method not implemented.');
-    }
-
+    
     getProdin() {
       const prodin: Prodin[] = [
         { jenisProdin: 'LAPINHAR', namaProdin: 'Lapinhar', deskripsiProdin: 'Laporan Informasi Harian' },

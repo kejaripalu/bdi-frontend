@@ -9,16 +9,20 @@ export class SektorPipe implements PipeTransform {
     constructor(private bidangDirektoratSektorService: BidangDirektoratSektorService) { }
 
     transform(value: any, ...args: any[]) {
-        const index = this.bidangDirektoratSektorService.getSektor()
+        const indexSektor = this.bidangDirektoratSektorService.getSektor()
             .findIndex(obj => {
                 return obj.namaSektor === value;
         });
 
         let deskripsi = null;
         if (args[0] === 'bidang') {
-            deskripsi = this.bidangDirektoratSektorService.getBidangDirektori()[index].deskripsiBidang;
+            const indexBidang = this.bidangDirektoratSektorService.getBidangDirektori()
+                .findIndex(obj => {
+                    return obj.namaBidang === this.bidangDirektoratSektorService.getSektor()[indexSektor].bidangDirektorat;
+            });            
+            deskripsi = this.bidangDirektoratSektorService.getBidangDirektori()[indexBidang].deskripsiBidang;            
         } else  {
-            deskripsi = this.bidangDirektoratSektorService.getSektor()[index].deskripsiSektor;
+            deskripsi = this.bidangDirektoratSektorService.getSektor()[indexSektor].deskripsiSektor;
         }
         return deskripsi;
     }

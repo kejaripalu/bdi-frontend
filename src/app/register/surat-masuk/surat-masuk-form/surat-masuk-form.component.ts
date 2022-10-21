@@ -169,7 +169,6 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
             month: +suratMasuk.tanggalSurat.slice(5, 7), 
             day: +suratMasuk.tanggalSurat.slice(8, 10)};
           
-          
           this.suratMasukForm = new FormGroup({
             'tanggalPenerimaanSurat': new FormControl(this.modelDateTanggalPenerimaanSurat, [Validators.required, Validators.minLength(10)]),
             'jamPenerimaanSurat': new FormControl(suratMasuk.jamPenerimaanSurat, [Validators.required, Validators.minLength(5)]),
