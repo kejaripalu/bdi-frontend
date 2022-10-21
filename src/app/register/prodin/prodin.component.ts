@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ProdinHelpComponent } from './prodin-help/prodin-help.component';
 
 @Component({
   selector: 'app-prodin',
@@ -7,13 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProdinComponent implements OnInit {
 
-  constructor() { }
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
   }
 
   onOpenHelp() {
-    
+    const modalHelp = this.modalService.open(ProdinHelpComponent, { size: 'xl', scrollable: true });
   }
 
 }

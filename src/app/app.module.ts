@@ -40,6 +40,7 @@ import { SektorPipe } from './shared/bidang-direktorat/sektor.pipe';
 import { ProdinPipe } from './shared/prodin/prodin.pipe';
 import { ProdinDetailComponent } from './register/prodin/prodin-detail/prodin-detail.component';
 import { ProdinFormComponent } from './register/prodin/prodin-form/prodin-form.component';
+import { ProdinHelpComponent } from './register/prodin/prodin-help/prodin-help.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import { ProdinFormComponent } from './register/prodin/prodin-form/prodin-form.c
     SektorPipe,
     ProdinPipe,
     ProdinDetailComponent,
-    ProdinFormComponent
+    ProdinFormComponent,
+    ProdinHelpComponent
   ],
   imports: [
     BrowserModule,
