@@ -84,8 +84,47 @@ export class ProdinFormComponent implements OnInit, OnDestroy {
       'keterangan': new FormControl(keterangan, Validators.maxLength(255)),
       'urlFile': new FormControl(urlFile)
     });
-    
     this.reloadSektorList();
+    
+    if (this.isEditMode) {
+      this.isLoadingEditForm = true;
+      this.prodinSub = this.produksiIntelijenService.getOneProdin(this.id).subscribe({
+        next: (prodin) => {
+          this.modelDateTanggalProduk = {year: +prodin.tanggalProduk.slice(0, 4), 
+            month: +prodin.tanggalProduk.slice(5, 7), 
+            day: +prodin.tanggalProduk.slice(8, 10)};      
+          
+          this.prodinForm = new FormGroup({
+            'nomorProdin': new FormControl(prodin.nomorProduk, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
+            'tanggalProdin': new FormControl(this.modelDateTanggalProduk, [Validators.required, Validators.minLength(8)]),
+            'perihal': new FormControl(prodin.perihal, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
+            'disposisiPimpinan': new FormControl(prodin.disposisiPimpinan, Validators.maxLength(255)),
+            'keterangan': new FormControl(prodin.keterangan, Validators.maxLength(255)),
+            'urlFile': new FormControl(prodin.urlFile)
+          });
+          
+          const indexSektor = this.bidangDirektoratSektorService.getSektor()
+            .findIndex(obj => {
+                return obj.namaSektor === prodin.sektor;
+          });
+          const indexBidang = this.bidangDirektoratSektorService.getBidangDirektori()
+            .findIndex(obj => {
+                return obj.namaBidang === this.bidangDirektoratSektorService.getSektor()[indexSektor].bidangDirektorat;
+          });        
+          this.bidang = this.bidangDirektoratSektorService.getBidangDirektori()[indexBidang].namaBidang!;          
+          this.jenisProdukIntelijenSelected = prodin.jenisProdukIntelijen;
+          this.sektorSelected = prodin.sektor;
+          this.reloadSektorList();
+          this.isLoadingEditForm = false;
+          this.editModeError = false;
+        },
+        error: (errorMessage) => {
+          this.isLoadingEditForm = false;
+          this.error = errorMessage;
+          this.editModeError = true;
+        }
+      });
+    }
   }
 
   onSubmit() {
@@ -97,7 +136,28 @@ export class ProdinFormComponent implements OnInit, OnDestroy {
       this.modelDateTanggalProduk.day);
 
     if (this.isEditMode) {
-      // TO DO
+      const prodin = new ProdukIntelijen();    
+      prodin.id = this.id;
+      prodin.jenisProdukIntelijen = this.jenisProdukIntelijenSelected;
+      prodin.nomorProduk = this.prodinForm.value['nomorProdin'];
+      prodin.tanggalProduk = dateTanggalProdin;
+      prodin.sektor = this.sektorSelected;
+      prodin.perihal = this.prodinForm.value['perihal'];
+      prodin.disposisiPimpinan = this.prodinForm.value['disposisiPimpinan'];
+      prodin.keterangan = this.prodinForm.value['keterangan'];
+      prodin.urlFile = this.prodinForm.value['urlFile'];
+
+      this.prodinSub = this.produksiIntelijenService.updateProdin(prodin).subscribe({
+        next: () => {
+          this.isLoading = false;
+          this.message = 'UpdateSukses';
+          this.onCancel();
+        },
+        error: (errorMessage) => {
+          this.error = errorMessage;
+          this.isLoading = false;
+        }
+      });
     } else {
       const prodin = new ProdukIntelijen(); 
       prodin.jenisProdukIntelijen = this.jenisProdukIntelijenSelected;
@@ -150,7 +210,9 @@ export class ProdinFormComponent implements OnInit, OnDestroy {
               namaSektor: this.bidangDirektoratSektorService.getSektor()[i].namaSektor!
             });
       }
-      this.sektorSelected = this.sektorList[0].namaSektor!;
+      if (!this.isEditMode) {
+        this.sektorSelected = this.sektorList[0].namaSektor!;
+      }
     } else if (this.bidang === 'SOSBUDMAS') {
       for (let i = 13; i < 25; i++) {        
         this.sektorList.push(
@@ -158,7 +220,9 @@ export class ProdinFormComponent implements OnInit, OnDestroy {
             namaSektor: this.bidangDirektoratSektorService.getSektor()[i].namaSektor!
           });
       }
-      this.sektorSelected = this.sektorList[0].namaSektor!;
+      if (!this.isEditMode) {
+        this.sektorSelected = this.sektorList[0].namaSektor!;
+      }
     } else if (this.bidang === 'EKOKEU') {
       for (let i = 25; i < 41; i++) {        
         this.sektorList.push(
@@ -166,7 +230,9 @@ export class ProdinFormComponent implements OnInit, OnDestroy {
             namaSektor: this.bidangDirektoratSektorService.getSektor()[i].namaSektor!
           });
       }
-      this.sektorSelected = this.sektorList[0].namaSektor!;
+      if (!this.isEditMode) {
+        this.sektorSelected = this.sektorList[0].namaSektor!;
+      }
     } else if (this.bidang === 'PAMSTRA') {
       for (let i = 41; i < 61; i++) {        
         this.sektorList.push(
@@ -174,7 +240,9 @@ export class ProdinFormComponent implements OnInit, OnDestroy {
             namaSektor: this.bidangDirektoratSektorService.getSektor()[i].namaSektor!
           });
       }
-      this.sektorSelected = this.sektorList[0].namaSektor!;
+      if (!this.isEditMode) {
+        this.sektorSelected = this.sektorList[0].namaSektor!;
+      }
     } else if (this.bidang === 'TIPRODIN') {
       for (let i = 61; i < 75; i++) {        
         this.sektorList.push(
@@ -182,7 +250,9 @@ export class ProdinFormComponent implements OnInit, OnDestroy {
             namaSektor: this.bidangDirektoratSektorService.getSektor()[i].namaSektor!
           });
       }
-      this.sektorSelected = this.sektorList[0].namaSektor!;
+      if (!this.isEditMode) {
+        this.sektorSelected = this.sektorList[0].namaSektor!;
+      }
     }    
   }
 

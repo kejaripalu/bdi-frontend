@@ -70,6 +70,7 @@ const appRoutes: Routes = [
         { path: 'list', component: ProdinListComponent },
         { path: 'list/:id/detail', component: ProdinDetailComponent },
         { path: 'list/form', component: ProdinFormComponent },
+        { path: 'list/:id/form', component: ProdinFormComponent },
     ]}
 ];
 
