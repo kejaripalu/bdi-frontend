@@ -5,7 +5,7 @@
     {{ error }} 
     <br>
     <a  [routerLink]="['/surat-keluar', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa']"
-        [queryParams]="{edit: 1, jenisSurat: jenisSurat === 'RAHASIA' ? 'R' : 'B'}" 
+        [queryParams]="{jenisSurat: jenisSurat === 'RAHASIA' ? 'R' : 'B'}" 
         class="alert-link">Kembali</a>
 </div>
 <div class="mt-4" style="margin-bottom: 50px;"  *ngIf="!isLoading && !error">

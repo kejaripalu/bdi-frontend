@@ -6,7 +6,7 @@
     <br>
     <a 
         [routerLink]="['/surat-masuk', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa']"
-        [queryParams]="{edit: 1, jenisSurat: jenisSurat}" 
+        [queryParams]="{jenisSurat: jenisSurat}" 
         class="alert-link">Kembali</a>
 </div>
 <div class="mt-4" style="margin-bottom: 50px;" *ngIf="!isLoadingEditForm && !editModeError">

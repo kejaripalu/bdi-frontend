@@ -5,7 +5,7 @@
     {{ error }} 
     <br>
     <a  [routerLink]="['/rki', 'list']"
-        [queryParams]="{edit: 1, bidang: namaBidang}" 
+        [queryParams]="{bidang: namaBidang}" 
         class="alert-link">Kembali</a>
 </div>
 <div class="mt-4" style="margin-bottom: 50px;"  *ngIf="!isLoading && !error">

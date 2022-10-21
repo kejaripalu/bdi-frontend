@@ -12,7 +12,7 @@ export class ProdinService {
         { jenisProdin: 'LAPHASTUG', namaProdin: 'Laphastug', deskripsiProdin: 'Laporan Hasil Pelaksanaan Tugas' },
         { jenisProdin: 'LAPOPSIN', namaProdin: 'Lapopsin', deskripsiProdin: 'Laporan Operasi Intelijen' },
         { jenisProdin: 'LAPAT', namaProdin: 'Lapat', deskripsiProdin: 'Laporan Atensi' },
-        { jenisProdin: 'LAHIN', namaProdin: 'Lahin', deskripsiProdin: 'Telaahan Intelijen' },
+        // { jenisProdin: 'LAHIN', namaProdin: 'Lahin', deskripsiProdin: 'Telaahan Intelijen' },
         { jenisProdin: 'KIRKA', namaProdin: 'Kirka', deskripsiProdin: 'Perkiraan Keadaan Intelijen' },
         { jenisProdin: 'TROOP_INFO', namaProdin: 'Troop-Info', deskripsiProdin: 'Troop-Info' },
       ];
