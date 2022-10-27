@@ -49,7 +49,7 @@
                             class="text-alert" 
                             *ngIf="suratKeluarForm.get('tanggalSurat')?.errors?.['minlength'] && 
                                     suratKeluarForm.get('tanggalSurat')?.touched">
-                                Tanggal harus sesuai!!!</small>
+                                Minimal 10 karakter dengan format "yyyy-MM-dd" !!!</small>
                     </div>
                 </div>
                 <div class="row">
@@ -72,6 +72,11 @@
                             *ngIf="suratKeluarForm.get('nomorSurat')?.errors?.['minlength'] && 
                                     suratKeluarForm.get('nomorSurat')?.touched">
                                     Minimal 5 karakter!!!</small>
+                        <small 
+                            class="text-alert" 
+                            *ngIf="suratKeluarForm.get('nomorSurat')?.errors?.['maxlength'] && 
+                                    suratKeluarForm.get('nomorSurat')?.touched">
+                                    Tidak boleh lebih dari 255 karakter!!!</small>
                     </div>
                 </div>
                 <div class="row">
@@ -95,6 +100,11 @@
                             *ngIf="suratKeluarForm.get('kepada')?.errors?.['minlength'] && 
                                     suratKeluarForm.get('kepada')?.touched">
                                 Minimal 3 karakter!!!</small>
+                        <small 
+                            class="text-alert" 
+                            *ngIf="suratKeluarForm.get('kepada')?.errors?.['maxlength'] && 
+                                suratKeluarForm.get('kepada')?.touched">
+                                    Tidak boleh lebih dari 255 karakter!!!</small>
                     </div>
                 </div>
                 <div class="row">
@@ -118,6 +128,11 @@
                             *ngIf="suratKeluarForm.get('perihal')?.errors?.['minlength'] && 
                                     suratKeluarForm.get('perihal')?.touched">
                                 Minimal 5 karakter!!!</small>
+                        <small 
+                            class="text-alert" 
+                            *ngIf="suratKeluarForm.get('perihal')?.errors?.['maxlength'] && 
+                                    suratKeluarForm.get('perihal')?.touched">
+                                Tidak boleh lebih dari 255 karakter!!!</small>
                     </div>
                 </div>
                 <div class="row">
@@ -130,6 +145,11 @@
                                 class="form-control"
                                 formControlName="lampiran"></textarea>
                         </div>
+                        <small 
+                            class="text-alert" 
+                            *ngIf="suratKeluarForm.get('lampiran')?.errors?.['maxlength'] && 
+                                    suratKeluarForm.get('lampiran')?.touched">
+                                Tidak boleh lebih dari 255 karakter!!!</small>
                     </div>
                 </div>
                 <div class="row">
@@ -142,7 +162,20 @@
                                 class="form-control"
                                 formControlName="keterangan"></textarea>
                         </div>
+                        <small 
+                            class="text-alert" 
+                            *ngIf="suratKeluarForm.get('keterangan')?.errors?.['maxlength'] && 
+                                    suratKeluarForm.get('keterangan')?.touched">
+                                Tidak boleh lebih dari 255 karakter!!!</small>
                     </div>
+                </div>
+                <div class="form-group">
+                    <label for="urlFile">Link File:</label>
+                    <textarea
+                        rows="3"
+                        name="urlFile" 
+                        class="form-control"
+                        formControlName="urlFile"></textarea>
                 </div>
                 <app-danger-alert [message]="error" *ngIf="error"></app-danger-alert>
                 <div class="mt-4" *ngIf="isLoading">

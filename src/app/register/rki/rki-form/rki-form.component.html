@@ -60,7 +60,7 @@
                             class="text-alert" 
                             *ngIf="rkiForm.get('tanggalWaktuDiterima')?.errors?.['minlength'] && 
                                     rkiForm.get('tanggalWaktuDiterima')?.touched">
-                                Minimal 8 karakter!!!</small>
+                                Minimal 10 karakter dengan format "yyyy-MM-dd" !!!</small>
                     </div>
                     <div class="col-sm-auto">
                         <div class="form-group">
@@ -80,7 +80,7 @@
                             class="text-alert" 
                             *ngIf="rkiForm.get('jamPenerimaanSurat')?.errors?.['minlength'] && 
                                     rkiForm.get('jamPenerimaanSurat')?.touched">
-                                Minimal 5 karakter!!!</small>
+                                Minimal 5 karakter dengan format "HH:mm" !!!</small>
                     </div>
                 </div>
                 <div class="row">
@@ -105,6 +105,11 @@
                             *ngIf="rkiForm.get('sumberBapul')?.errors?.['minlength'] && 
                                    rkiForm.get('sumberBapul')?.touched">
                                 Minimal 5 karakter!!!</small>
+                        <small 
+                            class="text-alert" 
+                            *ngIf="rkiForm.get('sumberBapul')?.errors?.['maxlength'] && 
+                                    rkiForm.get('sumberBapul')?.touched">
+                                Tidak boleh lebih dari 255 karakter!!!</small>
                     </div>                  
                 </div>              
                 <div class="form-group">
@@ -170,6 +175,11 @@
                         formControlName="catatan"
                         placement="top" ngbTooltip='Diisi catatan hasil tindakan bilamana ada hal-hal lain yang sejenis dengan informasi yang diperoleh, atau informasi lain sehubungan dengan informasi tersebut. Contoh: "Telah dicek dari data ternyata benar ada hubungannya dengan nomor ........."'></textarea>
                 </div>
+                <small 
+                    class="text-alert" 
+                    *ngIf="rkiForm.get('catatan')?.errors?.['maxlength'] && 
+                            rkiForm.get('catatan')?.touched">
+                        Tidak boleh lebih dari 255 karakter!!!</small>
                 <div class="form-group">
                     <label for="disposisiTindakan">Disposisi Tindakan:</label>
                     <textarea
@@ -179,6 +189,11 @@
                         formControlName="disposisiTindakan"
                         placement="top" ngbTooltip='Diisi disposisi Kasubdit / Asintel / Kasi Intel / Kepala Cabang Kejaksaan Negeri untuk menentukan bahwa informasi itu perlu / tidak dilaporkan kepada Direktur / Kajati/ Kajari tindak lanjutnya'></textarea>
                 </div>
+                <small 
+                    class="text-alert" 
+                    *ngIf="rkiForm.get('disposisiTindakan')?.errors?.['maxlength'] && 
+                            rkiForm.get('disposisiTindakan')?.touched">
+                        Tidak boleh lebih dari 255 karakter!!!</small>
                 <div class="form-group">
                     <label for="tindakLanjut">Tindak Lanjut:</label>
                     <div class="input-group">
@@ -206,8 +221,13 @@
                         name="tindakLanjut" 
                         class="form-control"
                         formControlName="tindakLanjut"
-                        placeholder="Isi tindak lanjut secara manual"></textarea>  
+                        placeholder="Isi tindak lanjut secara manual"></textarea> 
                 </div>
+                <small 
+                    class="text-alert" 
+                    *ngIf="rkiForm.get('tindakLanjut')?.errors?.['maxlength'] && 
+                            rkiForm.get('tindakLanjut')?.touched">
+                        Tidak boleh lebih dari 255 karakter!!!</small>
                 <div class="form-group">
                     <label for="keterangan">Keterangan:</label>
                     <textarea
@@ -217,6 +237,11 @@
                         formControlName="keterangan"
                         placement="top" ngbTooltip='Diisi nama sektor/subdit sesuai informasi diterima atau hal penting lainnya'></textarea>
                 </div>
+                <small 
+                    class="text-alert" 
+                    *ngIf="rkiForm.get('keterangan')?.errors?.['maxlength'] && 
+                            rkiForm.get('keterangan')?.touched">
+                        Tidak boleh lebih dari 255 karakter!!!</small>
                 <div class="form-group">
                     <label for="urlFile">Link File:</label>
                     <textarea

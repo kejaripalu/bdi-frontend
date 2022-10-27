@@ -8,4 +8,5 @@ export class SuratKeluar {
     lampiran!: string;
     keterangan!: string;
     jenisSurat!: string;
+    urlFile!: string;
 }

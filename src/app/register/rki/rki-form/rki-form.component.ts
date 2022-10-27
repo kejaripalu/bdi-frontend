@@ -90,12 +90,12 @@ export class RkiFormComponent implements OnInit, OnDestroy {
     this.rkiForm = new FormGroup({
       'tanggalWaktuDiterima': new FormControl(this.modelDateTanggalWaktuDiterima, [Validators.required, Validators.minLength(10)]),
       'jamWaktuDiterima': new FormControl(jamWaktuDiterima, [Validators.required, Validators.minLength(5)]),
-      'sumberBapul': new FormControl(sumberBapul, [Validators.required, Validators.minLength(5)]),
+      'sumberBapul': new FormControl(sumberBapul, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
       'uraianPeristiwaMasalah': new FormControl(uraianPeristiwaMasalah, [Validators.required, Validators.minLength(10)]),
-      'catatan': new FormControl(catatan),
-      'tindakLanjut': new FormControl(tindakLanjut),
-      'disposisiTindakan': new FormControl(disposisiTindakan),
-      'keterangan': new FormControl(keterangan),
+      'catatan': new FormControl(catatan, Validators.maxLength(255)),
+      'tindakLanjut': new FormControl(tindakLanjut, Validators.maxLength(255)),
+      'disposisiTindakan': new FormControl(disposisiTindakan, Validators.maxLength(255)),
+      'keterangan': new FormControl(keterangan, Validators.maxLength(255)),
       'urlFile': new FormControl(urlFile)
     });
     
@@ -157,12 +157,12 @@ export class RkiFormComponent implements OnInit, OnDestroy {
           this.rkiForm = new FormGroup({
             'tanggalWaktuDiterima': new FormControl(this.modelDateTanggalWaktuDiterima, [Validators.required, Validators.minLength(10)]),
             'jamWaktuDiterima': new FormControl(rki.jamWaktuDiterima, [Validators.required, Validators.minLength(5)]),
-            'sumberBapul': new FormControl(rki.sumberBapul, [Validators.required, Validators.minLength(5)]),
+            'sumberBapul': new FormControl(rki.sumberBapul, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
             'uraianPeristiwaMasalah': new FormControl(rki.uraianPeristiwaMasalah, [Validators.required, Validators.minLength(10)]),
-            'catatan': new FormControl(rki.catatan),
-            'tindakLanjut': new FormControl(rki.tindakLanjut),
-            'disposisiTindakan': new FormControl(rki.disposisiTindakan),
-            'keterangan': new FormControl(rki.keterangan),
+            'catatan': new FormControl(rki.catatan, Validators.maxLength(255)),
+            'tindakLanjut': new FormControl(rki.tindakLanjut, Validators.maxLength(255)),
+            'disposisiTindakan': new FormControl(rki.disposisiTindakan, Validators.maxLength(255)),
+            'keterangan': new FormControl(rki.keterangan, Validators.maxLength(255)),
             'urlFile': new FormControl(rki.urlFile)
           });
     

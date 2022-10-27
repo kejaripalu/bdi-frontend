@@ -61,14 +61,16 @@ export class SuratKeluarFormComponent implements OnInit, OnDestroy {
     let perihal = null as any;
     let lampiran = null as any;
     let keterangan = null as any;
+    let urlFile = null as any;
 
     this.suratKeluarForm = new FormGroup({
-      'tanggalSurat': new FormControl(this.modelDate,  [Validators.required, Validators.minLength(8)]),
-      'nomorSurat': new FormControl(nomorSurat,  [Validators.required, Validators.minLength(5)]),
-      'kepada': new FormControl(kepada,  [Validators.required, Validators.minLength(3)]),
-      'perihal': new FormControl(perihal,  [Validators.required, Validators.minLength(5)]),
-      'lampiran': new FormControl(lampiran),
-      'keterangan': new FormControl(keterangan)
+      'tanggalSurat': new FormControl(this.modelDate,  [Validators.required, Validators.minLength(10)]),
+      'nomorSurat': new FormControl(nomorSurat,  [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
+      'kepada': new FormControl(kepada,  [Validators.required, Validators.minLength(3), Validators.maxLength(255)]),
+      'perihal': new FormControl(perihal,  [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
+      'lampiran': new FormControl(lampiran, Validators.maxLength(255)),
+      'keterangan': new FormControl(keterangan, Validators.maxLength(255)),
+      'urlFile': new FormControl(urlFile)
     });
 
     if (this.isEditMode) {
@@ -80,12 +82,13 @@ export class SuratKeluarFormComponent implements OnInit, OnDestroy {
                             day: +suratKeluar.tanggalSurat.slice(8, 10)};
           
           this.suratKeluarForm = new FormGroup({
-            'tanggalSurat': new FormControl(this.modelDate, [Validators.required, Validators.minLength(8)]),
-            'nomorSurat': new FormControl(suratKeluar.nomorSurat, [Validators.required, Validators.minLength(5)]),
-            'kepada': new FormControl(suratKeluar.kepada, [Validators.required, Validators.minLength(3)]),
-            'perihal': new FormControl(suratKeluar.perihal, [Validators.required, Validators.minLength(5)]),
-            'lampiran': new FormControl(suratKeluar.lampiran),
-            'keterangan': new FormControl(suratKeluar.keterangan)
+            'tanggalSurat': new FormControl(this.modelDate, [Validators.required, Validators.minLength(10), Validators.maxLength(255)]),
+            'nomorSurat': new FormControl(suratKeluar.nomorSurat, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
+            'kepada': new FormControl(suratKeluar.kepada, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]),
+            'perihal': new FormControl(suratKeluar.perihal, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
+            'lampiran': new FormControl(suratKeluar.lampiran, Validators.maxLength(255)),
+            'keterangan': new FormControl(suratKeluar.keterangan, Validators.maxLength(255)),
+            'urlFile': new FormControl(suratKeluar.urlFile)
           });
           this.isLoadingEditForm = false;
           this.editModeError = false;
@@ -115,6 +118,7 @@ export class SuratKeluarFormComponent implements OnInit, OnDestroy {
       suratKeluar.perihal = this.suratKeluarForm.value['perihal'];
       suratKeluar.lampiran = this.suratKeluarForm.value['lampiran'];
       suratKeluar.keterangan = this.suratKeluarForm.value['keterangan'];
+      suratKeluar.urlFile = this.suratKeluarForm.value['urlFile'];
       suratKeluar.jenisSurat = this.jenisSurat;
 
       this.suratKeluarSub = this.suratKeluarService.updateSuratKeluar(suratKeluar).subscribe({
@@ -137,6 +141,7 @@ export class SuratKeluarFormComponent implements OnInit, OnDestroy {
       suratKeluar.perihal = this.suratKeluarForm.value['perihal'];
       suratKeluar.lampiran = this.suratKeluarForm.value['lampiran'];
       suratKeluar.keterangan = this.suratKeluarForm.value['keterangan'];
+      suratKeluar.urlFile = this.suratKeluarForm.value['urlFile'];
       suratKeluar.jenisSurat = this.jenisSurat;
 
       this.suratKeluarSub = this.suratKeluarService.createSuratKeluar(suratKeluar).subscribe({
