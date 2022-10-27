@@ -23,6 +23,7 @@ import { ProdinDetailComponent } from "./register/prodin/prodin-detail/prodin-de
 import { ProdinFormComponent } from "./register/prodin/prodin-form/prodin-form.component";
 import { ArsipComponent } from "./register/arsip/arsip.component";
 import { ArsipListComponent } from "./register/arsip/arsip-list/arsip-list.component";
+import { ArsipFormComponent } from "./register/arsip/arsip-form/arsip-form.component";
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -76,7 +77,8 @@ const appRoutes: Routes = [
     ]},
     { path: 'arsip', component: ArsipComponent, children:[
         { path: '', redirectTo: '/arsip/list', pathMatch: 'full' },
-        { path: 'list', component: ArsipListComponent }
+        { path: 'list', component: ArsipListComponent },
+        { path: 'list/form', component: ArsipFormComponent }
     ]} 
 ];
 

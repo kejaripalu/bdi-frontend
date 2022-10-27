@@ -84,7 +84,7 @@ export class ArsipListComponent implements OnInit, OnDestroy {
   }
 
   onNewArsip() {
-    throw new Error('Method not implemented.');
+    this.router.navigate(['/arsip', 'list', 'form']);
   }
   
     updatePageSize(arg0: any) {
