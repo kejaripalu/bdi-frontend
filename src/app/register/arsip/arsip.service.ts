@@ -44,6 +44,30 @@ export class ArsipService {
         }));
     }
 
+    getOne(id: string) {
+        const getEndPoint = `${this.endPoint}/${id}/detail`;
+        return this.httpClient.get<Arsip>(getEndPoint)
+            .pipe(
+                map(response => {
+                    return response;
+                }),
+                catchError(errorResponse => {
+                    let errorMessage =  'Aduh... Parah nih bos.. gagal ambil data dari server!!!';
+                    if (!errorResponse.error) {
+                        return throwError(() => errorMessage);
+                    }
+                    switch (errorResponse.error.message) {
+                        case 'ID_NOT_FOUND':
+                            errorMessage = 'Bro... Data tidak ditemukan!!!'
+                            break;
+                        default:
+                            errorMessage = 'GAGAL Menampilkan data!!!';
+                    }
+                    return throwError(() => errorMessage);
+                })
+        );
+    }
+
 }
 
 interface ResponseArsip {

@@ -44,6 +44,7 @@ import { ProdinHelpComponent } from './register/prodin/prodin-help/prodin-help.c
 import { ArsipComponent } from './register/arsip/arsip.component';
 import { ArsipListComponent } from './register/arsip/arsip-list/arsip-list.component';
 import { ArsipFormComponent } from './register/arsip/arsip-form/arsip-form.component';
+import { ArsipDetailComponent } from './register/arsip/arsip-detail/arsip-detail.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import { ArsipFormComponent } from './register/arsip/arsip-form/arsip-form.compo
     ProdinHelpComponent,
     ArsipComponent,
     ArsipListComponent,
-    ArsipFormComponent
+    ArsipFormComponent,
+    ArsipDetailComponent
   ],
   imports: [
     BrowserModule,

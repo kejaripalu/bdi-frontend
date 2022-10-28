@@ -69,9 +69,9 @@
                     <td class="align-top" style="text-align: center;">{{ a.kodePenyimpanan }}</td>
                     <td class="align-top">
                         <a class="dropdown-item text-primary"
-                                        [routerLink]="['/arsip', a.id, 'detail']"><i class="bi bi-list-check"></i> Detail</a>                   
+                                        [routerLink]="['/arsip', 'list', a.id, 'detail']"><i class="bi bi-list-check"></i> Detail</a>                   
                         <a class="dropdown-item text-success"
-                                        [routerLink]="['/arsip', a.id, 'form']"
+                                        [routerLink]="['/arsip', 'list', a.id, 'form']"
                                         [queryParams]="{edit: 1}">
                                         <i class="bi bi-pencil-square"></i> Ubah</a>
                         <a class="dropdown-item text-danger" (click)="onDeleteArsip(a.id)" style="cursor: pointer;"><i
