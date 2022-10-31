@@ -90,6 +90,38 @@ export class ArsipService {
         }));
     }
 
+    delete(id: string) {
+        const deleteEndPoint = `${this.endPoint}/${id}`;
+        return this.httpClient.delete<Arsip>(deleteEndPoint)
+            .pipe(catchError(errorResponse => {
+                let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
+                if (!errorResponse.error) {
+                    return throwError(() => errorMessage);
+                }
+                switch (errorResponse.error.message) {
+                    case 'ID_NOT_FOUND':
+                        errorMessage = 'Bro... Data tidak ditemukan!!!'
+                        break;
+                    default:
+                        errorMessage = 'GAGAL menghapus data!!!';
+                }
+                return throwError(() => errorMessage);
+        }));
+    }
+
+    getSearch(value: string, page: number, size: number, tahun: string) {
+        const startDate = tahun + '-01-01';        
+        const endDate = tahun + '-12-31';    
+        const getEndPoint = `${this.endPoint}/search?pages=${page}&sizes=${size}&` +
+            `startDate=${startDate}&endDate=${endDate}&value=${value}`;  
+        return this.httpClient.get<ResponseArsip>(getEndPoint)
+            .pipe(
+                map(response => {
+                    return response;
+                })
+        );
+    }
+
 }
 
 interface ResponseArsip {

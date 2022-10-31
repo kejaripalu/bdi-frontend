@@ -86,32 +86,82 @@ export class ArsipListComponent implements OnInit, OnDestroy {
   onNewArsip() {
     this.router.navigate(['/arsip', 'list', 'form']);
   }
-  
-    updatePageSize(arg0: any) {
-    throw new Error('Method not implemented.');
-    }
-    loadDataArsip() {
-    throw new Error('Method not implemented.');
-    }
-    onDeleteArsip(arg0: string) {
-    throw new Error('Method not implemented.');
-    }
-    onDateTimeShowData() {
-    throw new Error('Method not implemented.');
-    }
-    onSearchingMode() {
-    throw new Error('Method not implemented.');
-    }
-    updateYearSelected(arg0: any) {
-    throw new Error('Method not implemented.');
-    }
-    searchingArsip(arg0: string) {
-    throw new Error('Method not implemented.');
-    }
-    updateMonthSelected(arg0: any) {
-    throw new Error('Method not implemented.');
-    }
 
+  onDeleteArsip(id: string) {
+    if (confirm('Yakin ente mau hapus data ini?')) {
+      this.isLoading = true;
+      this.arsipSub = this.arsipService.delete(id)
+        .subscribe({
+          next: () => {
+            this.isLoading = false;
+            this.loadData();
+            this.toastService.show('Ashiiap.... Berhasil Hapus Data Arsip!', 
+                                    { classname: 'bg-success text-light', delay: 5000 });
+          },
+          error: (errorMessage) => {
+            this.error = errorMessage;
+            this.isLoading = false;
+          }
+        });
+    }
+  }
+  
+  updatePageSize(pageSize: number) {
+    this.pageSize = pageSize;
+    this.pageNumber = 1;
+    this.isLoading = true;
+    this.loadData();
+  }
+
+  updateMonthSelected(month: number) {
+    this.currentMonth = +month;
+    this.pageNumber = 1;
+    this.isLoading = true;
+    this.loadData();
+  }
+
+  updateYearSelected(year: number) {
+    this.currentYear = +year;
+    this.pageNumber = 1;
+    this.isLoading = true;
+    this.loadData();
+  }
+
+  onSearchingMode() {
+    this.isSearching = true;
+  }
+
+  onDateTimeShowData() {
+    this.isSearching = false;
+  }
+    
+searchingArsip(value: string) {
+    if (value.trim() === '') {
+      return;
+    }
+    this.isLoading = true;
+    this.pageNumber = 1;
+    this.arsipSub = this.arsipService.getSearch(
+      value,
+      this.pageNumber - 1, 
+      this.pageSize, 
+      this.currentYear.toString())
+        .subscribe({
+          next: (responseData) => {
+            // console.log(responseData);
+            this.arsip = responseData.content;
+            this.pageNumber = responseData.number + 1;
+            this.pageSize = responseData.size;
+            this.totalElements = responseData.totalElements;
+            this.isLoading = false;
+          },
+          error: () => {
+            this.error = 'Aduh... Gagal ambil data dari server!!!';
+            this.isLoading = false;
+          }
+        });
+  }
+    
   ngOnDestroy(): void {
     if (this.arsipSub) {
       this.arsipSub.unsubscribe();
