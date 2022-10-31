@@ -76,7 +76,37 @@ export class ArsipFormComponent implements OnInit, OnDestroy {
     });
 
     if (this.isEditMode) {
-      // TO DO
+      this.isLoadingEditForm = true;
+      this.arsipSub = this.arsipService.getOne(this.id).subscribe({
+        next: (arsip) => {
+          this.modelDateTanggalPenerimaanArsip = {year: +arsip.tanggalPenerimaanArsip.slice(0, 4), 
+            month: +arsip.tanggalPenerimaanArsip.slice(5, 7), 
+            day: +arsip.tanggalPenerimaanArsip.slice(8, 10)};      
+          this.modelDateTanggalSurat = {year: +arsip.tanggalSurat.slice(0, 4), 
+            month: +arsip.tanggalSurat.slice(5, 7), 
+            day: +arsip.tanggalSurat.slice(8, 10)};
+          
+          this.arsipForm = new FormGroup({
+            'tanggalPenerimaanArsip': new FormControl(this.modelDateTanggalPenerimaanArsip, [Validators.required, Validators.minLength(10)]),
+            'jamPenerimaanArsip': new FormControl(arsip.jamPenerimaanArsip, [Validators.required, Validators.minLength(5)]),
+            'diterimaDari': new FormControl(arsip.diterimaDari, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]),
+            'nomorSurat': new FormControl(arsip.nomorSurat, [Validators.required, Validators.maxLength(255)]),
+            'tanggalSurat': new FormControl(this.modelDateTanggalSurat, [Validators.required, Validators.minLength(10)]),
+            'perihal': new FormControl(arsip.perihal, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
+            'lampiran': new FormControl(arsip.lampiran, Validators.maxLength(255)),
+            'kodePenyimpanan': new FormControl(arsip.kodePenyimpanan, Validators.maxLength(255)),
+            'keterangan': new FormControl(arsip.keterangan, Validators.maxLength(255)),
+            'urlFile': new FormControl(arsip.urlFile)
+          });
+          this.isLoadingEditForm = false;
+          this.editModeError = false;
+        },
+        error: (errorMessage) => {
+          this.isLoadingEditForm = false;
+          this.error = errorMessage;
+          this.editModeError = true;
+        }
+      });
     }
   }
 
@@ -93,7 +123,30 @@ export class ArsipFormComponent implements OnInit, OnDestroy {
       this.modelDateTanggalSurat.day);
     
     if (this.isEditMode) {
-      // TO DO
+      const arsip = new Arsip();
+      arsip.id = this.id;
+      arsip.tanggalPenerimaanArsip = dateTanggalPenerimaanArsip;
+      arsip.jamPenerimaanArsip = this.arsipForm.value['jamPenerimaanArsip'];
+      arsip.diterimaDari = this.arsipForm.value['diterimaDari'];
+      arsip.nomorSurat = this.arsipForm.value['nomorSurat'];
+      arsip.tanggalSurat = dateTanggalSurat;
+      arsip.perihal = this.arsipForm.value['perihal'];
+      arsip.lampiran = this.arsipForm.value['lampiran'];
+      arsip.kodePenyimpanan = this.arsipForm.value['kodePenyimpanan'];
+      arsip.keterangan = this.arsipForm.value['keterangan'];
+      arsip.urlFile = this.arsipForm.value['urlFile'];
+
+      this.arsipSub = this.arsipService.update(arsip).subscribe({
+        next: () => {
+          this.isLoading = false;
+          this.message = 'UpdateSukses';
+          this.onCancel();
+        },
+        error: (errorMessage) => {
+          this.error = errorMessage;
+          this.isLoading = false;
+        }
+      });
     } else {
       const arsip = new Arsip();
       arsip.tanggalPenerimaanArsip = dateTanggalPenerimaanArsip;

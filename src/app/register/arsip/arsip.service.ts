@@ -68,6 +68,28 @@ export class ArsipService {
         );
     }
 
+    update(arsip: Arsip) {
+        const putEndPoint = `${this.endPoint}/${arsip.id}`;
+        return this.httpClient.put<Arsip>(putEndPoint, arsip)
+            .pipe(catchError(errorResponse => {
+                let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
+                if (!errorResponse.error) {
+                    return throwError(() => errorMessage);
+                }
+                switch (errorResponse.error.message) {
+                    case 'ID_NOT_FOUND':
+                        errorMessage = 'Bro... Data tidak ditemukan!!!'
+                        break;
+                    case 'DUPLICATE_DATA_FIELD':
+                        errorMessage = 'Bro.. Data ini sudah pernah diinput!!!';
+                        break;
+                    default:
+                        errorMessage = 'GAGAL Update data!!!';
+                }
+                return throwError(() => errorMessage);
+        }));
+    }
+
 }
 
 interface ResponseArsip {
