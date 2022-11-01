@@ -66,7 +66,7 @@
                     <td class="align-top">{{ r.tanggalWaktuDiterima }} {{ r.jamWaktuDiterima }}</td>
                     <td class="align-top">{{ r.sumberBapul }}</td>
                     <td class="align-top" style="text-align: center;">{{ r.nilaiDataInformasi }}</td>
-                    <td class="align-top">{{ r.uraianPeristiwaMasalah }}</td>
+                    <td class="align-top">{{ r.uraianPeristiwaMasalah | shorten: 200 }}</td>
                     <td class="align-top">
                         <a class="dropdown-item text-primary"
                                         [routerLink]="['/rki', 'list', r.id, 'detail']"
