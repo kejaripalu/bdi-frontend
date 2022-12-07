@@ -45,6 +45,8 @@ import { ArsipComponent } from './register/arsip/arsip.component';
 import { ArsipListComponent } from './register/arsip/arsip-list/arsip-list.component';
 import { ArsipFormComponent } from './register/arsip/arsip-form/arsip-form.component';
 import { ArsipDetailComponent } from './register/arsip/arsip-detail/arsip-detail.component';
+import { ArsipHelpComponent } from './register/arsip/arsip-help/arsip-help.component';
+import { ShortenPipe } from './shared/shorten.pipe';
 
 @NgModule({
   declarations: [
@@ -87,7 +89,9 @@ import { ArsipDetailComponent } from './register/arsip/arsip-detail/arsip-detail
     ArsipComponent,
     ArsipListComponent,
     ArsipFormComponent,
-    ArsipDetailComponent
+    ArsipDetailComponent,
+    ArsipHelpComponent,
+    ShortenPipe
   ],
   imports: [
     BrowserModule,
