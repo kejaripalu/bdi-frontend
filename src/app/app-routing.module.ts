@@ -25,6 +25,8 @@ import { ArsipComponent } from "./register/arsip/arsip.component";
 import { ArsipListComponent } from "./register/arsip/arsip-list/arsip-list.component";
 import { ArsipFormComponent } from "./register/arsip/arsip-form/arsip-form.component";
 import { ArsipDetailComponent } from "./register/arsip/arsip-detail/arsip-detail.component";
+import { KegiatanComponent } from "./register/kegiatan/kegiatan.component";
+import { KegiatanListComponent } from "./register/kegiatan/kegiatan-list/kegiatan-list.component";
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -82,7 +84,11 @@ const appRoutes: Routes = [
         { path: 'list/form', component: ArsipFormComponent },
         { path: 'list/:id/form', component: ArsipFormComponent },
         { path: 'list/:id/detail', component: ArsipDetailComponent }
-    ]} 
+    ]},
+    { path: 'kegiatan', component: KegiatanComponent, children:[
+        { path: '', redirectTo: '/kegiatan/list', pathMatch: 'full' },
+        { path: 'list', component: KegiatanListComponent }
+    ]}
 ];
 
 @NgModule({

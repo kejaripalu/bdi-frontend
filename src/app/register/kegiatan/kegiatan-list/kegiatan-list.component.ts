@@ -4,17 +4,16 @@ import { Subscription } from 'rxjs';
 import { BidangDirektoratSektorService } from 'src/app/shared/bidang-direktorat/bidang-direktorat-sektor.service';
 import { Month } from 'src/app/shared/month';
 import { ToastService } from 'src/app/shared/toast.service';
-import { RegisterKerjaIntelijen } from '../rki.model';
-import { RegisterKerjaIntelijenService } from '../rki.service';
+import { RegisterKegiatanIntelijen } from '../kegiatan.model';
+import { RegisterKegiatanIntelijenService } from '../kegiatan.service';
 
 @Component({
-  selector: 'app-rki-list',
-  templateUrl: './rki-list.component.html',
-  styleUrls: ['./rki-list.component.css']
+  selector: 'app-kegiatan-list',
+  templateUrl: './kegiatan-list.component.html',
+  styleUrls: ['./kegiatan-list.component.css']
 })
-export class RkiListComponent implements OnInit, OnDestroy {
-  rki: RegisterKerjaIntelijen[] = [];
-  title?: string;
+export class KegiatanListComponent implements OnInit, OnDestroy {
+  giat: RegisterKegiatanIntelijen[] = [];
   month = Object.keys(Month).filter((v) => isNaN(Number(v)));
   currentMonth = new Date().getMonth() + 1; // get current month
   currentYear = new Date().getFullYear(); // get current year
@@ -23,25 +22,26 @@ export class RkiListComponent implements OnInit, OnDestroy {
   namaBidang: string = null as any;
   isLoading: boolean = false;
   error: string = null as any;
-  private rkiSub!: Subscription;
-  private rkiQueryParamSub!: Subscription; 
+  private giatSub!: Subscription;
+  private giatQueryParamSub!: Subscription; 
   pageNumber: number = 1;
   pageSize: number = 10;
   totalElements: number = 0;
-  isSearching: boolean = false;
+  isSearching: boolean = false;  
+
 
   constructor(private router: Router,
               private route: ActivatedRoute,
               private bidangDirektoratSektorService: BidangDirektoratSektorService,
-              private rkiService: RegisterKerjaIntelijenService,
+              private giatService: RegisterKegiatanIntelijenService,
               public toastService: ToastService) { }
-  
+
   ngOnInit(): void {
     this.error = false as any;
     this.isLoading = true;
     this.getYear();
     this.checkMessage();
-    this.rkiQueryParamSub = this.route.queryParams
+    this.giatQueryParamSub = this.route.queryParams
         .subscribe((queryParams: Params) => {
           this.indexBidang = this.bidangDirektoratSektorService.getBidangDirektori()
               .findIndex(obj => {
@@ -51,14 +51,13 @@ export class RkiListComponent implements OnInit, OnDestroy {
           if (this.indexBidang < 0) {
             this.indexBidang = 0;
           }       
-          this.title = this.bidangDirektoratSektorService.getBidangDirektori()[this.indexBidang].deskripsiBidang;           
           this.namaBidang = this.bidangDirektoratSektorService.getBidangDirektori()[this.indexBidang].namaBidang!;          
-          this.loadDataRKI();
+          this.loadDataGiat();
     });
   }
-  
-  loadDataRKI() {
-    this.rkiSub = this.rkiService.getRKI(
+
+  loadDataGiat() {
+    this.giatSub = this.giatService.getAll(
       this.pageNumber - 1, 
       this.pageSize, 
       this.namaBidang, 
@@ -67,7 +66,7 @@ export class RkiListComponent implements OnInit, OnDestroy {
         .subscribe({
           next: (responseData) => {
             // console.log(responseData);
-            this.rki = responseData.content;
+            this.giat = responseData.content;
             this.pageNumber = responseData.number + 1;
             this.pageSize = responseData.size;
             this.totalElements = responseData.totalElements;
@@ -80,49 +79,42 @@ export class RkiListComponent implements OnInit, OnDestroy {
         });
   }
 
+  getYear() {
+    for (let startYear = 2019; startYear <= this.currentYear; startYear++) {
+      this.year.push(startYear);
+    }
+  }
+
   checkMessage() {
-    this.rkiQueryParamSub = this.route.queryParams
+    this.giatQueryParamSub = this.route.queryParams
     .subscribe((queryParams: Params) => {
       if (queryParams['message'] === 'SimpanSukses') {
-        this.toastService.show('Ashiiap.... Berhasil Input Data RKI!', 
+        this.toastService.show('Ashiiap.... Berhasil Input Data Kegiatan Intelijen!', 
           { classname: 'bg-success text-light', delay: 5000 });
       } else if (queryParams['message'] === 'UpdateSukses') {
-        this.toastService.show('Ashiiap.... Berhasil Update Data RKI!', 
+        this.toastService.show('Ashiiap.... Berhasil Update Data Kegiatan Intelijen!', 
           { classname: 'bg-success text-light', delay: 5000 });
       } else {
         return;
       }
     });  
   }
-  
-  getYear() {
-    for (let startYear = 2019; startYear <= this.currentYear; startYear++) {
-      this.year.push(startYear);
-    }
-  }
-  
-  onNewRKI() {
-    this.router.navigate(['/rki', 'list', 'form'], {
+
+  onNewGiat() {
+    this.router.navigate(['/kegiatan', 'list', 'form'], {
       queryParams: { bidang: this.namaBidang }
     });
   }
 
-  updatePageSize(pageSize: number) {
-    this.pageSize = pageSize;
-    this.pageNumber = 1;
-    this.isLoading = true;
-    this.loadDataRKI();
-  }
-  
   onDelete(id: string) {
     if (confirm('Yakin ente mau hapus data ini?')) {
       this.isLoading = true;
-      this.rkiSub = this.rkiService.deleteRKI(id)
+      this.giatSub = this.giatService.delete(id)
         .subscribe({
           next: () => {
             this.isLoading = false;
-            this.loadDataRKI();
-            this.toastService.show('Ashiiap.... Berhasil Hapus Data RKI!', 
+            this.loadDataGiat();
+            this.toastService.show('Ashiiap.... Berhasil Hapus Data Kegiatan Intelijen!', 
                                     { classname: 'bg-success text-light', delay: 5000 });
           },
           error: (errorMessage) => {
@@ -132,11 +124,18 @@ export class RkiListComponent implements OnInit, OnDestroy {
         });
     }
   }
-  
+
+  updatePageSize(pageSize: number) {
+    this.pageSize = pageSize;
+    this.pageNumber = 1;
+    this.isLoading = true;
+    this.loadDataGiat();
+  }
+
   onDateTimeShowData() {
     this.isSearching = false;
   }
-  
+
   onSearchingMode() {
     this.isSearching = true;
   }
@@ -145,16 +144,16 @@ export class RkiListComponent implements OnInit, OnDestroy {
     this.currentYear = +year;
     this.pageNumber = 1;
     this.isLoading = true;
-    this.loadDataRKI();
+    this.loadDataGiat();
   }
-  
-  searchingRKI(value: string) {
+
+  searchingGiat(value: string) {
     if (value.trim() === '') {
       return;
     }
     this.isLoading = true;
     this.pageNumber = 1;
-    this.rkiSub = this.rkiService.getSearchRKI(
+    this.giatSub = this.giatService.getSearch(
       value,
       this.pageNumber - 1, 
       this.pageSize, 
@@ -163,7 +162,7 @@ export class RkiListComponent implements OnInit, OnDestroy {
         .subscribe({
           next: (responseData) => {
             // console.log(responseData);
-            this.rki = responseData.content;
+            this.giat = responseData.content;
             this.pageNumber = responseData.number + 1;
             this.pageSize = responseData.size;
             this.totalElements = responseData.totalElements;
@@ -175,20 +174,20 @@ export class RkiListComponent implements OnInit, OnDestroy {
           }
         });
   }
-  
+
   updateMonthSelected(month: number) {
     this.currentMonth = +month;
     this.pageNumber = 1;
     this.isLoading = true;
-    this.loadDataRKI();
+    this.loadDataGiat();
   }
 
   ngOnDestroy(): void {
-    if (this.rkiQueryParamSub) {
-      this.rkiQueryParamSub.unsubscribe();
+    if (this.giatQueryParamSub) {
+      this.giatQueryParamSub.unsubscribe();
     }
-    if (this.rkiSub) {
-      this.rkiSub.unsubscribe();
+    if (this.giatSub) {
+      this.giatSub.unsubscribe();
     }
     this.toastService.clear();
   }

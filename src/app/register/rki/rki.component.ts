@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
@@ -12,7 +12,7 @@ import { RkiHelpComponent } from './rki-help/rki-help.component';
   templateUrl: './rki.component.html',
   styleUrls: ['./rki.component.css']
 })
-export class RkiComponent implements OnInit {
+export class RkiComponent implements OnInit, OnDestroy {
   bidang: Bidang[] = [];
   namaBidang: string = null as any;
   private rkiQueryParamSub!: Subscription; 
@@ -46,6 +46,12 @@ export class RkiComponent implements OnInit {
 
   onOpenHelp() {
     const modalHelp = this.modalService.open(RkiHelpComponent, { size: 'xl', scrollable: true });
+  }
+
+  ngOnDestroy(): void {
+    if (this.rkiQueryParamSub) {
+      this.rkiQueryParamSub.unsubscribe();
+    }
   }
 
 }

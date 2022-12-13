@@ -40,11 +40,19 @@
                 </a>
                 <div class="collapse" id="collapseKegiatan" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="#">IPOLHANKAM</a>
-                        <a class="nav-link" href="#">SOSBUDMAS</a>
-                        <a class="nav-link" href="#">EKOKEU</a>
+                        <a class="nav-link" routerLinkActive="active" 
+                            [routerLink]="['/kegiatan', 'list']"
+                            [queryParams]="{ bidang: 'IPOLHANKAM' }">IPOLHANKAM</a>
+                        <a class="nav-link" routerLinkActive="active" 
+                            [routerLink]="['/kegiatan', 'list']"
+                            [queryParams]="{ bidang: 'SOSBUDMAS' }">SOSBUDMAS</a>
+                        <a class="nav-link" routerLinkActive="active" 
+                            [routerLink]="['/kegiatan', 'list']"
+                            [queryParams]="{ bidang: 'EKOKEU' }">EKOKEU</a>
                         <a class="nav-link" href="#">PAMSTRA</a>
-                        <a class="nav-link" href="#">TI & Produk</a>         
+                        <a class="nav-link" routerLinkActive="active" 
+                            [routerLink]="['/kegiatan', 'list']"
+                            [queryParams]="{ bidang: 'TIPRODIN' }">TI & Produk</a>         
                     </nav>
                 </div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseOpsin" aria-expanded="false" aria-controls="collapseOpsin">
