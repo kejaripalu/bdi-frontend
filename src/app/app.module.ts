@@ -50,6 +50,7 @@ import { ShortenPipe } from './shared/shorten.pipe';
 import { KegiatanComponent } from './register/kegiatan/kegiatan.component';
 import { KegiatanListComponent } from './register/kegiatan/kegiatan-list/kegiatan-list.component';
 import { KegiatanFormComponent } from './register/kegiatan/kegiatan-form/kegiatan-form.component';
+import { KegiatanDetailComponent } from './register/kegiatan/kegiatan-detail/kegiatan-detail.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +98,8 @@ import { KegiatanFormComponent } from './register/kegiatan/kegiatan-form/kegiata
     ShortenPipe,
     KegiatanComponent,
     KegiatanListComponent,
-    KegiatanFormComponent
+    KegiatanFormComponent,
+    KegiatanDetailComponent
   ],
   imports: [
     BrowserModule,
