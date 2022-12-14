@@ -27,6 +27,7 @@ import { ArsipFormComponent } from "./register/arsip/arsip-form/arsip-form.compo
 import { ArsipDetailComponent } from "./register/arsip/arsip-detail/arsip-detail.component";
 import { KegiatanComponent } from "./register/kegiatan/kegiatan.component";
 import { KegiatanListComponent } from "./register/kegiatan/kegiatan-list/kegiatan-list.component";
+import { KegiatanFormComponent } from "./register/kegiatan/kegiatan-form/kegiatan-form.component";
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -87,7 +88,9 @@ const appRoutes: Routes = [
     ]},
     { path: 'kegiatan', component: KegiatanComponent, children:[
         { path: '', redirectTo: '/kegiatan/list', pathMatch: 'full' },
-        { path: 'list', component: KegiatanListComponent }
+        { path: 'list', component: KegiatanListComponent },
+        { path: 'list/form', component: KegiatanFormComponent },
+        { path: 'list/:id/form', component: KegiatanFormComponent }
     ]}
 ];
 

@@ -49,6 +49,7 @@ import { ArsipHelpComponent } from './register/arsip/arsip-help/arsip-help.compo
 import { ShortenPipe } from './shared/shorten.pipe';
 import { KegiatanComponent } from './register/kegiatan/kegiatan.component';
 import { KegiatanListComponent } from './register/kegiatan/kegiatan-list/kegiatan-list.component';
+import { KegiatanFormComponent } from './register/kegiatan/kegiatan-form/kegiatan-form.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +96,8 @@ import { KegiatanListComponent } from './register/kegiatan/kegiatan-list/kegiata
     ArsipHelpComponent,
     ShortenPipe,
     KegiatanComponent,
-    KegiatanListComponent
+    KegiatanListComponent,
+    KegiatanFormComponent
   ],
   imports: [
     BrowserModule,

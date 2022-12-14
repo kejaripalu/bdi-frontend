@@ -27,12 +27,7 @@ export class KegiatanComponent implements OnInit, OnDestroy {
             if (indexBidang < 0) {
                 indexBidang = 0;
             }
-            // if bidang IPOLHANKAM custom description namaBidang
-            if (indexBidang === 0) {
-              this.namaBidang = 'Ideologi, Politik, Pertahanan dan Keamanan, Cegah Tangkal dan Pengawasan Orang Asing, Pengamanan Sumber Daya Organisasi Kejaksaan dan Pengamanan Penanganan Perkara';
-            } else {
-              this.namaBidang = this.bidangDirektoratSektorService.getBidangDirektori()[indexBidang].deskripsiBidang!;
-            }
+            this.namaBidang = this.bidangDirektoratSektorService.getBidangDirektori()[indexBidang].deskripsiBidang!;
       });
   }
 
