@@ -1,0 +1,70 @@
+<div class="modal-header">
+    <h4 class="modal-title">PETUNJUK {{ kodeSurat }}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <h5>Register Kerja Intelijen bidang {{ namaBidang }}</h5>
+    <ol class="list-group list-group-numbered">
+        <li class="list-group-item">Pengertian:<br>
+            Register Kegiatan Bidang {{ namaBidang }} adalah buku catatan yang memuat data/informasi hasil kegiatan yang dilaksanakan terkait {{ namaBidang }}.
+        </li>
+        <li class="list-group-item">Kegunaan:<br>
+            Sebagai wadah pencatatan data/informasi dari hasil pelaksanaan kegiatan terkait permasalahan {{ namaBidang }}.
+        </li>
+        <li class="list-group-item">Penyelenggara pada:<br>
+            <ul>
+                <li>Kejaksaan Agung oleh masing-masing Kasubdit pada {{ penyelenggaraKejagung }};</li>
+                <li>Kejaksaan Tinggi oleh {{ penyelenggaraKejati }};</li>
+                <li>Kejaksaan Negeri oleh Kasi Intelijen; dan</li>
+                <li>Cabang Kejaksaan Negeri oleh Subseksi Intelijen dan Perdata dan Tata Usaha Negara.</li>
+            </ul>       
+        </li>
+        <li class="list-group-item">Waktu Pencatatan:<br>
+            Segera setelah menerima arsip surat perintah dan setelah dilaksanakan kegiatan.
+        </li>
+        <li class="list-group-item">Pelaksana:<br>
+            Dilaksanakan oleh petugas pencatat yang ditunjuk.
+        </li>
+        <li class="list-group-item">Penyimpanan:<br>
+            Disimpan dan dikelola oleh penyelenggara sesuai angka 3 (tiga).
+        </li>
+        <li class="list-group-item">Cara Pengisian:<br>
+            <table cellspacing="0" cellpadding="0" style="border-collapse: collapse; vertical-align: top;">
+                <tr>
+                    <td style="width:10%;">Kolom 1</td>
+                    <td style="width:3%;">&nbsp;:&nbsp;</td>
+                    <td>diisi nomor secara berurutan selama satu tahun takwim.</td>
+                </tr>
+                <tr>
+                    <td>Kolom 2</td>
+                    <td>&nbsp;:&nbsp;</td>
+                    <td>diisi sesuai Sektor/Subdit pada Bidang/Direktorat sesuai tugas masing-masing Bidang (lihat Bidang/Sektor pada Petunjuk Register Kerja Intelijen (R.IN-3).</td>
+                </tr>
+                <tr>
+                    <td>Kolom 3</td>
+                    <td>&nbsp;:&nbsp;</td>
+                    <td>diisi nomor, tanggal dan peruntukan/perihal surat perintah atau tanggal dan isi disposisi.</td>
+                </tr>
+                <tr>
+                    <td>Kolom 4</td>
+                    <td>&nbsp;:&nbsp;</td>
+                    <td>diisi nama petugas pelaksana.</td>
+                </tr>
+                <tr>
+                    <td>Kolom 5</td>
+                    <td>&nbsp;:&nbsp;</td>
+                    <td>diisi uraian singkat hasil pelaksanaan kegiatan.</td>
+                </tr>
+                <tr>
+                    <td>Kolom 6</td>
+                    <td>&nbsp;:&nbsp;</td>
+                    <td>diisi hal-hal lain yang dianggap perlu atau berkaitan dengan kendala dan/ atau hambatan dalam pelaksanaan kegiatan masing-masing sektor.</td>
+                </tr>
+            </table>
+        </li>
+        <li class="list-group-item">Ditutup pada setiap akhir bulan, diisi tempat, tanggal, bulan dan ditandatangani oleh Kasubdit/Kepala {{ penyelenggaraKejati }}/Kasi Intel/Kasubsi Intel dan Datun dengan diketahui oleh Direktur/Asintel/Kajari/Kepala Cabang Kejaksaan Negeri.</li>
+    </ol>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="activeModal.close('Close click')">Keluar</button>
+  </div>
