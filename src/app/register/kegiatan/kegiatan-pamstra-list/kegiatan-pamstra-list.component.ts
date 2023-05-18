@@ -4,35 +4,35 @@ import { Subscription } from 'rxjs';
 import { BidangDirektoratSektorService } from 'src/app/shared/bidang-direktorat/bidang-direktorat-sektor.service';
 import { Month } from 'src/app/shared/month';
 import { ToastService } from 'src/app/shared/toast.service';
-import { RegisterKegiatanIntelijen } from '../kegiatan.model';
-import { RegisterKegiatanIntelijenService } from '../kegiatan.service';
+import { RegisterKegiatanIntelijenPamstra } from '../kegiatan-pamstra.model';
+import { RegisterKegiatanIntelijenPamstraService } from '../kegiatan-pamstra.service';
 
 @Component({
-  selector: 'app-kegiatan-list',
-  templateUrl: './kegiatan-list.component.html',
-  styleUrls: ['./kegiatan-list.component.css']
+  selector: 'app-kegiatan-pamstra-list',
+  templateUrl: './kegiatan-pamstra-list.component.html',
+  styleUrls: ['./kegiatan-pamstra-list.component.css']
 })
-export class KegiatanListComponent implements OnInit, OnDestroy {
-  giat: RegisterKegiatanIntelijen[] = [];
+export class KegiatanPamstraListComponent implements OnInit, OnDestroy {
+  giat: RegisterKegiatanIntelijenPamstra[] = [];
   month = Object.keys(Month).filter((v) => isNaN(Number(v)));
   currentMonth = new Date().getMonth() + 1; // get current month
   currentYear = new Date().getFullYear(); // get current year
   year: number[] = [];
-  indexBidang!: number;
-  namaBidang: string = null as any;
   isLoading: boolean = false;
   error: string = null as any;
+  indexBidang!: number;
+  namaBidang: string = null as any;
   private giatSub!: Subscription;
   private giatQueryParamSub!: Subscription; 
   pageNumber: number = 1;
   pageSize: number = 10;
   totalElements: number = 0;
-  isSearching: boolean = false;  
+  isSearching: boolean = false;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
               private bidangDirektoratSektorService: BidangDirektoratSektorService,
-              private giatService: RegisterKegiatanIntelijenService,
+              private giatService: RegisterKegiatanIntelijenPamstraService,
               public toastService: ToastService) { }
 
   ngOnInit(): void {
@@ -59,7 +59,6 @@ export class KegiatanListComponent implements OnInit, OnDestroy {
     this.giatSub = this.giatService.getAll(
       this.pageNumber - 1, 
       this.pageSize, 
-      this.namaBidang, 
       +this.currentMonth, 
       this.currentYear.toString())
         .subscribe({
@@ -100,7 +99,7 @@ export class KegiatanListComponent implements OnInit, OnDestroy {
   }
 
   onNewGiat() {
-    this.router.navigate(['/kegiatan', 'list', 'form'], {
+    this.router.navigate(['/kegiatan', 'list', 'pamstra-form'], {
       queryParams: { bidang: this.namaBidang }
     });
   }
@@ -138,7 +137,7 @@ export class KegiatanListComponent implements OnInit, OnDestroy {
   onSearchingMode() {
     this.isSearching = true;
   }
-  
+
   updateYearSelected(year: number) {
     this.currentYear = +year;
     this.pageNumber = 1;
@@ -156,7 +155,6 @@ export class KegiatanListComponent implements OnInit, OnDestroy {
       value,
       this.pageNumber - 1, 
       this.pageSize, 
-      this.namaBidang, 
       this.currentYear.toString())
         .subscribe({
           next: (responseData) => {

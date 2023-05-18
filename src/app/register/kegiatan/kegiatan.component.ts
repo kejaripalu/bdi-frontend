@@ -38,6 +38,8 @@ export class KegiatanComponent implements OnInit, OnDestroy {
               this.kodeRegister = 'R.IN.8';
             } else if(indexBidang === 2) {
               this.kodeRegister = 'R.IN.9';
+            } else if(indexBidang === 3) {
+              this.kodeRegister = 'R.IN.10';
             } else if(indexBidang === 4) {
               this.kodeRegister = 'R.IN.11';
             } else {
