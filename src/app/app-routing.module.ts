@@ -31,6 +31,7 @@ import { KegiatanFormComponent } from "./register/kegiatan/kegiatan-form/kegiata
 import { KegiatanDetailComponent } from "./register/kegiatan/kegiatan-detail/kegiatan-detail.component";
 import { KegiatanPamstraListComponent } from "./register/kegiatan/kegiatan-pamstra-list/kegiatan-pamstra-list.component";
 import { KegiatanPamstraDetailComponent } from "./register/kegiatan/kegiatan-pamstra-detail/kegiatan-pamstra-detail.component";
+import { KegiatanPamstraFormComponent } from "./register/kegiatan/kegiatan-pamstra-form/kegiatan-pamstra-form.component";
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -96,7 +97,8 @@ const appRoutes: Routes = [
         { path: 'list/:id/form', component: KegiatanFormComponent },
         { path: 'list/:id/detail', component: KegiatanDetailComponent },
         { path: 'list/pamstra-list', component: KegiatanPamstraListComponent },
-        { path: 'list/pamstra-list/:id/detail', component: KegiatanPamstraDetailComponent }
+        { path: 'list/pamstra-list/:id/detail', component: KegiatanPamstraDetailComponent },
+        { path: 'list/pamstra-form', component: KegiatanPamstraFormComponent }
     ]}
 ];
 

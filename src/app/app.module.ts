@@ -54,6 +54,7 @@ import { KegiatanDetailComponent } from './register/kegiatan/kegiatan-detail/keg
 import { KegiatanHelpComponent } from './register/kegiatan/kegiatan-help/kegiatan-help.component';
 import { KegiatanPamstraListComponent } from './register/kegiatan/kegiatan-pamstra-list/kegiatan-pamstra-list.component';
 import { KegiatanPamstraDetailComponent } from './register/kegiatan/kegiatan-pamstra-detail/kegiatan-pamstra-detail.component';
+import { KegiatanPamstraFormComponent } from './register/kegiatan/kegiatan-pamstra-form/kegiatan-pamstra-form.component';
 
 @NgModule({
   declarations: [
@@ -105,7 +106,8 @@ import { KegiatanPamstraDetailComponent } from './register/kegiatan/kegiatan-pam
     KegiatanDetailComponent,
     KegiatanHelpComponent,
     KegiatanPamstraListComponent,
-    KegiatanPamstraDetailComponent
+    KegiatanPamstraDetailComponent,
+    KegiatanPamstraFormComponent
   ],
   imports: [
     BrowserModule,
