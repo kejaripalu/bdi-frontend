@@ -53,7 +53,7 @@
             <thead>
                 <tr>
                     <th scope="col">Sektor</th>
-                    <th scope="col">Nomor, Tanggal, dan Perihal SPRINT / Disposisi</th>
+                    <th scope="col" style="text-align: center;">Nomor, Tanggal, dan Perihal SPRINT / Disposisi</th>
                     <th scope="col" style="text-align: center;">Nama Petugas Pelaksana</th>
                     <th scope="col" style="text-align: center;">Hasil Pelaksanaan Kegiatan</th>
                     <th scope="col"></th>
@@ -62,7 +62,7 @@
             <tbody>
                 <tr *ngFor="let g of giat">
                     <td class="align-top">{{ g.sektor | sektorPipe }}</td>
-                    <td class="align-top" style="text-align: center;">{{ g.nomor }}<br>{{ g.tanggal }}<br>{{ g.perihal }}</td>
+                    <td class="align-top" style="text-align: center;">{{ g.nomor }}<br>{{ g.tanggal | date: 'dd-MM-yyyy' }}<br>{{ g.perihal }}</td>
                     <td class="align-top" style="text-align: center;">{{ g.namaPetugasPelaksana | shorten: 255 }}</td>
                     <td class="align-top">{{ g.hasilPelaksanaanKegiatan | shorten: 255 }}</td>
                     <td class="align-top">

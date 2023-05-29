@@ -46,9 +46,9 @@ export class KegiatanPamstraListComponent implements OnInit, OnDestroy {
               .findIndex(obj => {
                 return obj.namaBidang === queryParams['bidang'];
           });
-          // if index not found set to index 0 (IPOLHANKAM)
+          // if index not found set to index 3 (PAMSTRA)
           if (this.indexBidang < 0) {
-            this.indexBidang = 0;
+            this.indexBidang = 3;
           }       
           this.namaBidang = this.bidangDirektoratSektorService.getBidangDirektori()[this.indexBidang].namaBidang!;          
           this.loadDataGiat();

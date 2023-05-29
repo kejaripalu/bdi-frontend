@@ -67,7 +67,7 @@
                     <td class="align-top">{{ g.paguAnggaran | currency: "Rp. " }}</td>
                     <td class="align-top">
                         <a class="dropdown-item text-primary"
-                                        [routerLink]="['/kegiatan', 'list', g.id, 'detail']"
+                                        [routerLink]="['/kegiatan', 'list', 'pamstra-list', g.id, 'detail']"
                                         [queryParams]="{ bidang: namaBidang }"><i class="bi bi-list-check"></i> Detail</a>                   
                         <a class="dropdown-item text-success"
                                         [routerLink]="['/kegiatan', 'list', g.id, 'form']"

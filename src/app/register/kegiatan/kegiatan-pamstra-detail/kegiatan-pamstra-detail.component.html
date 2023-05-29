@@ -1,0 +1,189 @@
+<div *ngIf="isLoading" class="mt-4" style="text-align: center;">
+    <app-loading-spinner></app-loading-spinner>
+</div>
+<div class="alert alert-danger mt-4" *ngIf="error" role="alert">
+    {{ error }} 
+    <br>
+    <a  [routerLink]="['/kegiatan', 'list', 'pamstra-list']"
+        [queryParams]="{bidang: namaBidang}" 
+        class="alert-link">Kembali</a>
+</div>
+<div class="mt-4" style="margin-bottom: 50px;"  *ngIf="!isLoading && !error">
+    <div class="row">
+        <div class="col-sm-10 col-md-10 col-xl-10 offset-sm-1 offset-md-1 offset-xl-1">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xl-12" style="margin-bottom: 20px;">
+                    <div class="d-flex justify-content-between">
+                        <div class="p-2">
+                            <button type="button" class="btn btn-danger" style="margin-right: 15px;" (click)="onCancel()">
+                                <i class="bi bi-backspace-fill"></i> Kembali</button>
+                        </div>
+                        <div class="p-2">
+                            <button type="button" class="btn btn-warning"
+                            [routerLink]="['/kegiatan', 'list', giat.id, 'form']"
+                            [queryParams]="{edit: 1, namaBidang: namaBidang}"><i class="bi bi-pencil-square"></i> Ubah</button>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="col-sm-12 col-md-12 col-xl-12">
+                    <h4 class="text-primary">Rincian Kegiatan Intelijen</h4>
+                </div>
+            </div>
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-sm-4 col-md-4 col-xl-4">
+                        <p class="fw-bold">Sektor</p>
+                    </div>
+                    <div class="col-sm-8 col-md-8 col-xl-8">
+                        : {{ namaSektor }}
+                    </div>
+                </div>
+            </li>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-xl-4">
+                            <p class="fw-bold">Nama Kegiatan</p>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-xl-8">
+                            : {{ giat.namaKegiatan }}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-xl-4">
+                            <p class="fw-bold">Sumber Dana</p>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-xl-8">
+                            : {{ giat.sumberDana }}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-xl-4">
+                            <p class="fw-bold">Pagu Anggaran</p>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-xl-8">
+                            : {{ giat.paguAnggaran }}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-xl-4">
+                            <p class="fw-bold">Nomor & Tanggal Surat Permohonan</p>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-xl-8">
+                            : {{ giat.nomorSuratPermohonan }} tanggal {{ giat.tanggalSuratPermohonan | date: 'dd-MM-yyyy' }}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-xl-4">
+                            <p class="fw-bold">Tempat Pemaparan</p>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-xl-8">
+                            : {{ giat.tempatPemaparan }}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-xl-4">
+                            <p class="fw-bold">Telaahan Intelijen</p>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-xl-8">
+                            : {{ giat.telaahanIntelijen }}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-xl-4">
+                            <p class="fw-bold">Tindak Lanjut</p>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-xl-8">
+                            : {{ giat.tindakLanjutKeterangan }}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-xl-4">
+                            <p class="fw-bold">Nomor dan Tanggal Sprint Walpam</p>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-xl-8">
+                            : {{ giat.nomorSprintWalpam }} - {{ giat.tanggalSprintWalpam }}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-xl-4">
+                            <p class="fw-bold">Petugas Pelaksana</p>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-xl-8">
+                            : {{ giat.namaPetugasPelaksana }}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-xl-4">
+                            <p class="fw-bold">Nilai Kontrak</p>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-xl-8">
+                            : {{ giat.nilaiKontrak | currency: "Rp. " }}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-xl-4">
+                            <p class="fw-bold">Hasil Pelaksanaan</p>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-xl-8">
+                            : {{ giat.hasilPelaksanaanKeterangan }}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-xl-4">
+                            <p class="fw-bold">Nomor dan Tanggal Kertas Kerja</p>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-xl-8">
+                            : {{ giat.nomorKertasKerja }} - {{ giat.tanggalKertasKerja }}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-xl-4">
+                            <p class="fw-bold">Keterangan</p>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-xl-8">
+                            : {{ giat.keterangan }}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-xl-4">
+                            <p class="fw-bold">URL File</p>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-xl-8">
+                            : <a href="{{ giat.urlFile }}" 
+                                target="_blank"
+                                *ngIf="giat.urlFile">{{ giat.id }}</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

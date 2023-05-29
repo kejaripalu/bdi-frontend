@@ -2,16 +2,16 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { BidangDirektoratSektorService } from 'src/app/shared/bidang-direktorat/bidang-direktorat-sektor.service';
-import { RegisterKegiatanIntelijen } from '../kegiatan.model';
-import { RegisterKegiatanIntelijenService } from '../kegiatan.service';
+import { RegisterKegiatanIntelijenPamstra } from '../kegiatan-pamstra.model';
+import { RegisterKegiatanIntelijenPamstraService } from '../kegiatan-pamstra.service';
 
 @Component({
-  selector: 'app-kegiatan-detail',
-  templateUrl: './kegiatan-detail.component.html',
-  styleUrls: ['./kegiatan-detail.component.css']
+  selector: 'app-kegiatan-pamstra-detail',
+  templateUrl: './kegiatan-pamstra-detail.component.html',
+  styleUrls: ['./kegiatan-pamstra-detail.component.css']
 })
-export class KegiatanDetailComponent implements OnInit, OnDestroy {
-  giat!: RegisterKegiatanIntelijen;
+export class KegiatanPamstraDetailComponent implements OnInit, OnDestroy {
+  giat!: RegisterKegiatanIntelijenPamstra;
   isLoading: boolean = false;
   error: string = null as any;
   id!: string;
@@ -25,7 +25,7 @@ export class KegiatanDetailComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router,
               private route: ActivatedRoute,
-              private giatService: RegisterKegiatanIntelijenService,
+              private giatService: RegisterKegiatanIntelijenPamstraService,
               private bidangDirektoratSektorService: BidangDirektoratSektorService) { }
 
   ngOnInit(): void {
@@ -43,9 +43,9 @@ export class KegiatanDetailComponent implements OnInit, OnDestroy {
               .findIndex(obj => {
                 return obj.namaBidang === queryParams['bidang'];
           });
-          // if index not found set to index 0 (IPOLHANKAM)
+          // if index not found set to index 3 (PAMSTRA)
           if (this.indexBidang < 0) {
-            this.indexBidang = 0;
+            this.indexBidang = 3;
           }       
           this.namaBidang = this.bidangDirektoratSektorService.getBidangDirektori()[this.indexBidang].namaBidang!;  
     });
@@ -67,12 +67,12 @@ export class KegiatanDetailComponent implements OnInit, OnDestroy {
   }
 
   onCancel() {
-    this.router.navigate(['/kegiatan', 'list'], { queryParams: { bidang: this.namaBidang } });
+    this.router.navigate(['/kegiatan', 'list', 'pamstra-list'], { queryParams: { bidang: this.namaBidang } });
   }
 
   ngOnDestroy(): void {
     if (this.giatChangeSub) {
-        this.giatChangeSub.unsubscribe();
+      this.giatChangeSub.unsubscribe();
     }
     if (this.giatParamSub) {
         this.giatParamSub.unsubscribe();
@@ -81,5 +81,4 @@ export class KegiatanDetailComponent implements OnInit, OnDestroy {
         this.giatQueryParamSub.unsubscribe()
     }
   }
-
 }
