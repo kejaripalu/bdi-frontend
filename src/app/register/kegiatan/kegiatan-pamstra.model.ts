@@ -4,10 +4,12 @@ export class RegisterKegiatanIntelijenPamstra {
     sektor!: string;
     namaKegiatan!: string;
     sumberDana!: string;
+    instansi!: string;
     paguAnggaran!: number;
     nomorSuratPermohonan!: string;
     tanggalSuratPermohonan!: string;
     tempatPemaparan!: string;
+    tanggalPemaparan!: string;
     telaahanIntelijen!: string;
     tindakLanjut!: boolean;
     tindakLanjutKeterangan!: string;

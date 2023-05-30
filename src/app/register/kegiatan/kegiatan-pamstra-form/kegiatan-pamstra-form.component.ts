@@ -32,9 +32,12 @@ export class KegiatanPamstraFormComponent implements OnInit, OnDestroy {
   sektorList: Sektor[] = [];
   namaSektorSelected: string = null as any;
   tindakLanjutValue: boolean = true;
+  pelaksanaanList: string[] = ['ON_PROGRESS', 'SELESAI', 'DIHENTIKAN'];
+  pelaksanaanSelected: string = this.pelaksanaanList[0];
 
   modelDateTanggalSuratPermohonan: NgbDateStruct = null as any; // model date NgBootstrap
   modelDateTanggalSprintWalpam: NgbDateStruct = null as any; // model date NgBootstrap
+  modelDateTanggalPemaparan: NgbDateStruct = null as any; // model date NgBootstrap
   modelDateTanggalKertasKerja: NgbDateStruct = null as any; // model date NgBootstrap
 
   constructor(private giatService: RegisterKegiatanIntelijenPamstraService,
@@ -49,6 +52,7 @@ export class KegiatanPamstraFormComponent implements OnInit, OnDestroy {
     this.isLoadingEditForm = false;
     this.modelDateTanggalSuratPermohonan = this.calendar.getToday();
     this.modelDateTanggalSprintWalpam = this.calendar.getToday();
+    this.modelDateTanggalPemaparan = this.calendar.getToday();
     this.modelDateTanggalKertasKerja = this.calendar.getToday();
     this.giatParamSub = this.route.params
       .subscribe((params: Params) => {
@@ -76,6 +80,7 @@ export class KegiatanPamstraFormComponent implements OnInit, OnDestroy {
   private initForm() {
     let namaKegiatan = null as any;
     let sumberDana = null as any;
+    let instansi = null as any;
     let paguAnggaran = null as any;
     let nomorSuratPermohonan = null as any;
     let tempatPemaparan = null as any;
@@ -85,7 +90,7 @@ export class KegiatanPamstraFormComponent implements OnInit, OnDestroy {
     let nomorSprintWalpam = null as any;
     let namaPetugasPelaksana = null as any;
     let nilaiKontrak = null as any;
-    let hasilPelaksanaan = null as any;
+    let hasilPelaksanaan = this.pelaksanaanSelected;
     let hasilPelaksanaanKeterangan = null as any;
     let nomorKertasKerja = null as any;
     let keterangan = null as any;
@@ -94,19 +99,21 @@ export class KegiatanPamstraFormComponent implements OnInit, OnDestroy {
     this.giatForm = new FormGroup({
       'namaKegiatan': new FormControl(namaKegiatan, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
       'sumberDana': new FormControl(sumberDana, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]),
+      'instansi': new FormControl(instansi, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]),
       'paguAnggaran': new FormControl(paguAnggaran, [Validators.required]),
       'nomorSuratPermohonan': new FormControl(nomorSuratPermohonan, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]),
       'tanggalSuratPermohonan': new FormControl(this.modelDateTanggalSuratPermohonan, [Validators.required, Validators.minLength(10)]),
       'tempatPemaparan': new FormControl(tempatPemaparan, [Validators.maxLength(255)]),
+      'tanggalPemaparan': new FormControl(this.modelDateTanggalPemaparan, [Validators.minLength(10)]),
       'telaahanIntelijen': new FormControl(telaahanIntelijen),
       'tindakLanjut': new FormControl(tindakLanjut),
-      'tindakLanjutKeterangan': new FormControl(tindakLanjutKeterangan, [Validators.maxLength(255)]),
+      'tindakLanjutKeterangan': new FormControl(tindakLanjutKeterangan),
       'nomorSprintWalpam': new FormControl(nomorSprintWalpam, [Validators.maxLength(255)]),
       'tanggalSprintWalpam': new FormControl(this.modelDateTanggalSprintWalpam, [Validators.minLength(10)]),
       'namaPetugasPelaksana': new FormControl(namaPetugasPelaksana, [Validators.maxLength(255)]),
       'nilaiKontrak': new FormControl(nilaiKontrak),
       'hasilPelaksanaan': new FormControl(hasilPelaksanaan),
-      'hasilPelaksanaanKeterangan': new FormControl(hasilPelaksanaanKeterangan, Validators.maxLength(255)),
+      'hasilPelaksanaanKeterangan': new FormControl(hasilPelaksanaanKeterangan),
       'nomorKertasKerja': new FormControl(nomorKertasKerja, [Validators.maxLength(255)]),
       'tanggalKertasKerja': new FormControl(this.modelDateTanggalKertasKerja, [Validators.minLength(10)]),
       'keterangan': new FormControl(keterangan, Validators.maxLength(255)),
@@ -134,24 +141,29 @@ export class KegiatanPamstraFormComponent implements OnInit, OnDestroy {
           this.modelDateTanggalKertasKerja = {year: +giat.tanggalKertasKerja.slice(0, 4), 
             month: +giat.tanggalKertasKerja.slice(5, 7), 
             day: +giat.tanggalKertasKerja.slice(8, 10)};      
+          this.modelDateTanggalPemaparan = {year: +giat.tanggalPemaparan.slice(0, 4), 
+            month: +giat.tanggalPemaparan.slice(5, 7), 
+            day: +giat.tanggalPemaparan.slice(8, 10)};      
           
           this.giatForm = new FormGroup({
-            'namaKegiatan': new FormControl(namaKegiatan, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
-            'sumberDana': new FormControl(sumberDana, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]),
-            'paguAnggaran': new FormControl(paguAnggaran, [Validators.required]),
-            'nomorSuratPermohonan': new FormControl(nomorSuratPermohonan, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]),
+            'namaKegiatan': new FormControl(giat.namaKegiatan, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
+            'sumberDana': new FormControl(giat.sumberDana, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]),
+            'instansi': new FormControl(giat.instansi, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]),
+            'paguAnggaran': new FormControl(giat.paguAnggaran, [Validators.required]),
+            'nomorSuratPermohonan': new FormControl(giat.nomorSuratPermohonan, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]),
             'tanggalSuratPermohonan': new FormControl(this.modelDateTanggalSuratPermohonan, [Validators.required, Validators.minLength(10)]),
-            'tempatPemaparan': new FormControl(tempatPemaparan, [Validators.maxLength(255)]),
-            'telaahanIntelijen': new FormControl(telaahanIntelijen),
-            'tindakLanjut': new FormControl(tindakLanjut),
-            'tindakLanjutKeterangan': new FormControl(tindakLanjutKeterangan, [Validators.maxLength(255)]),
-            'nomorSprintWalpam': new FormControl(nomorSprintWalpam, [Validators.maxLength(255)]),
+            'tempatPemaparan': new FormControl(giat.tempatPemaparan, [Validators.maxLength(255)]),
+            'tanggalPemaparan': new FormControl(this.modelDateTanggalPemaparan, [Validators.minLength(10)]),
+            'telaahanIntelijen': new FormControl(giat.telaahanIntelijen),
+            'tindakLanjut': new FormControl(giat.tindakLanjut),
+            'tindakLanjutKeterangan': new FormControl(giat.tindakLanjutKeterangan),
+            'nomorSprintWalpam': new FormControl(giat.nomorSprintWalpam, [Validators.maxLength(255)]),
             'tanggalSprintWalpam': new FormControl(this.modelDateTanggalSprintWalpam, [Validators.minLength(10)]),
-            'namaPetugasPelaksana': new FormControl(namaPetugasPelaksana, [Validators.minLength(3)]),
-            'nilaiKontrak': new FormControl(nilaiKontrak),
-            'hasilPelaksanaan': new FormControl(hasilPelaksanaan),
-            'hasilPelaksanaanKeterangan': new FormControl(hasilPelaksanaanKeterangan),
-            'nomorKertasKerja': new FormControl(nomorKertasKerja, [Validators.maxLength(255)]),
+            'namaPetugasPelaksana': new FormControl(giat.namaPetugasPelaksana, [Validators.minLength(3)]),
+            'nilaiKontrak': new FormControl(giat.nilaiKontrak),
+            'hasilPelaksanaan': new FormControl(giat.hasilPelaksanaan),
+            'hasilPelaksanaanKeterangan': new FormControl(giat.hasilPelaksanaanKeterangan),
+            'nomorKertasKerja': new FormControl(giat.nomorKertasKerja, [Validators.maxLength(255)]),
             'tanggalKertasKerja': new FormControl(this.modelDateTanggalKertasKerja, [Validators.minLength(10)]),
             'keterangan': new FormControl(giat.keterangan, Validators.maxLength(255)),
             'urlFile': new FormControl(giat.urlFile)
@@ -185,16 +197,22 @@ export class KegiatanPamstraFormComponent implements OnInit, OnDestroy {
       this.modelDateTanggalKertasKerja.year,
       this.modelDateTanggalKertasKerja.month,
       this.modelDateTanggalKertasKerja.day);
+    const dateTanggalPemaparan = this.currentDateTimeService.getConvertCurrentDate(
+      this.modelDateTanggalPemaparan.year,
+      this.modelDateTanggalPemaparan.month,
+      this.modelDateTanggalPemaparan.day);
 
       const giat = new RegisterKegiatanIntelijenPamstra();
 
       giat.sektor = this.namaSektorSelected;
       giat.namaKegiatan = this.giatForm.value['namaKegiatan'];
       giat.sumberDana = this.giatForm.value['sumberDana'];
+      giat.instansi = this.giatForm.value['instansi'];
       giat.paguAnggaran = this.giatForm.value['paguAnggaran'];
       giat.nomorSuratPermohonan = this.giatForm.value['nomorSuratPermohonan'];
       giat.tanggalSuratPermohonan = dateTanggalSuratPermohonan;
       giat.tempatPemaparan = this.giatForm.value['tempatPemaparan'];
+      giat.tanggalPemaparan = dateTanggalSuratPermohonan;
       giat.telaahanIntelijen = this.giatForm.value['telaahanIntelijen'];
       giat.tindakLanjut = this.giatForm.value['tindakLanjut'];
       giat.tindakLanjutKeterangan = this.giatForm.value['tindakLanjutKeterangan'];
@@ -251,6 +269,16 @@ export class KegiatanPamstraFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  tindakPelaksanaanChange(value: string) {
+    if (value === this.pelaksanaanList[0]) {
+      this.pelaksanaanSelected = this.pelaksanaanList[0];
+    } else if (value === this.pelaksanaanList[1]) {
+      this.pelaksanaanSelected = this.pelaksanaanList[1];
+    } else if (value === this.pelaksanaanList[2]) {
+      this.pelaksanaanSelected = this.pelaksanaanList[2];
+    }
+  }
+
   onDateTanggalSuratPermohonanSelect(date: NgbDate) {
     this.modelDateTanggalSuratPermohonan = date;
   }
@@ -259,6 +287,10 @@ export class KegiatanPamstraFormComponent implements OnInit, OnDestroy {
     this.modelDateTanggalSprintWalpam = date;
   }
   
+  onDateTanggalPemaparanSelect(date: NgbDate) {
+    this.modelDateTanggalPemaparan = date;
+  }
+
   onDateTanggalKertasKerjaSelect(date: NgbDate) {
     this.modelDateTanggalKertasKerja = date;
   }

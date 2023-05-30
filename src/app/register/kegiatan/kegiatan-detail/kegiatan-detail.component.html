@@ -21,7 +21,7 @@
                         <div class="p-2">
                             <button type="button" class="btn btn-warning"
                             [routerLink]="['/kegiatan', 'list', giat.id, 'form']"
-                            [queryParams]="{edit: 1, namaBidang: namaBidang}"><i class="bi bi-pencil-square"></i> Ubah</button>
+                            [queryParams]="{edit: 1, bidang: namaBidang}"><i class="bi bi-pencil-square"></i> Ubah</button>
                         </div>
                     </div>
                 </div>
@@ -30,17 +30,17 @@
                     <h4 class="text-primary">Rincian Kegiatan Intelijen</h4>
                 </div>
             </div>
-            <li class="list-group-item">
-                <div class="row">
-                    <div class="col-sm-4 col-md-4 col-xl-4">
-                        <p class="fw-bold">Sektor</p>
-                    </div>
-                    <div class="col-sm-8 col-md-8 col-xl-8">
-                        : {{ namaSektor }}
-                    </div>
-                </div>
-            </li>
             <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-xl-4">
+                            <p class="fw-bold">Sektor</p>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-xl-8">
+                            : {{ namaSektor }}
+                        </div>
+                    </div>
+                </li>
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-sm-4 col-md-4 col-xl-4">

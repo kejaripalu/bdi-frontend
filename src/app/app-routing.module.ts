@@ -98,7 +98,8 @@ const appRoutes: Routes = [
         { path: 'list/:id/detail', component: KegiatanDetailComponent },
         { path: 'list/pamstra-list', component: KegiatanPamstraListComponent },
         { path: 'list/pamstra-list/:id/detail', component: KegiatanPamstraDetailComponent },
-        { path: 'list/pamstra-form', component: KegiatanPamstraFormComponent }
+        { path: 'list/pamstra-form', component: KegiatanPamstraFormComponent },
+        { path: 'list/:id/pamstra-form', component: KegiatanPamstraFormComponent }
     ]}
 ];
 

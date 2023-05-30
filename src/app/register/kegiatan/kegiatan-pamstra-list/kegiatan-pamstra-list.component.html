@@ -70,7 +70,7 @@
                                         [routerLink]="['/kegiatan', 'list', 'pamstra-list', g.id, 'detail']"
                                         [queryParams]="{ bidang: namaBidang }"><i class="bi bi-list-check"></i> Detail</a>                   
                         <a class="dropdown-item text-success"
-                                        [routerLink]="['/kegiatan', 'list', g.id, 'form']"
+                                        [routerLink]="['/kegiatan', 'list', g.id, 'pamstra-form']"
                                         [queryParams]="{ edit: 1, bidang: namaBidang }">
                                         <i class="bi bi-pencil-square"></i> Ubah</a>
                         <a class="dropdown-item text-danger" (click)="onDelete(g.id)" style="cursor: pointer;"><i

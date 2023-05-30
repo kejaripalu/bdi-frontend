@@ -17,7 +17,7 @@ export class KegiatanPamstraDetailComponent implements OnInit, OnDestroy {
   id!: string;
   namaBidang: string = null as any;
   namaSektor: string = null as any;
-  indexBidang!: number;
+  indexBidang: number = 3;
   indexSektor!: number;
   private giatChangeSub!: Subscription;
   private giatParamSub!: Subscription;
