@@ -120,7 +120,9 @@
                                 type="text" 
                                 name="paguAnggaran" 
                                 class="form-control"
-                                formControlName="paguAnggaran">
+                                formControlName="paguAnggaran"
+                                currencyMask
+                                [options]="{ align: 'left', prefix: 'Rp. ', thousands: '.', decimal: ',', precision: 2 }">
                         </div>
                         <small 
                             class="text-alert" 
@@ -351,7 +353,9 @@
                                 rows="3"
                                 name="nilaiKontrak" 
                                 class="form-control"
-                                formControlName="nilaiKontrak">
+                                formControlName="nilaiKontrak"
+                                currencyMask
+                                [options]="{ align: 'left', prefix: 'Rp. ', thousands: '.', decimal: ',', precision: 2 }">
                         </div>
                         <small 
                             class="text-alert" 

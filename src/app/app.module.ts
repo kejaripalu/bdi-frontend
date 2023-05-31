@@ -55,6 +55,7 @@ import { KegiatanHelpComponent } from './register/kegiatan/kegiatan-help/kegiata
 import { KegiatanPamstraListComponent } from './register/kegiatan/kegiatan-pamstra-list/kegiatan-pamstra-list.component';
 import { KegiatanPamstraDetailComponent } from './register/kegiatan/kegiatan-pamstra-detail/kegiatan-pamstra-detail.component';
 import { KegiatanPamstraFormComponent } from './register/kegiatan/kegiatan-pamstra-form/kegiatan-pamstra-form.component';
+import { NgxCurrencyModule } from 'ngx-currency';
 
 @NgModule({
   declarations: [
@@ -115,7 +116,8 @@ import { KegiatanPamstraFormComponent } from './register/kegiatan/kegiatan-pamst
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    NgxCurrencyModule
   ],
   providers: [],
   bootstrap: [AppComponent]

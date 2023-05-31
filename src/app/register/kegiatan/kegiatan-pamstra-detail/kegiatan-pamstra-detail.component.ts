@@ -4,6 +4,10 @@ import { Subscription } from 'rxjs';
 import { BidangDirektoratSektorService } from 'src/app/shared/bidang-direktorat/bidang-direktorat-sektor.service';
 import { RegisterKegiatanIntelijenPamstra } from '../kegiatan-pamstra.model';
 import { RegisterKegiatanIntelijenPamstraService } from '../kegiatan-pamstra.service';
+import { registerLocaleData } from '@angular/common';
+import localeIt from '@angular/common/locales/it';
+
+registerLocaleData(localeIt, 'it');
 
 @Component({
   selector: 'app-kegiatan-pamstra-detail',

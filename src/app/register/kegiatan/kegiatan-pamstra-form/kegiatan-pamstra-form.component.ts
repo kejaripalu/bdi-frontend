@@ -34,6 +34,8 @@ export class KegiatanPamstraFormComponent implements OnInit, OnDestroy {
   tindakLanjutValue: boolean = true;
   pelaksanaanList: string[] = ['ON_PROGRESS', 'SELESAI', 'DIHENTIKAN'];
   pelaksanaanSelected: string = this.pelaksanaanList[0];
+  currencyPaguAnggaran: number = 0;
+  currencyNilaiKontrak: number = 0;
 
   modelDateTanggalSuratPermohonan: NgbDateStruct = null as any; // model date NgBootstrap
   modelDateTanggalSprintWalpam: NgbDateStruct = null as any; // model date NgBootstrap
@@ -81,7 +83,7 @@ export class KegiatanPamstraFormComponent implements OnInit, OnDestroy {
     let namaKegiatan = null as any;
     let sumberDana = null as any;
     let instansi = null as any;
-    let paguAnggaran = null as any;
+    let paguAnggaran = this.currencyPaguAnggaran;
     let nomorSuratPermohonan = null as any;
     let tempatPemaparan = null as any;
     let telaahanIntelijen = null as any;
@@ -89,7 +91,7 @@ export class KegiatanPamstraFormComponent implements OnInit, OnDestroy {
     let tindakLanjutKeterangan = null as any;
     let nomorSprintWalpam = null as any;
     let namaPetugasPelaksana = null as any;
-    let nilaiKontrak = null as any;
+    let nilaiKontrak = this.currencyNilaiKontrak;
     let hasilPelaksanaan = this.pelaksanaanSelected;
     let hasilPelaksanaanKeterangan = null as any;
     let nomorKertasKerja = null as any;
@@ -143,13 +145,15 @@ export class KegiatanPamstraFormComponent implements OnInit, OnDestroy {
             day: +giat.tanggalKertasKerja.slice(8, 10)};      
           this.modelDateTanggalPemaparan = {year: +giat.tanggalPemaparan.slice(0, 4), 
             month: +giat.tanggalPemaparan.slice(5, 7), 
-            day: +giat.tanggalPemaparan.slice(8, 10)};      
+            day: +giat.tanggalPemaparan.slice(8, 10)};
+          this.currencyPaguAnggaran = giat.paguAnggaran;
+          this.currencyNilaiKontrak = giat.nilaiKontrak;    
           
           this.giatForm = new FormGroup({
             'namaKegiatan': new FormControl(giat.namaKegiatan, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
             'sumberDana': new FormControl(giat.sumberDana, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]),
             'instansi': new FormControl(giat.instansi, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]),
-            'paguAnggaran': new FormControl(giat.paguAnggaran, [Validators.required]),
+            'paguAnggaran': new FormControl(this.currencyPaguAnggaran, [Validators.required]),
             'nomorSuratPermohonan': new FormControl(giat.nomorSuratPermohonan, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]),
             'tanggalSuratPermohonan': new FormControl(this.modelDateTanggalSuratPermohonan, [Validators.required, Validators.minLength(10)]),
             'tempatPemaparan': new FormControl(giat.tempatPemaparan, [Validators.maxLength(255)]),
@@ -160,7 +164,7 @@ export class KegiatanPamstraFormComponent implements OnInit, OnDestroy {
             'nomorSprintWalpam': new FormControl(giat.nomorSprintWalpam, [Validators.maxLength(255)]),
             'tanggalSprintWalpam': new FormControl(this.modelDateTanggalSprintWalpam, [Validators.minLength(10)]),
             'namaPetugasPelaksana': new FormControl(giat.namaPetugasPelaksana, [Validators.minLength(3)]),
-            'nilaiKontrak': new FormControl(giat.nilaiKontrak),
+            'nilaiKontrak': new FormControl(this.currencyNilaiKontrak),
             'hasilPelaksanaan': new FormControl(giat.hasilPelaksanaan),
             'hasilPelaksanaanKeterangan': new FormControl(giat.hasilPelaksanaanKeterangan),
             'nomorKertasKerja': new FormControl(giat.nomorKertasKerja, [Validators.maxLength(255)]),
