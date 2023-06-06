@@ -57,8 +57,8 @@ export class RegisterKegiatanIntelijenService {
                     return throwError(() => errorMessage);
                 }
                 switch (errorResponse.error.message) {
-                    case 'DUPLICATE_DATA_FIELD':
-                      errorMessage = 'Bro.. Data ini sudah pernah diinput!!!';
+                    case 'INVALID_DATA_INTEGRITY':
+                      errorMessage = 'Bro.. Gagal Simpan Data, Cek lagi data isian!!!';
                       break;
                     default:
                       errorMessage = 'GAGAL Simpan data!!!';
@@ -79,8 +79,8 @@ export class RegisterKegiatanIntelijenService {
                     case 'ID_NOT_FOUND':
                         errorMessage = 'Bro... Data tidak ditemukan!!!'
                         break;
-                    case 'DUPLICATE_DATA_FIELD':
-                        errorMessage = 'Bro.. Data ini sudah pernah diinput!!!';
+                    case 'INVALID_DATA_INTEGRITY':
+                        errorMessage = 'Bro.. Gagal Simpan Data, Cek lagi data isian!!!';
                         break;
                     default:
                         errorMessage = 'GAGAL Update data!!!';
