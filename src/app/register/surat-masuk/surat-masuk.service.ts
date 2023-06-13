@@ -72,7 +72,7 @@ export class SuratMasukService {
                 }
                 switch (errorResponse.error.message) {
                     case 'INVALID_DATA_INTEGRITY':
-                      errorMessage = 'Bro.. Gagal Simpan Data, Cek lagi data isian!!!';
+                      errorMessage = 'Bro.. Gagal Simpan Data, Cek lagi data isian!!!, data yang dimasukan sudah ada atau format data yang dimasukan invalid!';
                       break;
                     default:
                       errorMessage = 'GAGAL Simpan data!!!';
@@ -94,7 +94,7 @@ export class SuratMasukService {
                         errorMessage = 'Bro... Data tidak ditemukan!!!'
                         break;
                     case 'INVALID_DATA_INTEGRITY':
-                        errorMessage = 'Bro.. Gagal Simpan Data, Cek lagi data isian!!!';
+                        errorMessage = 'Bro.. Gagal Simpan Data, Cek lagi data isian!!!, data yang dimasukan sudah ada atau format data yang dimasukan invalid!';
                         break;
                     default:
                         errorMessage = 'GAGAL Update data!!!';
