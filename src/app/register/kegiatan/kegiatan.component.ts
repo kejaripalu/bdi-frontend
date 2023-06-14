@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { BidangDirektoratSektorService } from 'src/app/shared/bidang-direktorat/bidang-direktorat-sektor.service';
 import { KegiatanHelpComponent } from './kegiatan-help/kegiatan-help.component';
+import { KegiatanPamstraHelpComponent } from './kegiatan-pamstra-help/kegiatan-pamstra-help.component';
 
 @Component({
   selector: 'app-kegiatan',
@@ -48,8 +49,12 @@ export class KegiatanComponent implements OnInit, OnDestroy {
       });
   }
 
-  onOpenHelp() {
-    this.modalService.open(KegiatanHelpComponent, { size: 'xl', scrollable: true });
+  onOpenHelp(kodeRegister: string) {
+    if(kodeRegister === 'R.IN.10') {
+      this.modalService.open(KegiatanPamstraHelpComponent, { size: 'xl', scrollable: true });
+    } else {
+      this.modalService.open(KegiatanHelpComponent, { size: 'xl', scrollable: true });
+    }
   }
 
   ngOnDestroy(): void {
