@@ -32,6 +32,8 @@ import { KegiatanDetailComponent } from "./register/kegiatan/kegiatan-detail/keg
 import { KegiatanPamstraListComponent } from "./register/kegiatan/kegiatan-pamstra-list/kegiatan-pamstra-list.component";
 import { KegiatanPamstraDetailComponent } from "./register/kegiatan/kegiatan-pamstra-detail/kegiatan-pamstra-detail.component";
 import { KegiatanPamstraFormComponent } from "./register/kegiatan/kegiatan-pamstra-form/kegiatan-pamstra-form.component";
+import { OpsinComponent } from "./register/opsin/opsin.component";
+import { OpsinListComponent } from "./register/opsin/opsin-list/opsin-list.component";
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -100,6 +102,10 @@ const appRoutes: Routes = [
         { path: 'list/pamstra-list/:id/detail', component: KegiatanPamstraDetailComponent },
         { path: 'list/pamstra-form', component: KegiatanPamstraFormComponent },
         { path: 'list/:id/pamstra-form', component: KegiatanPamstraFormComponent }
+    ]},
+    { path: 'opsin', component: OpsinComponent, children:[
+        { path: '', redirectTo: '/opsin/list', pathMatch: 'full' },
+        { path: 'list', component: OpsinListComponent }
     ]}
 ];
 

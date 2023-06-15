@@ -216,7 +216,7 @@ export class KegiatanPamstraFormComponent implements OnInit, OnDestroy {
       giat.nomorSuratPermohonan = this.giatForm.value['nomorSuratPermohonan'];
       giat.tanggalSuratPermohonan = dateTanggalSuratPermohonan;
       giat.tempatPemaparan = this.giatForm.value['tempatPemaparan'];
-      giat.tanggalPemaparan = dateTanggalSuratPermohonan;
+      giat.tanggalPemaparan = dateTanggalPemaparan;
       giat.telaahanIntelijen = this.giatForm.value['telaahanIntelijen'];
       giat.tindakLanjut = this.giatForm.value['tindakLanjut'];
       giat.tindakLanjutKeterangan = this.giatForm.value['tindakLanjutKeterangan'];
