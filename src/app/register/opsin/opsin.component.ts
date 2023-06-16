@@ -3,6 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { BidangDirektoratSektorService } from 'src/app/shared/bidang-direktorat/bidang-direktorat-sektor.service';
+import { OpsinHelpComponent } from './opsin-help/opsin-help.component';
 
 @Component({
   selector: 'app-opsin',
@@ -48,7 +49,7 @@ export class OpsinComponent implements OnInit, OnDestroy {
   }
 
   onOpenHelp() {
-      //this.modalService.open(KegiatanHelpComponent, { size: 'xl', scrollable: true });
+      this.modalService.open(OpsinHelpComponent, { size: 'xl', scrollable: true });
   }
 
   ngOnDestroy(): void {
