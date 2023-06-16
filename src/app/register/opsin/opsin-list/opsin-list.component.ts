@@ -13,7 +13,7 @@ import { ToastService } from 'src/app/shared/toast.service';
   styleUrls: ['./opsin-list.component.css']
 })
 export class OpsinListComponent implements OnInit, OnDestroy {
-  giat: RegisterOpsin[] = [];
+  opsin: RegisterOpsin[] = [];
   month = Object.keys(Month).filter((v) => isNaN(Number(v)));
   currentMonth = new Date().getMonth() + 1; // get current month
   currentYear = new Date().getFullYear(); // get current year
@@ -22,8 +22,8 @@ export class OpsinListComponent implements OnInit, OnDestroy {
   namaBidang: string = null as any;
   isLoading: boolean = false;
   error: string = null as any;
-  private giatSub!: Subscription;
-  private giatQueryParamSub!: Subscription; 
+  private opsinSub!: Subscription;
+  private opsinQueryParamSub!: Subscription; 
   pageNumber: number = 1;
   pageSize: number = 10;
   totalElements: number = 0;
@@ -40,7 +40,7 @@ export class OpsinListComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.getYear();
     this.checkMessage();
-    this.giatQueryParamSub = this.route.queryParams
+    this.opsinQueryParamSub = this.route.queryParams
         .subscribe((queryParams: Params) => {
           this.indexBidang = this.bidangDirektoratSektorService.getBidangDirektori()
               .findIndex(obj => {
@@ -56,7 +56,7 @@ export class OpsinListComponent implements OnInit, OnDestroy {
   }
 
   loadDataOpsin() {
-    this.giatSub = this.opsinService.getAll(
+    this.opsinSub = this.opsinService.getAll(
       this.pageNumber - 1, 
       this.pageSize, 
       this.namaBidang, 
@@ -65,7 +65,7 @@ export class OpsinListComponent implements OnInit, OnDestroy {
         .subscribe({
           next: (responseData) => {
             // console.log(responseData);
-            this.giat = responseData.content;
+            this.opsin = responseData.content;
             this.pageNumber = responseData.number + 1;
             this.pageSize = responseData.size;
             this.totalElements = responseData.totalElements;
@@ -79,7 +79,7 @@ export class OpsinListComponent implements OnInit, OnDestroy {
   }
 
   checkMessage() {
-    this.giatQueryParamSub = this.route.queryParams
+    this.opsinQueryParamSub = this.route.queryParams
     .subscribe((queryParams: Params) => {
       if (queryParams['message'] === 'SimpanSukses') {
         this.toastService.show('Ashiiap.... Berhasil Input Data Operasi Intelijen!', 
@@ -108,7 +108,7 @@ export class OpsinListComponent implements OnInit, OnDestroy {
   onDelete(id: string) {
     if (confirm('Yakin ente mau hapus data ini?')) {
       this.isLoading = true;
-      this.giatSub = this.opsinService.delete(id)
+      this.opsinSub = this.opsinService.delete(id)
         .subscribe({
           next: () => {
             this.isLoading = false;
@@ -152,7 +152,7 @@ export class OpsinListComponent implements OnInit, OnDestroy {
     }
     this.isLoading = true;
     this.pageNumber = 1;
-    this.giatSub = this.opsinService.getSearch(
+    this.opsinSub = this.opsinService.getSearch(
       value,
       this.pageNumber - 1, 
       this.pageSize, 
@@ -161,7 +161,7 @@ export class OpsinListComponent implements OnInit, OnDestroy {
         .subscribe({
           next: (responseData) => {
             // console.log(responseData);
-            this.giat = responseData.content;
+            this.opsin = responseData.content;
             this.pageNumber = responseData.number + 1;
             this.pageSize = responseData.size;
             this.totalElements = responseData.totalElements;
@@ -182,11 +182,11 @@ export class OpsinListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.giatQueryParamSub) {
-      this.giatQueryParamSub.unsubscribe();
+    if (this.opsinQueryParamSub) {
+      this.opsinQueryParamSub.unsubscribe();
     }
-    if (this.giatSub) {
-      this.giatSub.unsubscribe();
+    if (this.opsinSub) {
+      this.opsinSub.unsubscribe();
     }
     this.toastService.clear();
   }

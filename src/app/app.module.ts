@@ -59,6 +59,7 @@ import { NgxCurrencyModule } from 'ngx-currency';
 import { KegiatanPamstraHelpComponent } from './register/kegiatan/kegiatan-pamstra-help/kegiatan-pamstra-help.component';
 import { OpsinComponent } from './register/opsin/opsin.component';
 import { OpsinListComponent } from './register/opsin/opsin-list/opsin-list.component';
+import { OpsinFormComponent } from './register/opsin/opsin-form/opsin-form.component';
 
 @NgModule({
   declarations: [
@@ -114,7 +115,8 @@ import { OpsinListComponent } from './register/opsin/opsin-list/opsin-list.compo
     KegiatanPamstraFormComponent,
     KegiatanPamstraHelpComponent,
     OpsinComponent,
-    OpsinListComponent
+    OpsinListComponent,
+    OpsinFormComponent
   ],
   imports: [
     BrowserModule,
