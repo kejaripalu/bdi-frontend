@@ -60,6 +60,7 @@ import { KegiatanPamstraHelpComponent } from './register/kegiatan/kegiatan-pamst
 import { OpsinComponent } from './register/opsin/opsin.component';
 import { OpsinListComponent } from './register/opsin/opsin-list/opsin-list.component';
 import { OpsinFormComponent } from './register/opsin/opsin-form/opsin-form.component';
+import { OpsinDetailComponent } from './register/opsin/opsin-detail/opsin-detail.component';
 
 @NgModule({
   declarations: [
@@ -116,7 +117,8 @@ import { OpsinFormComponent } from './register/opsin/opsin-form/opsin-form.compo
     KegiatanPamstraHelpComponent,
     OpsinComponent,
     OpsinListComponent,
-    OpsinFormComponent
+    OpsinFormComponent,
+    OpsinDetailComponent
   ],
   imports: [
     BrowserModule,

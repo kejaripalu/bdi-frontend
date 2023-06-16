@@ -35,6 +35,7 @@ import { KegiatanPamstraFormComponent } from "./register/kegiatan/kegiatan-pamst
 import { OpsinComponent } from "./register/opsin/opsin.component";
 import { OpsinListComponent } from "./register/opsin/opsin-list/opsin-list.component";
 import { OpsinFormComponent } from "./register/opsin/opsin-form/opsin-form.component";
+import { OpsinDetailComponent } from "./register/opsin/opsin-detail/opsin-detail.component";
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -109,6 +110,7 @@ const appRoutes: Routes = [
         { path: 'list', component: OpsinListComponent },
         { path: 'list/form', component: OpsinFormComponent },
         { path: 'list/:id/form', component: OpsinFormComponent },
+        { path: 'list/:id/detail', component: OpsinDetailComponent },
     ]}
 ];
 
