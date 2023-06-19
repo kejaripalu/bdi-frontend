@@ -70,7 +70,7 @@
                         <a class="nav-link" routerLinkActive="active" 
                             [routerLink]="['/opsin', 'list']"
                             [queryParams]="{ bidang: 'SOSBUDMAS' }">Sosbudmas</a>
-                        <a class="nav-link" class="nav-link" routerLinkActive="active" 
+                        <a class="nav-link" routerLinkActive="active" 
                             [routerLink]="['/opsin', 'list']"
                             [queryParams]="{ bidang: 'EKOKEU' }">Ekokeu</a>
                         <a class="nav-link" routerLinkActive="active"
@@ -79,6 +79,34 @@
                         <a class="nav-link" routerLinkActive="active" 
                             [routerLink]="['/opsin', 'list']"
                             [queryParams]="{ bidang: 'TIPRODIN' }">TI & Produk</a>         
+                    </nav>
+                </div>
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSankom" aria-expanded="false" aria-controls="collapseSankom">
+                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                    Sankom
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseSankom" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link"  
+                            href="#">Berita Masuk</a>
+                        <a class="nav-link"  
+                            href="#">Berita Keluar</a>
+                        <a class="nav-link" 
+                            href="#">Ekspedisi Berita</a>         
+                    </nav>
+                </div>
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePPMPPH" aria-expanded="false" aria-controls="collapsePPMPPH">
+                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                    PPM & PPH
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapsePPMPPH" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link"  
+                            href="#">Register Tamu</a>
+                        <a class="nav-link"  
+                            href="#">Informasi Publik</a>
                     </nav>
                 </div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
