@@ -1,13 +1,14 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { catchError, map, throwError } from "rxjs";
 import { MonthConverterService } from "src/app/shared/month-converter.service";
 import { environment } from "src/environments/environment";
-import { RegisterOpsin } from "./opsin.model";
+import { RegisterLahin } from "./lahin.model";
+import { catchError, map, throwError } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
-export class RegisterOpsinService {
-    private endPoint = environment.baseUrl + '/opsin';
+export class TelaahanIntelijenService {
+
+    private endPoint = environment.baseUrl + '/lahin';
 
     constructor(private httpClient: HttpClient,
                 private monthConverterService: MonthConverterService) { }
@@ -15,9 +16,9 @@ export class RegisterOpsinService {
     getAll(page: number, size: number, bidang: string, bulan: number, tahun: string) {
         const startDate = this.monthConverterService.getStartDate(bulan, tahun);        
         const endDate = this.monthConverterService.getEndDate(bulan, tahun);    
-        const getEndPoint = `${this.endPoint}?pages=${page}&sizes=${size}&bidangDirektorat=${bidang}&` +
+        const getEndPoint = `${this.endPoint}?pages=${page}&sizes=${size}&` +
             `startDate=${startDate}&endDate=${endDate}`;        
-        return this.httpClient.get<ResponseOpsin>(getEndPoint)
+        return this.httpClient.get<ResponseLahin>(getEndPoint)
             .pipe(
                 map(response => {
                     return response;
@@ -27,7 +28,7 @@ export class RegisterOpsinService {
 
     getOne(id: string) {
         const getEndPoint = `${this.endPoint}/${id}/detail`;
-        return this.httpClient.get<RegisterOpsin>(getEndPoint)
+        return this.httpClient.get<RegisterLahin>(getEndPoint)
             .pipe(
                 map(response => {
                     return response;
@@ -49,8 +50,8 @@ export class RegisterOpsinService {
         );
     }
 
-    create(opsin: RegisterOpsin) {
-        return this.httpClient.post<RegisterOpsin>(this.endPoint, opsin)
+    create(lahin: RegisterLahin) {
+        return this.httpClient.post<RegisterLahin>(this.endPoint, lahin)
             .pipe(catchError(errorResponse => {
                 let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
                 if (!errorResponse.error) {
@@ -67,9 +68,9 @@ export class RegisterOpsinService {
         }));
     }
 
-    update(opsin: RegisterOpsin) {
-        const putEndPoint = `${this.endPoint}/${opsin.id}`;
-        return this.httpClient.put<RegisterOpsin>(putEndPoint, opsin)
+    update(lahin: RegisterLahin) {
+        const putEndPoint = `${this.endPoint}/${lahin.id}`;
+        return this.httpClient.put<RegisterLahin>(putEndPoint, lahin)
             .pipe(catchError(errorResponse => {
                 let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
                 if (!errorResponse.error) {
@@ -91,7 +92,7 @@ export class RegisterOpsinService {
 
     delete(id: string) {
         const deleteEndPoint = `${this.endPoint}/${id}`;
-        return this.httpClient.delete<RegisterOpsin>(deleteEndPoint)
+        return this.httpClient.delete<RegisterLahin>(deleteEndPoint)
             .pipe(catchError(errorResponse => {
                 let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
                 if (!errorResponse.error) {
@@ -113,7 +114,7 @@ export class RegisterOpsinService {
         const endDate = tahun + '-12-31';    
         const getEndPoint = `${this.endPoint}/search?pages=${page}&sizes=${size}&bidangDirektorat=${bidang}&` +
             `startDate=${startDate}&endDate=${endDate}&value=${value}`;  
-        return this.httpClient.get<ResponseOpsin>(getEndPoint)
+        return this.httpClient.get<ResponseLahin>(getEndPoint)
             .pipe(
                 map(response => {
                     return response;
@@ -123,8 +124,8 @@ export class RegisterOpsinService {
 
 }
 
-interface ResponseOpsin {
-    content: RegisterOpsin[],
+interface ResponseLahin {
+    content: RegisterLahin[],
     size: number,
     totalElements: number,
     totalPages: number,

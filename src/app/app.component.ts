@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   tahun = new Date().getFullYear();
+  version = 'v1.0.0b';
 
   constructor() { }
 

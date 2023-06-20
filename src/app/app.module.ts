@@ -62,6 +62,8 @@ import { OpsinListComponent } from './register/opsin/opsin-list/opsin-list.compo
 import { OpsinFormComponent } from './register/opsin/opsin-form/opsin-form.component';
 import { OpsinDetailComponent } from './register/opsin/opsin-detail/opsin-detail.component';
 import { OpsinHelpComponent } from './register/opsin/opsin-help/opsin-help.component';
+import { LahinComponent } from './register/lahin/lahin.component';
+import { LahinListComponent } from './register/lahin/lahin-list/lahin-list.component';
 
 @NgModule({
   declarations: [
@@ -120,7 +122,9 @@ import { OpsinHelpComponent } from './register/opsin/opsin-help/opsin-help.compo
     OpsinListComponent,
     OpsinFormComponent,
     OpsinDetailComponent,
-    OpsinHelpComponent
+    OpsinHelpComponent,
+    LahinComponent,
+    LahinListComponent
   ],
   imports: [
     BrowserModule,
