@@ -40,6 +40,7 @@ import { LahinComponent } from "./register/lahin/lahin.component";
 import { LahinListComponent } from "./register/lahin/lahin-list/lahin-list.component";
 import { LahinFormComponent } from "./register/lahin/lahin-form/lahin-form.component";
 import { LahinDetailComponent } from "./register/lahin/lahin-detail/lahin-detail.component";
+import { PageNotFoundComponent } from "./pages/page-not-found/page-not-found.component";
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -122,7 +123,9 @@ const appRoutes: Routes = [
         { path: 'list/form', component: LahinFormComponent },
         { path: 'list/:id/form', component: LahinFormComponent },
         { path: 'list/:id/detail', component: LahinDetailComponent }
-    ]}
+    ]},
+    { path: 'page-not-found', component: PageNotFoundComponent },
+    { path: '**', redirectTo: 'page-not-found' }
 ];
 
 @NgModule({

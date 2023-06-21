@@ -67,6 +67,7 @@ import { LahinListComponent } from './register/lahin/lahin-list/lahin-list.compo
 import { LahinFormComponent } from './register/lahin/lahin-form/lahin-form.component';
 import { LahinDetailComponent } from './register/lahin/lahin-detail/lahin-detail.component';
 import { LahinHelpComponent } from './register/lahin/lahin-help/lahin-help.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -130,7 +131,8 @@ import { LahinHelpComponent } from './register/lahin/lahin-help/lahin-help.compo
     LahinListComponent,
     LahinFormComponent,
     LahinDetailComponent,
-    LahinHelpComponent
+    LahinHelpComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
