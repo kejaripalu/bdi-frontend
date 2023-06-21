@@ -16,7 +16,6 @@ export class ProdinDetailComponent implements OnInit, OnDestroy {
   id!: string;
   private prodinChangeSub!: Subscription;
   private prodinParamSub!: Subscription;
-  private prodinQueryParamSub!: Subscription;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -54,9 +53,6 @@ export class ProdinDetailComponent implements OnInit, OnDestroy {
     }
     if (this.prodinParamSub) {
         this.prodinParamSub.unsubscribe();
-    }
-    if (this.prodinQueryParamSub) {
-        this.prodinQueryParamSub.unsubscribe()
     }
   }
 

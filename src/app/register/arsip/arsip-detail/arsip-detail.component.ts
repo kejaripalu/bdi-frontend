@@ -17,7 +17,6 @@ export class ArsipDetailComponent implements OnInit, OnDestroy {
   jenisSurat: string = null as any;
   private arsipChangeSub!: Subscription;
   private arsipParamSub!: Subscription;
-  private arsipQueryParamSub!: Subscription;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -55,9 +54,6 @@ export class ArsipDetailComponent implements OnInit, OnDestroy {
     }
     if (this.arsipParamSub) {
         this.arsipParamSub.unsubscribe();
-    }
-    if (this.arsipQueryParamSub) {
-        this.arsipQueryParamSub.unsubscribe()
     }
   }
 

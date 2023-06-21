@@ -27,7 +27,6 @@ export class ProdinFormComponent implements OnInit, OnDestroy {
   private prodinFormSub!: Subscription;
   private prodinSub!: Subscription;
   private prodinParamSub!: Subscription;
-  private prodinQueryParamSub!: Subscription;
   private id: string = null as any;
   message: string = null as any;
   jenisProdukIntelijenSelected: string = null as any;
@@ -274,9 +273,6 @@ export class ProdinFormComponent implements OnInit, OnDestroy {
     }
     if (this.prodinParamSub) {
       this.prodinParamSub.unsubscribe();
-    }
-    if (this.prodinQueryParamSub) {
-      this.prodinQueryParamSub.unsubscribe();
     }
   }
 

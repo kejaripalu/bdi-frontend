@@ -5,6 +5,7 @@ export class RegisterLahin {
     tanggal!: string;
     pembuat!: string;
     perihal!: string;
+    lampiran!: string;
     tindakLanjut!: string;
     keterangan!: string;
     urlFile!: string;

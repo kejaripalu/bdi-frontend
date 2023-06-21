@@ -37,6 +37,9 @@ import { OpsinListComponent } from "./register/opsin/opsin-list/opsin-list.compo
 import { OpsinFormComponent } from "./register/opsin/opsin-form/opsin-form.component";
 import { OpsinDetailComponent } from "./register/opsin/opsin-detail/opsin-detail.component";
 import { LahinComponent } from "./register/lahin/lahin.component";
+import { LahinListComponent } from "./register/lahin/lahin-list/lahin-list.component";
+import { LahinFormComponent } from "./register/lahin/lahin-form/lahin-form.component";
+import { LahinDetailComponent } from "./register/lahin/lahin-detail/lahin-detail.component";
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -114,11 +117,11 @@ const appRoutes: Routes = [
         { path: 'list/:id/detail', component: OpsinDetailComponent }
     ]},
     { path: 'lahin', component: LahinComponent, children:[
-       // { path: '', redirectTo: '/lahin/list', pathMatch: 'full' },
-        // { path: 'list', component: OpsinListComponent },
-        // { path: 'list/form', component: OpsinFormComponent },
-        // { path: 'list/:id/form', component: OpsinFormComponent },
-        // { path: 'list/:id/detail', component: OpsinDetailComponent }
+       { path: '', redirectTo: '/lahin/list', pathMatch: 'full' },
+        { path: 'list', component: LahinListComponent },
+        { path: 'list/form', component: LahinFormComponent },
+        { path: 'list/:id/form', component: LahinFormComponent },
+        { path: 'list/:id/detail', component: LahinDetailComponent }
     ]}
 ];
 

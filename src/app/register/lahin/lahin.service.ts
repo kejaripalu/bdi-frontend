@@ -6,14 +6,14 @@ import { RegisterLahin } from "./lahin.model";
 import { catchError, map, throwError } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
-export class TelaahanIntelijenService {
+export class RegisterTelaahanIntelijenService {
 
     private endPoint = environment.baseUrl + '/lahin';
 
     constructor(private httpClient: HttpClient,
                 private monthConverterService: MonthConverterService) { }
 
-    getAll(page: number, size: number, bidang: string, bulan: number, tahun: string) {
+    getAll(page: number, size: number, bulan: number, tahun: string) {
         const startDate = this.monthConverterService.getStartDate(bulan, tahun);        
         const endDate = this.monthConverterService.getEndDate(bulan, tahun);    
         const getEndPoint = `${this.endPoint}?pages=${page}&sizes=${size}&` +
@@ -109,10 +109,10 @@ export class TelaahanIntelijenService {
         }));
     }
 
-    getSearch(value: string, page: number, size: number, bidang: string, tahun: string) {
+    getSearch(value: string, page: number, size: number, tahun: string) {
         const startDate = tahun + '-01-01';        
         const endDate = tahun + '-12-31';    
-        const getEndPoint = `${this.endPoint}/search?pages=${page}&sizes=${size}&bidangDirektorat=${bidang}&` +
+        const getEndPoint = `${this.endPoint}/search?pages=${page}&sizes=${size}&` +
             `startDate=${startDate}&endDate=${endDate}&value=${value}`;  
         return this.httpClient.get<ResponseLahin>(getEndPoint)
             .pipe(

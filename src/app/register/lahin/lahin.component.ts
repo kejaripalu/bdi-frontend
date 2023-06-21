@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { LahinHelpComponent } from './lahin-help/lahin-help.component';
 
 @Component({
   selector: 'app-lahin',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LahinComponent implements OnInit {
 
-  constructor() { }
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
+  }
+
+  onOpenHelp() {
+    const modalHelp = this.modalService.open(LahinHelpComponent, { size: 'xl', scrollable: true });
   }
 
 }

@@ -22,7 +22,6 @@ export class ArsipFormComponent implements OnInit, OnDestroy {
   private arsipFormSub!: Subscription;
   private arsipSub!: Subscription;
   private arsipParamSub!: Subscription;
-  private arsipQueryParamSub!: Subscription;
   private id: string = null as any;
   jenisSurat: string = null as any;
   message: string = null as any;
@@ -197,9 +196,6 @@ export class ArsipFormComponent implements OnInit, OnDestroy {
     }
     if (this.arsipParamSub) {
       this.arsipParamSub.unsubscribe();
-    }
-    if (this.arsipQueryParamSub) {
-      this.arsipQueryParamSub.unsubscribe();
     }
   }
 
