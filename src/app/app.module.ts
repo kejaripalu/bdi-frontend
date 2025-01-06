@@ -68,6 +68,11 @@ import { LahinFormComponent } from './register/lahin/lahin-form/lahin-form.compo
 import { LahinDetailComponent } from './register/lahin/lahin-detail/lahin-detail.component';
 import { LahinHelpComponent } from './register/lahin/lahin-help/lahin-help.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { PphppmComponent } from './register/pphppm/pphppm.component';
+import { PphppmDetailComponent } from './register/pphppm/pphppm-detail/pphppm-detail.component';
+import { PphppmFormComponent } from './register/pphppm/pphppm-form/pphppm-form.component';
+import { PphppmHelpComponent } from './register/pphppm/pphppm-help/pphppm-help.component';
+import { PphppmListComponent } from './register/pphppm/pphppm-list/pphppm-list.component';
 
 @NgModule({
   declarations: [
@@ -132,7 +137,12 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
     LahinFormComponent,
     LahinDetailComponent,
     LahinHelpComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    PphppmComponent,
+    PphppmDetailComponent,
+    PphppmFormComponent,
+    PphppmHelpComponent,
+    PphppmListComponent
   ],
   imports: [
     BrowserModule,

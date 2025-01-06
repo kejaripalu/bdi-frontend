@@ -103,6 +103,18 @@
                         </div>
                     </div>
                 </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-xl-4">
+                            <p class="fw-bold">URL File</p>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-xl-8">
+                            : <a href="{{ suratKeluar.urlFile }}" 
+                                target="_blank"
+                                *ngIf="suratKeluar.urlFile">{{ suratKeluar.id }}</a>
+                        </div>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>

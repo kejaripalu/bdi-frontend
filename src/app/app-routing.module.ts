@@ -41,6 +41,10 @@ import { LahinListComponent } from "./register/lahin/lahin-list/lahin-list.compo
 import { LahinFormComponent } from "./register/lahin/lahin-form/lahin-form.component";
 import { LahinDetailComponent } from "./register/lahin/lahin-detail/lahin-detail.component";
 import { PageNotFoundComponent } from "./pages/page-not-found/page-not-found.component";
+import { PphppmComponent } from "./register/pphppm/pphppm.component";
+import { PphppmListComponent } from "./register/pphppm/pphppm-list/pphppm-list.component";
+import { PphppmFormComponent } from "./register/pphppm/pphppm-form/pphppm-form.component";
+import { PphppmDetailComponent } from "./register/pphppm/pphppm-detail/pphppm-detail.component";
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -124,6 +128,13 @@ const appRoutes: Routes = [
         { path: 'list/:id/form', component: LahinFormComponent },
         { path: 'list/:id/detail', component: LahinDetailComponent }
     ]},
+    { path: 'pphppm', component: PphppmComponent, children:[
+        { path: '', redirectTo: '/pphppm/list', pathMatch: 'full' },
+        { path: 'list', component: PphppmListComponent },
+        { path: 'list/form', component: PphppmFormComponent },
+        { path: 'list/:id/form', component: PphppmFormComponent },
+        { path: 'list/:id/detail', component: PphppmDetailComponent}
+     ]},
     { path: 'page-not-found', component: PageNotFoundComponent },
     { path: '**', redirectTo: 'page-not-found', pathMatch: 'full' }
 ];

@@ -3,7 +3,6 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { Bidang } from 'src/app/shared/bidang-direktorat/bidang';
-import { BidangDirektorat, BidangDirektoratLabel } from 'src/app/shared/bidang-direktorat/bidang-direktorat';
 import { BidangDirektoratSektorService } from 'src/app/shared/bidang-direktorat/bidang-direktorat-sektor.service';
 import { RkiHelpComponent } from './rki-help/rki-help.component';
 
