@@ -8,6 +8,7 @@ import { Sektor } from 'src/app/shared/bidang-direktorat/sektor';
 import { CurrentDateTimeService } from 'src/app/shared/curent-date-time.service';
 import { RegisterKerjaIntelijen } from '../rki.model';
 import { RegisterKerjaIntelijenService } from '../rki.service';
+import { NotificationService } from 'src/app/shared/notification.service';
 
 @Component({
   selector: 'app-rki-form',
@@ -37,15 +38,18 @@ export class RkiFormComponent implements OnInit, OnDestroy {
   deskripsiSektorSelected: string = null as any;
   tindakLanjutSelected: string = null as any;
   isSelectTindakLanjut: boolean = false;
+  currentNotificationStatus: boolean = false;
 
   modelDateTanggalWaktuDiterima: NgbDateStruct = null as any; // model date NgBootstrap
 
-  constructor(private rkiService: RegisterKerjaIntelijenService,
-              private bidangDirektoratSektorService: BidangDirektoratSektorService,
-              private route: ActivatedRoute, 
-              private router: Router,
-              private calendar: NgbCalendar, // service calendar NgBootStrap
-              private currentDateTimeService: CurrentDateTimeService) { }
+  constructor(
+    private rkiService: RegisterKerjaIntelijenService,
+    private bidangDirektoratSektorService: BidangDirektoratSektorService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private calendar: NgbCalendar, // service calendar NgBootStrap
+    private currentDateTimeService: CurrentDateTimeService,
+    private notificationStatusService: NotificationService) { }
 
   ngOnInit(): void {
     this.isLoading = false;
@@ -57,88 +61,87 @@ export class RkiFormComponent implements OnInit, OnDestroy {
       .subscribe((params: Params) => {
         this.isEditMode = params['id'] != null;
         this.id = params['id'];
-    });
+      });
     this.rkiQueryParamSub = this.route.queryParams
       .subscribe((queryParams: Params) => {
         this.indexBidang = this.bidangDirektoratSektorService.getBidangDirektori()
           .findIndex(obj => {
-              return obj.namaBidang === queryParams['bidang'];
-            });
-            // if index not found set to index 0 (IPOLHANKAM)
-            if (this.indexBidang < 0) {
-              this.indexBidang = 0;
-            }
-            this.title = this.bidangDirektoratSektorService.getBidangDirektori()[this.indexBidang].deskripsiBidang!;       
-            this.namaBidang = this.bidangDirektoratSektorService.getBidangDirektori()[this.indexBidang].namaBidang!;          
-    });
+            return obj.namaBidang === queryParams['bidang'];
+          });
+        // if index not found set to index 0 (IPOLHANKAM)
+        if (this.indexBidang < 0) {
+          this.indexBidang = 0;
+        }
+        this.title = this.bidangDirektoratSektorService.getBidangDirektori()[this.indexBidang].deskripsiBidang!;
+        this.namaBidang = this.bidangDirektoratSektorService.getBidangDirektori()[this.indexBidang].namaBidang!;
+      });
     this.initForm();
     this.rkiFormSub = this.rkiForm.statusChanges.subscribe(
       // (status) => console.log(status)
     );
+    this.notificationStatusService.currentNotificationStatus.subscribe(notification => this.currentNotificationStatus = notification);
   }
 
   private initForm() {
     let jamWaktuDiterima = this.currentDateTimeService.getCurrentTime();
-    let sumberBapul = null as any;
-    let uraianPeristiwaMasalah = null as any;
-    let catatan = null as any;
-    let tindakLanjut = null as any;
-    let disposisiTindakan = null as any;
-    let keterangan = null as any;
-    let urlFile = null as any;
 
     this.rkiForm = new FormGroup({
       'tanggalWaktuDiterima': new FormControl(this.modelDateTanggalWaktuDiterima, [Validators.required, Validators.minLength(10)]),
       'jamWaktuDiterima': new FormControl(jamWaktuDiterima, [Validators.required, Validators.minLength(5)]),
-      'sumberBapul': new FormControl(sumberBapul, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
-      'uraianPeristiwaMasalah': new FormControl(uraianPeristiwaMasalah, [Validators.required, Validators.minLength(10)]),
-      'catatan': new FormControl(catatan, Validators.maxLength(255)),
-      'tindakLanjut': new FormControl(tindakLanjut, Validators.maxLength(255)),
-      'disposisiTindakan': new FormControl(disposisiTindakan, Validators.maxLength(255)),
-      'keterangan': new FormControl(keterangan, Validators.maxLength(255)),
-      'urlFile': new FormControl(urlFile)
+      'sumberBapul': new FormControl(null as any, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
+      'uraianPeristiwaMasalah': new FormControl(null as any, [Validators.required, Validators.minLength(10)]),
+      'catatan': new FormControl(null as any, Validators.maxLength(255)),
+      'tindakLanjut': new FormControl(null as any, Validators.maxLength(255)),
+      'disposisiTindakan': new FormControl(null as any, Validators.maxLength(255)),
+      'keterangan': new FormControl(null as any, Validators.maxLength(255)),
+      'urlFile': new FormControl(null as any)
     });
-    
+
     if (this.namaBidang === 'IPOLHANKAM') {
-      for (let i = 0; i < 13; i++) {        
-          this.sektorList.push(
-            { deskripsiSektor: this.bidangDirektoratSektorService.getSektor()[i].deskripsiSektor!,
-              namaSektor: this.bidangDirektoratSektorService.getSektor()[i].namaSektor!
-            });
+      for (let i = 0; i < 13; i++) {
+        this.sektorList.push(
+          {
+            deskripsiSektor: this.bidangDirektoratSektorService.getSektor()[i].deskripsiSektor!,
+            namaSektor: this.bidangDirektoratSektorService.getSektor()[i].namaSektor!
+          });
       }
-      this.namaSektorSelected = this.sektorList[0].namaSektor!;  
+      this.namaSektorSelected = this.sektorList[0].namaSektor!;
       this.deskripsiSektorSelected = this.sektorList[0].deskripsiSektor!;
     } else if (this.namaBidang === 'SOSBUDMAS') {
-      for (let i = 13; i < 25; i++) {        
+      for (let i = 13; i < 25; i++) {
         this.sektorList.push(
-          { deskripsiSektor: this.bidangDirektoratSektorService.getSektor()[i].deskripsiSektor!,
+          {
+            deskripsiSektor: this.bidangDirektoratSektorService.getSektor()[i].deskripsiSektor!,
             namaSektor: this.bidangDirektoratSektorService.getSektor()[i].namaSektor!
           });
       }
       this.namaSektorSelected = this.sektorList[0].namaSektor!;
       this.deskripsiSektorSelected = this.sektorList[0].deskripsiSektor!;
     } else if (this.namaBidang === 'EKOKEU') {
-      for (let i = 25; i < 41; i++) {        
+      for (let i = 25; i < 41; i++) {
         this.sektorList.push(
-          { deskripsiSektor: this.bidangDirektoratSektorService.getSektor()[i].deskripsiSektor!,
+          {
+            deskripsiSektor: this.bidangDirektoratSektorService.getSektor()[i].deskripsiSektor!,
             namaSektor: this.bidangDirektoratSektorService.getSektor()[i].namaSektor!
           });
       }
       this.namaSektorSelected = this.sektorList[0].namaSektor!;
       this.deskripsiSektorSelected = this.sektorList[0].deskripsiSektor!;
     } else if (this.namaBidang === 'PAMSTRA') {
-      for (let i = 41; i < 61; i++) {        
+      for (let i = 41; i < 61; i++) {
         this.sektorList.push(
-          { deskripsiSektor: this.bidangDirektoratSektorService.getSektor()[i].deskripsiSektor!,
+          {
+            deskripsiSektor: this.bidangDirektoratSektorService.getSektor()[i].deskripsiSektor!,
             namaSektor: this.bidangDirektoratSektorService.getSektor()[i].namaSektor!
           });
       }
       this.namaSektorSelected = this.sektorList[0].namaSektor!;
       this.deskripsiSektorSelected = this.sektorList[0].deskripsiSektor!;
     } else if (this.namaBidang === 'TIPRODIN') {
-      for (let i = 61; i < 75; i++) {        
+      for (let i = 61; i < 75; i++) {
         this.sektorList.push(
-          { deskripsiSektor: this.bidangDirektoratSektorService.getSektor()[i].deskripsiSektor!,
+          {
+            deskripsiSektor: this.bidangDirektoratSektorService.getSektor()[i].deskripsiSektor!,
             namaSektor: this.bidangDirektoratSektorService.getSektor()[i].namaSektor!
           });
       }
@@ -150,10 +153,12 @@ export class RkiFormComponent implements OnInit, OnDestroy {
       this.isLoadingEditForm = true;
       this.rkiSub = this.rkiService.getOneRKI(this.id).subscribe({
         next: (rki) => {
-          this.modelDateTanggalWaktuDiterima = {year: +rki.tanggalWaktuDiterima.slice(0, 4), 
-            month: +rki.tanggalWaktuDiterima.slice(5, 7), 
-            day: +rki.tanggalWaktuDiterima.slice(8, 10)};      
-          
+          this.modelDateTanggalWaktuDiterima = {
+            year: +rki.tanggalWaktuDiterima.slice(0, 4),
+            month: +rki.tanggalWaktuDiterima.slice(5, 7),
+            day: +rki.tanggalWaktuDiterima.slice(8, 10)
+          };
+
           this.rkiForm = new FormGroup({
             'tanggalWaktuDiterima': new FormControl(this.modelDateTanggalWaktuDiterima, [Validators.required, Validators.minLength(10)]),
             'jamWaktuDiterima': new FormControl(rki.jamWaktuDiterima, [Validators.required, Validators.minLength(5)]),
@@ -165,8 +170,8 @@ export class RkiFormComponent implements OnInit, OnDestroy {
             'keterangan': new FormControl(rki.keterangan, Validators.maxLength(255)),
             'urlFile': new FormControl(rki.urlFile)
           });
-    
-          if (rki.tindakLanjut === 'Jadikan produk intelijen' || 
+
+          if (rki.tindakLanjut === 'Jadikan produk intelijen' ||
             rki.tindakLanjut === 'Kartukan' ||
             rki.tindakLanjut === 'Gunakan sebagai bahan koordinasi' ||
             rki.tindakLanjut === 'Buat Sprintug untuk menindaklanjuti informasi ini' ||
@@ -176,7 +181,7 @@ export class RkiFormComponent implements OnInit, OnDestroy {
             this.tindakLanjutSelected = 'lainnya';
             this.isSelectTindakLanjut = true;
           }
-          
+
           this.namaSektorSelected = rki.sektor;
           this.isLoadingEditForm = false;
           this.editModeError = false;
@@ -197,69 +202,53 @@ export class RkiFormComponent implements OnInit, OnDestroy {
       this.modelDateTanggalWaktuDiterima.year,
       this.modelDateTanggalWaktuDiterima.month,
       this.modelDateTanggalWaktuDiterima.day);
-    
-    if (this.isEditMode) {
-      const rki = new RegisterKerjaIntelijen();
-    
-      rki.id = this.id;
-      rki.tanggalWaktuDiterima = dateTanggalWaktuDiterima;
-      rki.jamWaktuDiterima = this.rkiForm.value['jamWaktuDiterima'];
-      rki.sumberBapul = this.rkiForm.value['sumberBapul'];
-      rki.nilaiDataInformasi = this.nilaiSumberInformasi + this.nilaiIsiInformasi;
-      rki.uraianPeristiwaMasalah = this.rkiForm.value['uraianPeristiwaMasalah'];
-      rki.catatan = this.rkiForm.value['catatan'];
-      rki.disposisiTindakan = this.rkiForm.value['disposisiTindakan'];
-      if (this.isSelectTindakLanjut) {
-        rki.tindakLanjut = this.rkiForm.value['tindakLanjut'];
-      } else {
-        rki.tindakLanjut = this.tindakLanjutSelected;
-      }
-      rki.keterangan = this.rkiForm.value['keterangan'];
-      rki.urlFile = this.rkiForm.value['urlFile'];
-      rki.bidangDirektorat = this.namaBidang;
-      rki.sektor = this.namaSektorSelected;
 
+    const rki = new RegisterKerjaIntelijen();
+    rki.tanggalWaktuDiterima = dateTanggalWaktuDiterima;
+    rki.jamWaktuDiterima = this.rkiForm.value['jamWaktuDiterima'];
+    rki.sumberBapul = this.rkiForm.value['sumberBapul'];
+    rki.nilaiDataInformasi = this.nilaiSumberInformasi + this.nilaiIsiInformasi;
+    rki.uraianPeristiwaMasalah = this.rkiForm.value['uraianPeristiwaMasalah'];
+    rki.catatan = this.rkiForm.value['catatan'];
+    rki.disposisiTindakan = this.rkiForm.value['disposisiTindakan'];
+    if (this.isSelectTindakLanjut) {
+      rki.tindakLanjut = this.rkiForm.value['tindakLanjut'];
+    } else {
+      rki.tindakLanjut = this.tindakLanjutSelected;
+    }
+    rki.keterangan = this.rkiForm.value['keterangan'];
+    rki.urlFile = this.rkiForm.value['urlFile'];
+    rki.bidangDirektorat = this.namaBidang;
+    rki.sektor = this.namaSektorSelected;
+
+    if (this.isEditMode) {
+      rki.id = this.id;
       this.rkiSub = this.rkiService.updateRKI(rki).subscribe({
         next: () => {
           this.isLoading = false;
           this.message = 'UpdateSukses';
+          this.onNotificationStatusChange(true);
           this.onCancel();
         },
         error: (errorMessage) => {
           this.error = errorMessage;
           this.isLoading = false;
+          this.onNotificationStatusChange(false);
         }
       });
     } else {
-      const rki = new RegisterKerjaIntelijen();
-
-      rki.tanggalWaktuDiterima = dateTanggalWaktuDiterima;
-      rki.jamWaktuDiterima = this.rkiForm.value['jamWaktuDiterima'];
-      rki.sumberBapul = this.rkiForm.value['sumberBapul'];
-      rki.nilaiDataInformasi = this.nilaiSumberInformasi + this.nilaiIsiInformasi;
-      rki.uraianPeristiwaMasalah = this.rkiForm.value['uraianPeristiwaMasalah'];
-      rki.catatan = this.rkiForm.value['catatan'];
-      rki.disposisiTindakan = this.rkiForm.value['disposisiTindakan'];
-      if (this.isSelectTindakLanjut) {
-        rki.tindakLanjut = this.rkiForm.value['tindakLanjut'];
-      } else {
-        rki.tindakLanjut = this.tindakLanjutSelected;
-      }
-      rki.keterangan = this.rkiForm.value['keterangan'];
-      rki.urlFile = this.rkiForm.value['urlFile'];
-      rki.bidangDirektorat = this.namaBidang;
-      rki.sektor = this.namaSektorSelected;
-
       this.rkiSub = this.rkiService.createRKI(rki).subscribe({
         next: () => {
           // console.log(responseData);
           this.isLoading = false;
           this.message = 'SimpanSukses';
+          this.onNotificationStatusChange(true);
           this.onCancel();
         },
         error: (errorMessage) => {
           this.error = errorMessage;
           this.isLoading = false;
+          this.onNotificationStatusChange(false);
         }
       });
     }
@@ -287,28 +276,32 @@ export class RkiFormComponent implements OnInit, OnDestroy {
       this.isSelectTindakLanjut = false;
     } else if (value === 'lainnya') {
       this.isSelectTindakLanjut = true;
-    }else {
+    } else {
       this.tindakLanjutSelected = value;
       this.isSelectTindakLanjut = false;
     }
   }
 
   onCancel() {
-    this.rkiForm.reset();    
-    this.router.navigate(['/rki', 'list'], { 
-      queryParams: { 
-        bidang: this.namaBidang, 
-        message: this.message 
-      } 
+    this.rkiForm.reset();
+    this.router.navigate(['/rki', 'list'], {
+      queryParams: {
+        bidang: this.namaBidang,
+        message: this.message
+      }
     });
+  }
+
+  onNotificationStatusChange(status: boolean) {
+    this.notificationStatusService.changeNotificationStatus(status);
   }
 
   ngOnDestroy(): void {
     if (this.rkiFormSub) {
-        this.rkiFormSub.unsubscribe();
+      this.rkiFormSub.unsubscribe();
     }
     if (this.rkiSub) {
-        this.rkiSub.unsubscribe();
+      this.rkiSub.unsubscribe();
     }
     if (this.rkiParamSub) {
       this.rkiParamSub.unsubscribe();

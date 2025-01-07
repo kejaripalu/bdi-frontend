@@ -15,7 +15,7 @@ export class PphppmComponent implements OnInit {
   }
   
   onOpenHelp() {
-    const modalHelp = this.modalService.open(PphppmHelpComponent, {size: 'xl', scrollable: true});
+    this.modalService.open(PphppmHelpComponent, {size: 'xl', scrollable: true});
   }
 
 }

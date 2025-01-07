@@ -5,6 +5,8 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { RegisterTelaahanIntelijenService } from '../lahin.service';
 import { ToastService } from 'src/app/shared/toast.service';
 import { Month } from 'src/app/shared/month';
+import { Message } from 'src/app/shared/message';
+import { NotificationService } from 'src/app/shared/notification.service';
 
 @Component({
   selector: 'app-lahin-list',
@@ -12,6 +14,8 @@ import { Month } from 'src/app/shared/month';
   styleUrls: ['./lahin-list.component.css']
 })
 export class LahinListComponent implements OnInit, OnDestroy {
+  private name: string = "Register Telaahan Intelijen";
+  private message: Message = new Message();
   lahin: RegisterLahin[] = [];
   month = Object.keys(Month).filter((v) => isNaN(Number(v)));
   currentMonth = new Date().getMonth() + 1; // get current month
@@ -20,60 +24,66 @@ export class LahinListComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   error: string = null as any;
   private lahinSub!: Subscription;
-  private lahinQueryParamSub!: Subscription; 
+  private lahinQueryParamSub!: Subscription;
   pageNumber: number = 1;
   pageSize: number = 10;
   totalElements: number = 0;
-  isSearching: boolean = false;  
+  isSearching: boolean = false;
+  currentNotificationStatus: boolean = false;
 
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              private lahinService: RegisterTelaahanIntelijenService,
-              public toastService: ToastService) { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private lahinService: RegisterTelaahanIntelijenService,
+    public toastService: ToastService,
+    private notificationStatusService: NotificationService) { }
 
   ngOnInit(): void {
     this.error = false as any;
     this.isLoading = true;
     this.getYear();
-    this.checkMessage();
     this.loadData();
+    this.checkMessage();
   }
 
   loadData() {
     this.lahinSub = this.lahinService.getAll(
-      this.pageNumber - 1, 
-      this.pageSize, 
-      +this.currentMonth, 
+      this.pageNumber - 1,
+      this.pageSize,
+      +this.currentMonth,
       this.currentYear.toString())
-        .subscribe({
-          next: (responseData) => {
-            // console.log(responseData);
-            this.lahin = responseData.content;
-            this.pageNumber = responseData.number + 1;
-            this.pageSize = responseData.size;
-            this.totalElements = responseData.totalElements;
-            this.isLoading = false;
-          },
-          error: () => {
-            this.error = 'Aduh... Gagal ambil data dari server!!!';
-            this.isLoading = false;
-          }
-        });
+      .subscribe({
+        next: (responseData) => {
+          // console.log(responseData);
+          this.lahin = responseData.content;
+          this.pageNumber = responseData.number + 1;
+          this.pageSize = responseData.size;
+          this.totalElements = responseData.totalElements;
+          this.isLoading = false;
+        },
+        error: () => {
+          this.error = this.message.errorGetData;
+          this.isLoading = false;
+        }
+      });
+    this.notificationStatusService.currentNotificationStatus.subscribe(notification => this.currentNotificationStatus = notification);
   }
 
   checkMessage() {
     this.lahinQueryParamSub = this.route.queryParams
-    .subscribe((queryParams: Params) => {
-      if (queryParams['message'] === 'SimpanSukses') {
-        this.toastService.show('Ashiiap.... Berhasil Input Data Telaahan Intelijen!', 
-          { classname: 'bg-success text-light', delay: 5000 });
-      } else if (queryParams['message'] === 'UpdateSukses') {
-        this.toastService.show('Ashiiap.... Berhasil Update Data Telaahan Intelijen!', 
-          { classname: 'bg-success text-light', delay: 5000 });
-      } else {
-        return;
-      }
-    });  
+      .subscribe((queryParams: Params) => {
+        if (queryParams['message'] === 'SimpanSukses' && this.currentNotificationStatus) {
+          this.toastService.show(this.message.saveMessage + this.name + '!!!',
+            { classname: 'bg-success text-light', delay: 5000 });
+          this.onNotificationStatusChange(false);
+        } else if (queryParams['message'] === 'UpdateSukses' && this.currentNotificationStatus) {
+          this.toastService.show(this.message.updateMessage + this.name + '!!!',
+            { classname: 'bg-success text-light', delay: 5000 });
+          this.onNotificationStatusChange(false);
+        } else {
+          return;
+        }
+      });
   }
 
   getYear() {
@@ -87,15 +97,15 @@ export class LahinListComponent implements OnInit, OnDestroy {
   }
 
   onDelete(id: string) {
-    if (confirm('Yakin ente mau hapus data ini?')) {
+    if (confirm(this.message.deleteConfirm)) {
       this.isLoading = true;
       this.lahinSub = this.lahinService.delete(id)
         .subscribe({
           next: () => {
             this.isLoading = false;
             this.loadData();
-            this.toastService.show('Ashiiap.... Berhasil Hapus Data Telaahan Intelijen!', 
-                                    { classname: 'bg-success text-light', delay: 5000 });
+            this.toastService.show(this.message.deleteMessage + this.name + '!!!',
+              { classname: 'bg-success text-light', delay: 5000 });
           },
           error: (errorMessage) => {
             this.error = errorMessage;
@@ -135,23 +145,23 @@ export class LahinListComponent implements OnInit, OnDestroy {
     this.pageNumber = 1;
     this.lahinSub = this.lahinService.getSearch(
       value,
-      this.pageNumber - 1, 
-      this.pageSize, 
+      this.pageNumber - 1,
+      this.pageSize,
       this.currentYear.toString())
-        .subscribe({
-          next: (responseData) => {
-            // console.log(responseData);
-            this.lahin = responseData.content;
-            this.pageNumber = responseData.number + 1;
-            this.pageSize = responseData.size;
-            this.totalElements = responseData.totalElements;
-            this.isLoading = false;
-          },
-          error: () => {
-            this.error = 'Aduh... Gagal ambil data dari server!!!';
-            this.isLoading = false;
-          }
-        });
+      .subscribe({
+        next: (responseData) => {
+          // console.log(responseData);
+          this.lahin = responseData.content;
+          this.pageNumber = responseData.number + 1;
+          this.pageSize = responseData.size;
+          this.totalElements = responseData.totalElements;
+          this.isLoading = false;
+        },
+        error: () => {
+          this.error = this.message.errorGetData;
+          this.isLoading = false;
+        }
+      });
   }
 
   updateMonthSelected(month: number) {
@@ -161,6 +171,10 @@ export class LahinListComponent implements OnInit, OnDestroy {
     this.loadData();
   }
 
+  onNotificationStatusChange(status: boolean) {
+    this.notificationStatusService.changeNotificationStatus(status);
+  }
+  
   ngOnDestroy(): void {
     if (this.lahinQueryParamSub) {
       this.lahinQueryParamSub.unsubscribe();

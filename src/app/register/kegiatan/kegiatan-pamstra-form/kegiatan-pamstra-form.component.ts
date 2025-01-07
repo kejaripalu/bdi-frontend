@@ -8,6 +8,7 @@ import { BidangDirektoratSektorService } from 'src/app/shared/bidang-direktorat/
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CurrentDateTimeService } from 'src/app/shared/curent-date-time.service';
 import { RegisterKegiatanIntelijenPamstra } from '../kegiatan-pamstra.model';
+import { NotificationService } from 'src/app/shared/notification.service';
 
 @Component({
   selector: 'app-kegiatan-pamstra-form',
@@ -36,18 +37,21 @@ export class KegiatanPamstraFormComponent implements OnInit, OnDestroy {
   pelaksanaanSelected: string = this.pelaksanaanList[0];
   currencyPaguAnggaran: number = 0;
   currencyNilaiKontrak: number = 0;
+  currentNotificationStatus: boolean = false;
 
   modelDateTanggalSuratPermohonan: NgbDateStruct = null as any; // model date NgBootstrap
   modelDateTanggalSprintWalpam: NgbDateStruct = null as any; // model date NgBootstrap
   modelDateTanggalPemaparan: NgbDateStruct = null as any; // model date NgBootstrap
   modelDateTanggalKertasKerja: NgbDateStruct = null as any; // model date NgBootstrap
 
-  constructor(private giatService: RegisterKegiatanIntelijenPamstraService,
-              private bidangDirektoratSektorService: BidangDirektoratSektorService,
-              private route: ActivatedRoute, 
-              private router: Router,
-              private calendar: NgbCalendar, // service calendar NgBootStrap
-              private currentDateTimeService: CurrentDateTimeService) { }
+  constructor(
+    private giatService: RegisterKegiatanIntelijenPamstraService,
+    private bidangDirektoratSektorService: BidangDirektoratSektorService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private calendar: NgbCalendar, // service calendar NgBootStrap
+    private currentDateTimeService: CurrentDateTimeService,
+    private notificationStatusService: NotificationService) { }
 
   ngOnInit(): void {
     this.isLoading = false;
@@ -60,71 +64,57 @@ export class KegiatanPamstraFormComponent implements OnInit, OnDestroy {
       .subscribe((params: Params) => {
         this.isEditMode = params['id'] != null;
         this.id = params['id'];
-    });
+      });
     this.giatQueryParamSub = this.route.queryParams
       .subscribe((queryParams: Params) => {
         this.indexBidang = this.bidangDirektoratSektorService.getBidangDirektori()
           .findIndex(obj => {
-              return obj.namaBidang === queryParams['bidang'];
-            });
-            // if index not found set to index 3 (PAMSTRA)
-            if (this.indexBidang < 0) {
-              this.indexBidang = 3;
-            }
-            this.namaBidang = this.bidangDirektoratSektorService.getBidangDirektori()[this.indexBidang].namaBidang!;          
-    });
+            return obj.namaBidang === queryParams['bidang'];
+          });
+        // if index not found set to index 3 (PAMSTRA)
+        if (this.indexBidang < 0) {
+          this.indexBidang = 3;
+        }
+        this.namaBidang = this.bidangDirektoratSektorService.getBidangDirektori()[this.indexBidang].namaBidang!;
+      });
     this.initForm();
     this.giatFormSub = this.giatForm.statusChanges.subscribe(
       // (status) => console.log(status)
     );
+    this.notificationStatusService.currentNotificationStatus.subscribe(notification => this.currentNotificationStatus = notification);
   }
 
   private initForm() {
-    let namaKegiatan = null as any;
-    let sumberDana = null as any;
-    let instansi = null as any;
     let paguAnggaran = this.currencyPaguAnggaran;
-    let nomorSuratPermohonan = null as any;
-    let tempatPemaparan = null as any;
-    let telaahanIntelijen = null as any;
-    let tindakLanjut = this.tindakLanjutValue;
-    let tindakLanjutKeterangan = null as any;
-    let nomorSprintWalpam = null as any;
-    let namaPetugasPelaksana = null as any;
-    let nilaiKontrak = this.currencyNilaiKontrak;
-    let hasilPelaksanaan = this.pelaksanaanSelected;
-    let hasilPelaksanaanKeterangan = null as any;
-    let nomorKertasKerja = null as any;
-    let keterangan = null as any;
-    let urlFile = null as any;
-
+    
     this.giatForm = new FormGroup({
-      'namaKegiatan': new FormControl(namaKegiatan, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
-      'sumberDana': new FormControl(sumberDana, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]),
-      'instansi': new FormControl(instansi, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]),
+      'namaKegiatan': new FormControl(null as any, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
+      'sumberDana': new FormControl(null as any, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]),
+      'instansi': new FormControl(null as any, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]),
       'paguAnggaran': new FormControl(paguAnggaran, [Validators.required]),
-      'nomorSuratPermohonan': new FormControl(nomorSuratPermohonan, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]),
+      'nomorSuratPermohonan': new FormControl(null as any, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]),
       'tanggalSuratPermohonan': new FormControl(this.modelDateTanggalSuratPermohonan, [Validators.required, Validators.minLength(10)]),
-      'tempatPemaparan': new FormControl(tempatPemaparan, [Validators.maxLength(255)]),
+      'tempatPemaparan': new FormControl(null as any, [Validators.maxLength(255)]),
       'tanggalPemaparan': new FormControl(this.modelDateTanggalPemaparan, [Validators.minLength(10)]),
-      'telaahanIntelijen': new FormControl(telaahanIntelijen),
-      'tindakLanjut': new FormControl(tindakLanjut),
-      'tindakLanjutKeterangan': new FormControl(tindakLanjutKeterangan),
-      'nomorSprintWalpam': new FormControl(nomorSprintWalpam, [Validators.maxLength(255)]),
+      'telaahanIntelijen': new FormControl(null as any),
+      'tindakLanjut': new FormControl(null as any),
+      'tindakLanjutKeterangan': new FormControl(null as any),
+      'nomorSprintWalpam': new FormControl(null as any, [Validators.maxLength(255)]),
       'tanggalSprintWalpam': new FormControl(this.modelDateTanggalSprintWalpam, [Validators.minLength(10)]),
-      'namaPetugasPelaksana': new FormControl(namaPetugasPelaksana, [Validators.maxLength(255)]),
-      'nilaiKontrak': new FormControl(nilaiKontrak),
-      'hasilPelaksanaan': new FormControl(hasilPelaksanaan),
-      'hasilPelaksanaanKeterangan': new FormControl(hasilPelaksanaanKeterangan),
-      'nomorKertasKerja': new FormControl(nomorKertasKerja, [Validators.maxLength(255)]),
+      'namaPetugasPelaksana': new FormControl(null as any, [Validators.maxLength(255)]),
+      'nilaiKontrak': new FormControl(null as any),
+      'hasilPelaksanaan': new FormControl(null as any),
+      'hasilPelaksanaanKeterangan': new FormControl(null as any),
+      'nomorKertasKerja': new FormControl(null as any, [Validators.maxLength(255)]),
       'tanggalKertasKerja': new FormControl(this.modelDateTanggalKertasKerja, [Validators.minLength(10)]),
-      'keterangan': new FormControl(keterangan, Validators.maxLength(255)),
-      'urlFile': new FormControl(urlFile)
+      'keterangan': new FormControl(null as any, Validators.maxLength(255)),
+      'urlFile': new FormControl(null as any)
     });
 
-    for (let i = 41; i < 61; i++) {        
+    for (let i = 41; i < 61; i++) {
       this.sektorList.push(
-        { deskripsiSektor: this.bidangDirektoratSektorService.getSektor()[i].deskripsiSektor!,
+        {
+          deskripsiSektor: this.bidangDirektoratSektorService.getSektor()[i].deskripsiSektor!,
           namaSektor: this.bidangDirektoratSektorService.getSektor()[i].namaSektor!
         });
     }
@@ -134,21 +124,29 @@ export class KegiatanPamstraFormComponent implements OnInit, OnDestroy {
       this.isLoadingEditForm = true;
       this.giatSub = this.giatService.getOne(this.id).subscribe({
         next: (giat) => {
-          this.modelDateTanggalSuratPermohonan = {year: +giat.tanggalSuratPermohonan.slice(0, 4), 
-            month: +giat.tanggalSuratPermohonan.slice(5, 7), 
-            day: +giat.tanggalSuratPermohonan.slice(8, 10)};      
-          this.modelDateTanggalSprintWalpam = {year: +giat.tanggalSprintWalpam.slice(0, 4), 
-            month: +giat.tanggalSprintWalpam.slice(5, 7), 
-            day: +giat.tanggalSprintWalpam.slice(8, 10)};      
-          this.modelDateTanggalKertasKerja = {year: +giat.tanggalKertasKerja.slice(0, 4), 
-            month: +giat.tanggalKertasKerja.slice(5, 7), 
-            day: +giat.tanggalKertasKerja.slice(8, 10)};      
-          this.modelDateTanggalPemaparan = {year: +giat.tanggalPemaparan.slice(0, 4), 
-            month: +giat.tanggalPemaparan.slice(5, 7), 
-            day: +giat.tanggalPemaparan.slice(8, 10)};
+          this.modelDateTanggalSuratPermohonan = {
+            year: +giat.tanggalSuratPermohonan.slice(0, 4),
+            month: +giat.tanggalSuratPermohonan.slice(5, 7),
+            day: +giat.tanggalSuratPermohonan.slice(8, 10)
+          };
+          this.modelDateTanggalSprintWalpam = {
+            year: +giat.tanggalSprintWalpam.slice(0, 4),
+            month: +giat.tanggalSprintWalpam.slice(5, 7),
+            day: +giat.tanggalSprintWalpam.slice(8, 10)
+          };
+          this.modelDateTanggalKertasKerja = {
+            year: +giat.tanggalKertasKerja.slice(0, 4),
+            month: +giat.tanggalKertasKerja.slice(5, 7),
+            day: +giat.tanggalKertasKerja.slice(8, 10)
+          };
+          this.modelDateTanggalPemaparan = {
+            year: +giat.tanggalPemaparan.slice(0, 4),
+            month: +giat.tanggalPemaparan.slice(5, 7),
+            day: +giat.tanggalPemaparan.slice(8, 10)
+          };
           this.currencyPaguAnggaran = giat.paguAnggaran;
-          this.currencyNilaiKontrak = giat.nilaiKontrak;    
-          
+          this.currencyNilaiKontrak = giat.nilaiKontrak;
+
           this.giatForm = new FormGroup({
             'namaKegiatan': new FormControl(giat.namaKegiatan, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
             'sumberDana': new FormControl(giat.sumberDana, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]),
@@ -172,7 +170,7 @@ export class KegiatanPamstraFormComponent implements OnInit, OnDestroy {
             'keterangan': new FormControl(giat.keterangan, Validators.maxLength(255)),
             'urlFile': new FormControl(giat.urlFile)
           });
-          
+
           this.namaSektorSelected = giat.sektor;
           this.isLoadingEditForm = false;
           this.editModeError = false;
@@ -206,30 +204,30 @@ export class KegiatanPamstraFormComponent implements OnInit, OnDestroy {
       this.modelDateTanggalPemaparan.month,
       this.modelDateTanggalPemaparan.day);
 
-      const giat = new RegisterKegiatanIntelijenPamstra();
+    const giat = new RegisterKegiatanIntelijenPamstra();
 
-      giat.sektor = this.namaSektorSelected;
-      giat.namaKegiatan = this.giatForm.value['namaKegiatan'];
-      giat.sumberDana = this.giatForm.value['sumberDana'];
-      giat.instansi = this.giatForm.value['instansi'];
-      giat.paguAnggaran = this.giatForm.value['paguAnggaran'];
-      giat.nomorSuratPermohonan = this.giatForm.value['nomorSuratPermohonan'];
-      giat.tanggalSuratPermohonan = dateTanggalSuratPermohonan;
-      giat.tempatPemaparan = this.giatForm.value['tempatPemaparan'];
-      giat.tanggalPemaparan = dateTanggalPemaparan;
-      giat.telaahanIntelijen = this.giatForm.value['telaahanIntelijen'];
-      giat.tindakLanjut = this.giatForm.value['tindakLanjut'];
-      giat.tindakLanjutKeterangan = this.giatForm.value['tindakLanjutKeterangan'];
-      giat.nomorSprintWalpam = this.giatForm.value['nomorSprintWalpam'];
-      giat.tanggalSprintWalpam = dateTanggalSprintWalpam;
-      giat.namaPetugasPelaksana = this.giatForm.value['namaPetugasPelaksana'];
-      giat.nilaiKontrak = this.giatForm.value['nilaiKontrak'];
-      giat.hasilPelaksanaan = this.giatForm.value['hasilPelaksanaan'];
-      giat.hasilPelaksanaanKeterangan = this.giatForm.value['hasilPelaksanaanKeterangan'];
-      giat.nomorKertasKerja = this.giatForm.value['nomorKertasKerja'];
-      giat.tanggalKertasKerja = dateTanggalKertasKerja;
-      giat.keterangan = this.giatForm.value['keterangan'];
-      giat.urlFile = this.giatForm.value['urlFile'];
+    giat.sektor = this.namaSektorSelected;
+    giat.namaKegiatan = this.giatForm.value['namaKegiatan'];
+    giat.sumberDana = this.giatForm.value['sumberDana'];
+    giat.instansi = this.giatForm.value['instansi'];
+    giat.paguAnggaran = this.giatForm.value['paguAnggaran'];
+    giat.nomorSuratPermohonan = this.giatForm.value['nomorSuratPermohonan'];
+    giat.tanggalSuratPermohonan = dateTanggalSuratPermohonan;
+    giat.tempatPemaparan = this.giatForm.value['tempatPemaparan'];
+    giat.tanggalPemaparan = dateTanggalPemaparan;
+    giat.telaahanIntelijen = this.giatForm.value['telaahanIntelijen'];
+    giat.tindakLanjut = this.giatForm.value['tindakLanjut'];
+    giat.tindakLanjutKeterangan = this.giatForm.value['tindakLanjutKeterangan'];
+    giat.nomorSprintWalpam = this.giatForm.value['nomorSprintWalpam'];
+    giat.tanggalSprintWalpam = dateTanggalSprintWalpam;
+    giat.namaPetugasPelaksana = this.giatForm.value['namaPetugasPelaksana'];
+    giat.nilaiKontrak = this.giatForm.value['nilaiKontrak'];
+    giat.hasilPelaksanaan = this.giatForm.value['hasilPelaksanaan'];
+    giat.hasilPelaksanaanKeterangan = this.giatForm.value['hasilPelaksanaanKeterangan'];
+    giat.nomorKertasKerja = this.giatForm.value['nomorKertasKerja'];
+    giat.tanggalKertasKerja = dateTanggalKertasKerja;
+    giat.keterangan = this.giatForm.value['keterangan'];
+    giat.urlFile = this.giatForm.value['urlFile'];
 
     if (this.isEditMode) {
       giat.id = this.id;
@@ -238,11 +236,13 @@ export class KegiatanPamstraFormComponent implements OnInit, OnDestroy {
         next: () => {
           this.isLoading = false;
           this.message = 'UpdateSukses';
+          this.onNotificationStatusChange(true);
           this.onCancel();
         },
         error: (errorMessage) => {
           this.error = errorMessage;
           this.isLoading = false;
+          this.onNotificationStatusChange(false);
         }
       });
     } else {
@@ -251,11 +251,13 @@ export class KegiatanPamstraFormComponent implements OnInit, OnDestroy {
           // console.log(responseData);
           this.isLoading = false;
           this.message = 'SimpanSukses';
+          this.onNotificationStatusChange(true);
           this.onCancel();
         },
         error: (errorMessage) => {
           this.error = errorMessage;
           this.isLoading = false;
+          this.onNotificationStatusChange(false);
         }
       });
     }
@@ -286,11 +288,11 @@ export class KegiatanPamstraFormComponent implements OnInit, OnDestroy {
   onDateTanggalSuratPermohonanSelect(date: NgbDate) {
     this.modelDateTanggalSuratPermohonan = date;
   }
-  
+
   onDateTanggalSprintWalpamSelect(date: NgbDate) {
     this.modelDateTanggalSprintWalpam = date;
   }
-  
+
   onDateTanggalPemaparanSelect(date: NgbDate) {
     this.modelDateTanggalPemaparan = date;
   }
@@ -300,13 +302,17 @@ export class KegiatanPamstraFormComponent implements OnInit, OnDestroy {
   }
 
   onCancel() {
-    this.giatForm.reset();    
-    this.router.navigate(['/kegiatan', 'list', 'pamstra-list'], { 
-      queryParams: { 
-        bidang: this.namaBidang, 
-        message: this.message 
-      } 
+    this.giatForm.reset();
+    this.router.navigate(['/kegiatan', 'list', 'pamstra-list'], {
+      queryParams: {
+        bidang: this.namaBidang,
+        message: this.message
+      }
     });
+  }
+
+  onNotificationStatusChange(status: boolean){
+    this.notificationStatusService.changeNotificationStatus(status);
   }
 
   ngOnDestroy(): void {
@@ -314,7 +320,7 @@ export class KegiatanPamstraFormComponent implements OnInit, OnDestroy {
       this.giatFormSub.unsubscribe();
     }
     if (this.giatSub) {
-        this.giatSub.unsubscribe();
+      this.giatSub.unsubscribe();
     }
     if (this.giatParamSub) {
       this.giatParamSub.unsubscribe();

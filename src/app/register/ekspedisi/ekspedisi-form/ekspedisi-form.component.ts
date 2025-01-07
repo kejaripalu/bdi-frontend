@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { CurrentDateTimeService } from 'src/app/shared/curent-date-time.service';
 import { Ekspedisi } from '../ekspedisi.model';
 import { EkspedisiService } from '../ekspedisi.service';
+import { NotificationService } from 'src/app/shared/notification.service';
 
 @Component({
   selector: 'app-ekspedisi-form',
@@ -26,15 +27,18 @@ export class EkspedisiFormComponent implements OnInit, OnDestroy {
   private id: string = null as any;
   jenisSurat: string = null as any;
   message: string = null as any;
+  currentNotificationStatus: boolean = false;
 
   modelDateTanggalSurat: NgbDateStruct = null as any; // model date NgBootstrap
   modelDateTanggalTerimaSurat: NgbDateStruct = null as any; // model date NgBootstrap
 
-  constructor(private ekspedisiService: EkspedisiService,
-              private route: ActivatedRoute, 
-              private router: Router,
-              private calendar: NgbCalendar, // service calendar NgBootStrap
-              private currentDateTimeService: CurrentDateTimeService) { }
+  constructor(
+    private ekspedisiService: EkspedisiService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private calendar: NgbCalendar, // service calendar NgBootStrap
+    private currentDateTimeService: CurrentDateTimeService,
+    private notificationStatusService: NotificationService) { }
 
   ngOnInit(): void {
     this.isLoading = false;
@@ -43,53 +47,51 @@ export class EkspedisiFormComponent implements OnInit, OnDestroy {
     this.modelDateTanggalTerimaSurat = this.calendar.getToday();
     this.ekspedisiParamSub = this.route.params
       .subscribe((params: Params) => {
-          this.isEditMode = params['id'] != null;
-          this.id = params['id'];
-    });
+        this.isEditMode = params['id'] != null;
+        this.id = params['id'];
+      });
     this.ekspedisiQueryParamSub = this.route.queryParams
       .subscribe((queryParams: Params) => {
-          this.jenisSurat = queryParams['jenisSurat']?.toUpperCase() !== 'RAHASIA' ? 'BIASA' : 'RAHASIA';
-    });
+        this.jenisSurat = queryParams['jenisSurat']?.toUpperCase() !== 'RAHASIA' ? 'BIASA' : 'RAHASIA';
+      });
     this.initForm();
     this.ekspedisiFormSub = this.ekspedisiForm.statusChanges.subscribe(
       // (status) => console.log(status)
-    )
+    );
+    this.notificationStatusService.currentNotificationStatus.subscribe(notification => this.currentNotificationStatus = notification);
   }
 
   initForm() {
-    let nomorSurat = null as any;
-    let kepada = null as any;
-    let perihal = null as any;
-    let lampiran = null as any;
-    let jamTandaTerima = this.currentDateTimeService.getCurrentTime();    
-    let namaDanParaf = null as any;
-    let keterangan = null as any;
-    let urlFile = null as any;
+    let jamTandaTerima = this.currentDateTimeService.getCurrentTime();
 
     this.ekspedisiForm = new FormGroup({
-      'nomorSurat': new FormControl(nomorSurat, [Validators.required, Validators.maxLength(255)]),
+      'nomorSurat': new FormControl(null as any, [Validators.required, Validators.maxLength(255)]),
       'tanggalSurat': new FormControl(this.modelDateTanggalSurat, [Validators.required, Validators.minLength(10)]),
-      'kepada': new FormControl(kepada, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
-      'perihal': new FormControl(perihal, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
-      'lampiran': new FormControl(lampiran, Validators.maxLength(255)),
+      'kepada': new FormControl(null as any, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
+      'perihal': new FormControl(null as any, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
+      'lampiran': new FormControl(null as any, Validators.maxLength(255)),
       'tanggalTandaTerima': new FormControl(this.modelDateTanggalTerimaSurat, [Validators.required, Validators.minLength(10)]),
       'jamTandaTerima': new FormControl(jamTandaTerima, [Validators.required, Validators.minLength(5)]),
-      'namaDanParaf': new FormControl(namaDanParaf),
-      'keterangan': new FormControl(keterangan, Validators.maxLength(255)),
-      'urlFile': new FormControl(urlFile)
+      'namaDanParaf': new FormControl(null as any),
+      'keterangan': new FormControl(null as any, Validators.maxLength(255)),
+      'urlFile': new FormControl(null as any)
     });
 
     if (this.isEditMode) {
       this.isLoadingEditForm = true;
       this.ekspedisiSub = this.ekspedisiService.getOneEkspedisi(this.id).subscribe({
         next: (ekspedisi) => {
-          this.modelDateTanggalSurat = {year: +ekspedisi.tanggalSurat.slice(0, 4), 
-            month: +ekspedisi.tanggalSurat.slice(5, 7), 
-            day: +ekspedisi.tanggalSurat.slice(8, 10)};
-          this.modelDateTanggalTerimaSurat = {year: +ekspedisi.tanggalTandaTerima.slice(0, 4), 
-            month: +ekspedisi.tanggalTandaTerima.slice(5, 7), 
-            day: +ekspedisi.tanggalTandaTerima.slice(8, 10)}; 
-          
+          this.modelDateTanggalSurat = {
+            year: +ekspedisi.tanggalSurat.slice(0, 4),
+            month: +ekspedisi.tanggalSurat.slice(5, 7),
+            day: +ekspedisi.tanggalSurat.slice(8, 10)
+          };
+          this.modelDateTanggalTerimaSurat = {
+            year: +ekspedisi.tanggalTandaTerima.slice(0, 4),
+            month: +ekspedisi.tanggalTandaTerima.slice(5, 7),
+            day: +ekspedisi.tanggalTandaTerima.slice(8, 10)
+          };
+
           this.ekspedisiForm = new FormGroup({
             'nomorSurat': new FormControl(ekspedisi.nomorSurat, [Validators.required, Validators.maxLength(255)]),
             'tanggalSurat': new FormControl(this.modelDateTanggalSurat, [Validators.required, Validators.minLength(10)]),
@@ -125,87 +127,80 @@ export class EkspedisiFormComponent implements OnInit, OnDestroy {
       this.modelDateTanggalTerimaSurat.year,
       this.modelDateTanggalTerimaSurat.month,
       this.modelDateTanggalTerimaSurat.day);
-       
-    if (this.isEditMode) {
-      const ekspedisi = new Ekspedisi();
-    
-      ekspedisi.id = this.id;
-      ekspedisi.nomorSurat = this.ekspedisiForm.value['nomorSurat'];
-      ekspedisi.tanggalSurat = dateTanggalSurat;
-      ekspedisi.kepada = this.ekspedisiForm.value['kepada'];
-      ekspedisi.perihal = this.ekspedisiForm.value['perihal'];
-      ekspedisi.lampiran = this.ekspedisiForm.value['lampiran'];
-      ekspedisi.tanggalTandaTerima = dateTanggalTandaTerima;
-      ekspedisi.jamTandaTerima = this.ekspedisiForm.value['jamTandaTerima'];
-      ekspedisi.jenisSurat = this.jenisSurat;
-      ekspedisi.namaDanParaf = this.ekspedisiForm.value['namaDanParaf'];
-      ekspedisi.keterangan = this.ekspedisiForm.value['keterangan'];
-      ekspedisi.urlFile = this.ekspedisiForm.value['urlFile'];
 
+    const ekspedisi = new Ekspedisi();
+    ekspedisi.nomorSurat = this.ekspedisiForm.value['nomorSurat'];
+    ekspedisi.tanggalSurat = dateTanggalSurat;
+    ekspedisi.kepada = this.ekspedisiForm.value['kepada'];
+    ekspedisi.perihal = this.ekspedisiForm.value['perihal'];
+    ekspedisi.lampiran = this.ekspedisiForm.value['lampiran'];
+    ekspedisi.tanggalTandaTerima = dateTanggalTandaTerima;
+    ekspedisi.jamTandaTerima = this.ekspedisiForm.value['jamTandaTerima'];
+    ekspedisi.jenisSurat = this.jenisSurat;
+    ekspedisi.namaDanParaf = this.ekspedisiForm.value['namaDanParaf'];
+    ekspedisi.keterangan = this.ekspedisiForm.value['keterangan'];
+    ekspedisi.urlFile = this.ekspedisiForm.value['urlFile'];
+
+    if (this.isEditMode) {
+      ekspedisi.id = this.id;
       this.ekspedisiSub = this.ekspedisiService.updateEkspedisi(ekspedisi).subscribe({
         next: () => {
           this.isLoading = false;
           this.message = 'UpdateSukses';
+          this.onNotificationStatusChange(true);
           this.onCancel();
         },
         error: (errorMessage) => {
           this.error = errorMessage;
           this.isLoading = false;
+          this.onNotificationStatusChange(false);
         }
       });
     } else {
-      const ekspedisi = new Ekspedisi();
-     
-      ekspedisi.nomorSurat = this.ekspedisiForm.value['nomorSurat'];
-      ekspedisi.tanggalSurat = dateTanggalSurat;
-      ekspedisi.kepada = this.ekspedisiForm.value['kepada'];
-      ekspedisi.perihal = this.ekspedisiForm.value['perihal'];
-      ekspedisi.lampiran = this.ekspedisiForm.value['lampiran'];
-      ekspedisi.tanggalTandaTerima = dateTanggalTandaTerima;
-      ekspedisi.jamTandaTerima = this.ekspedisiForm.value['jamTandaTerima'];
-      ekspedisi.jenisSurat = this.jenisSurat;
-      ekspedisi.namaDanParaf = this.ekspedisiForm.value['namaDanParaf'];
-      ekspedisi.keterangan = this.ekspedisiForm.value['keterangan'];
-      ekspedisi.urlFile = this.ekspedisiForm.value['urlFile'];
-
       this.ekspedisiSub = this.ekspedisiService.createEkspedisi(ekspedisi).subscribe({
         next: () => {
           // console.log(responseData);
           this.isLoading = false;
           this.message = 'SimpanSukses';
+          this.onNotificationStatusChange(true);
           this.onCancel();
         },
         error: (errorMessage) => {
           this.error = errorMessage;
           this.isLoading = false;
+          this.onNotificationStatusChange(false);
         }
       });
-    }    
+    }
   }
 
   onCancel() {
     this.ekspedisiForm.reset();
     if (this.jenisSurat === 'RAHASIA') {
-        this.router.navigate(['/ekspedisi', 'rahasia'], {queryParams: {jenisSurat: 'RAHASIA', message: this.message}});
+      this.router.navigate(['/ekspedisi', 'rahasia'], { queryParams: { jenisSurat: 'RAHASIA', message: this.message } });
     } else {
-        this.router.navigate(['/ekspedisi', 'biasa'], {queryParams: {jenisSurat: 'BIASA', message: this.message}});
-    }   
+      this.router.navigate(['/ekspedisi', 'biasa'], { queryParams: { jenisSurat: 'BIASA', message: this.message } });
+    }
   }
 
   onDateTanggalSuratSelect(date: NgbDate) {
     this.modelDateTanggalSurat = date;
   }
-  
+
   onDateTanggalTandaTerimaSelect(date: NgbDate) {
     this.modelDateTanggalTerimaSurat = date;
   }
 
+  onNotificationStatusChange(status: boolean) {
+    this.notificationStatusService.changeNotificationStatus(status);
+  }
+
   ngOnDestroy(): void {
     if (this.ekspedisiFormSub) {
-        this.ekspedisiFormSub.unsubscribe();
+      this.ekspedisiFormSub.unsubscribe();
     }
     if (this.ekspedisiSub) {
-        this.ekspedisiSub.unsubscribe();
+      this.ekspedisiSub.unsubscribe();
     }
     if (this.ekspedisiParamSub) {
       this.ekspedisiParamSub.unsubscribe();

@@ -15,7 +15,7 @@ export class ArsipComponent implements OnInit {
   }
 
   onOpenHelp() {
-    const modalHelp = this.modalService.open(ArsipHelpComponent, { size: 'xl', scrollable: true });
+    this.modalService.open(ArsipHelpComponent, { size: 'xl', scrollable: true });
   }
 
 }

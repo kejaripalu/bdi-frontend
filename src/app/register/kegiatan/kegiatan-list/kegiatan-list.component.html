@@ -49,21 +49,21 @@
         </div>
     </div>
     <div class="table-responsive">
-        <table class="table table-striped table-sm mt-4">
+        <table class="table table-striped table-sm mt-4 table-bordered">
             <thead>
                 <tr>
                     <th scope="col">Sektor</th>
-                    <th scope="col" style="text-align: center;">Nomor, Tanggal, dan Perihal SPRINT / Disposisi</th>
-                    <th scope="col" style="text-align: center;">Nama Petugas Pelaksana</th>
-                    <th scope="col" style="text-align: center;">Hasil Pelaksanaan Kegiatan</th>
-                    <th scope="col"></th>
+                    <th scope="col">Nomor, Tanggal, dan Perihal SPRINT / Disposisi</th>
+                    <th scope="col">Nama Petugas Pelaksana</th>
+                    <th scope="col">Hasil Pelaksanaan Kegiatan</th>
+                    <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let g of giat">
                     <td class="align-top">{{ g.sektor | sektorPipe }}</td>
-                    <td class="align-top" style="text-align: center;">{{ g.nomor }}<br>{{ g.tanggal | date: 'dd-MM-yyyy' }}<br>{{ g.perihal }}</td>
-                    <td class="align-top" style="text-align: center;">{{ g.namaPetugasPelaksana | shorten: 255 }}</td>
+                    <td class="align-top">{{ g.nomor }}<br>{{ g.tanggal | date: 'dd-MM-yyyy' }}<br>{{ g.perihal }}</td>
+                    <td class="align-top">{{ g.namaPetugasPelaksana | shorten: 255 }}</td>
                     <td class="align-top">{{ g.hasilPelaksanaanKegiatan | shorten: 255 }}</td>
                     <td class="align-top">
                         <a class="dropdown-item text-primary"

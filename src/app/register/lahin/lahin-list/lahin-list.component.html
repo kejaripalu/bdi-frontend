@@ -52,19 +52,19 @@
         <table class="table table-striped table-sm mt-4 table-bordered">
             <thead>
                 <tr>
-                    <th scope="col" style="text-align: center;">Nomor dan Tanggal</th>
-                    <th scope="col" style="text-align: center;">Pembuat</th>
-                    <th scope="col" style="text-align: center;">Perihal</th>
-                    <th scope="col" style="text-align: center;">Tindak Lanjut</th>
-                    <th scope="col" style="text-align: center;">Action</th>
+                    <th scope="col">Nomor dan Tanggal</th>
+                    <th scope="col">Pembuat</th>
+                    <th scope="col">Perihal</th>
+                    <th scope="col">Tindak Lanjut</th>
+                    <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let l of lahin">
-                    <td class="align-top" style="text-align: center;">{{ l.nomor }}<br>{{ l.tanggal }}</td>
-                    <td class="align-top" style="text-align: center;">{{ l.pembuat | shorten: 255 }}</td>
-                    <td class="align-top" style="text-align: center;">{{ l.perihal | shorten: 255 }}</td>
-                    <td class="align-top" style="text-align: center;">{{ l.tindakLanjut | shorten: 255 }}</td>
+                    <td class="align-top">{{ l.nomor }}<br>{{ l.tanggal }}</td>
+                    <td class="align-top">{{ l.pembuat | shorten: 255 }}</td>
+                    <td class="align-top">{{ l.perihal | shorten: 255 }}</td>
+                    <td class="align-top">{{ l.tindakLanjut | shorten: 255 }}</td>
                     <td class="align-top">
                         <a class="dropdown-item text-primary"
                                         [routerLink]="['/lahin', 'list', l.id, 'detail']">

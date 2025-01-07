@@ -6,6 +6,7 @@ import { min, Subscription } from 'rxjs';
 import { CurrentDateTimeService } from 'src/app/shared/curent-date-time.service';
 import { SuratMasuk } from '../surat-masuk.model';
 import { SuratMasukService } from '../surat-masuk.service';
+import { NotificationService } from 'src/app/shared/notification.service';
 
 @Component({
   selector: 'app-surat-masuk-form',
@@ -26,15 +27,18 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
   private id: string = null as any;
   jenisSurat: string = null as any;
   message: string = null as any;
+  currentNotificationStatus: boolean = false;
 
   modelDateTanggalPenerimaanSurat: NgbDateStruct = null as any; // model date NgBootstrap
   modelDateTanggalSurat: NgbDateStruct = null as any; // model date NgBootstrap
 
-  constructor(private suratMasukService: SuratMasukService,
-              private route: ActivatedRoute, 
-              private router: Router,
-              private calendar: NgbCalendar, // service calendar NgBootStrap
-              private currentDateTimeService: CurrentDateTimeService) { }
+  constructor(
+    private suratMasukService: SuratMasukService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private calendar: NgbCalendar, // service calendar NgBootStrap
+    private currentDateTimeService: CurrentDateTimeService,
+    private notificationStatusService: NotificationService) { }
 
   ngOnInit(): void {
     this.isLoading = false;
@@ -43,17 +47,18 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
     this.modelDateTanggalSurat = this.calendar.getToday();
     this.suratMasukParamSub = this.route.params
       .subscribe((params: Params) => {
-          this.isEditMode = params['id'] != null;
-          this.id = params['id'];
-    });
+        this.isEditMode = params['id'] != null;
+        this.id = params['id'];
+      });
     this.suratMasukQueryParamSub = this.route.queryParams
       .subscribe((queryParams: Params) => {
-          this.jenisSurat = queryParams['jenisSurat']?.toUpperCase() !== 'RAHASIA' ? 'BIASA' : 'RAHASIA';
-    });
+        this.jenisSurat = queryParams['jenisSurat']?.toUpperCase() !== 'RAHASIA' ? 'BIASA' : 'RAHASIA';
+      });
     this.initForm();
     this.suratMasukFormSub = this.suratMasukForm.statusChanges.subscribe(
       // (status) => console.log(status)
-    )
+    );
+    this.notificationStatusService.currentNotificationStatus.subscribe(notification => this.currentNotificationStatus = notification);
   }
 
   onSubmit() {
@@ -67,11 +72,8 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
       this.modelDateTanggalSurat.year,
       this.modelDateTanggalSurat.month,
       this.modelDateTanggalSurat.day);
-       
-    if (this.isEditMode) {
+
       const suratMasuk = new SuratMasuk();
-    
-      suratMasuk.id = this.id;
       suratMasuk.tanggalPenerimaanSurat = dateTanggalPenerimaanSurat;
       suratMasuk.jamPenerimaanSurat = this.suratMasukForm.value['jamPenerimaanSurat'];
       suratMasuk.asal = this.suratMasukForm.value['asal'];
@@ -83,92 +85,80 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
       suratMasuk.tindakLanjutDisposisi = this.suratMasukForm.value['tindakLanjutDisposisi'];
       suratMasuk.keterangan = this.suratMasukForm.value['keterangan'];
       suratMasuk.urlFile = this.suratMasukForm.value['urlFile'];
-
+      
+      if (this.isEditMode) {
+      suratMasuk.id = this.id;
       this.suratMasukSub = this.suratMasukService.updateSuratMasuk(suratMasuk).subscribe({
         next: () => {
           this.isLoading = false;
           this.message = 'UpdateSukses';
+          this.onNotificationStatusChange(true);
           this.onCancel();
         },
         error: (errorMessage) => {
           this.error = errorMessage;
           this.isLoading = false;
+          this.onNotificationStatusChange(false);
         }
       });
     } else {
-      // console.log(this.suratMasukForm);
-      const suratMasuk = new SuratMasuk();
-     
-      suratMasuk.tanggalPenerimaanSurat = dateTanggalPenerimaanSurat;
-      suratMasuk.jamPenerimaanSurat = this.suratMasukForm.value['jamPenerimaanSurat'];
-      suratMasuk.asal = this.suratMasukForm.value['asal'];
-      suratMasuk.nomorSurat = this.suratMasukForm.value['nomorSurat'];
-      suratMasuk.tanggalSurat = dateTanggalSurat;
-      suratMasuk.perihal = this.suratMasukForm.value['perihal'];
-      suratMasuk.jenisSurat = this.jenisSurat;
-      suratMasuk.isiDisposisi = this.suratMasukForm.value['isiDisposisi'];
-      suratMasuk.tindakLanjutDisposisi = this.suratMasukForm.value['tindakLanjutDisposisi'];
-      suratMasuk.keterangan = this.suratMasukForm.value['keterangan'];
-      suratMasuk.urlFile = this.suratMasukForm.value['urlFile'];
-
       this.suratMasukSub = this.suratMasukService.createSuratMasuk(suratMasuk).subscribe({
         next: () => {
           // console.log(responseData);
           this.isLoading = false;
           this.message = 'SimpanSukses';
+          this.onNotificationStatusChange(true);
           this.onCancel();
         },
         error: (errorMessage) => {
           this.error = errorMessage;
           this.isLoading = false;
+          this.onNotificationStatusChange(false);
         }
       });
-    }    
+    }
   }
 
   onCancel() {
     this.suratMasukForm.reset();
     if (this.jenisSurat === 'RAHASIA') {
-        this.router.navigate(['/surat-masuk', 'rahasia'], {queryParams: {jenisSurat: 'RAHASIA', message: this.message}});
+      this.router.navigate(['/surat-masuk', 'rahasia'], { queryParams: { jenisSurat: 'RAHASIA', message: this.message } });
     } else {
-        this.router.navigate(['/surat-masuk', 'biasa'], {queryParams: {jenisSurat: 'BIASA', message: this.message}});
-    }   
+      this.router.navigate(['/surat-masuk', 'biasa'], { queryParams: { jenisSurat: 'BIASA', message: this.message } });
+    }
   }
 
   private initForm() {
-    let jamPenerimaanSurat = this.currentDateTimeService.getCurrentTime();    
-    let asal = null as any;
-    let nomorSurat = null as any;
-    let perihal = null as any;
-    let isiDisposisi = null as any;
-    let tindakLanjutDisposisi = null as any;
-    let keterangan = null as any;
-    let urlFile = null as any;
-
+    let jamPenerimaanSurat = this.currentDateTimeService.getCurrentTime();
+    
     this.suratMasukForm = new FormGroup({
       'tanggalPenerimaanSurat': new FormControl(this.modelDateTanggalPenerimaanSurat, [Validators.required, Validators.minLength(10)]),
       'jamPenerimaanSurat': new FormControl(jamPenerimaanSurat, [Validators.required, Validators.minLength(5)]),
-      'asal': new FormControl(asal, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
-      'nomorSurat': new FormControl(nomorSurat, [Validators.required, Validators.maxLength(255)]),
-      'perihal': new FormControl(perihal, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
+      'asal': new FormControl(null as any, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
+      'nomorSurat': new FormControl(null as any, [Validators.required, Validators.maxLength(255)]),
+      'perihal': new FormControl(null as any, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
       'tanggalSurat': new FormControl(this.modelDateTanggalSurat, [Validators.required, Validators.minLength(10)]),
-      'isiDisposisi': new FormControl(isiDisposisi, Validators.maxLength(255)),
-      'tindakLanjutDisposisi': new FormControl(tindakLanjutDisposisi, Validators.maxLength(255)),
-      'keterangan': new FormControl(keterangan, Validators.maxLength(255)),
-      'urlFile': new FormControl(urlFile)
+      'isiDisposisi': new FormControl(null as any, Validators.maxLength(255)),
+      'tindakLanjutDisposisi': new FormControl(null as any, Validators.maxLength(255)),
+      'keterangan': new FormControl(null as any, Validators.maxLength(255)),
+      'urlFile': new FormControl(null as any)
     });
 
     if (this.isEditMode) {
       this.isLoadingEditForm = true;
       this.suratMasukSub = this.suratMasukService.getOneSuratMasuk(this.id).subscribe({
         next: (suratMasuk) => {
-          this.modelDateTanggalPenerimaanSurat = {year: +suratMasuk.tanggalPenerimaanSurat.slice(0, 4), 
-            month: +suratMasuk.tanggalPenerimaanSurat.slice(5, 7), 
-            day: +suratMasuk.tanggalPenerimaanSurat.slice(8, 10)};      
-          this.modelDateTanggalSurat = {year: +suratMasuk.tanggalSurat.slice(0, 4), 
-            month: +suratMasuk.tanggalSurat.slice(5, 7), 
-            day: +suratMasuk.tanggalSurat.slice(8, 10)};
-          
+          this.modelDateTanggalPenerimaanSurat = {
+            year: +suratMasuk.tanggalPenerimaanSurat.slice(0, 4),
+            month: +suratMasuk.tanggalPenerimaanSurat.slice(5, 7),
+            day: +suratMasuk.tanggalPenerimaanSurat.slice(8, 10)
+          };
+          this.modelDateTanggalSurat = {
+            year: +suratMasuk.tanggalSurat.slice(0, 4),
+            month: +suratMasuk.tanggalSurat.slice(5, 7),
+            day: +suratMasuk.tanggalSurat.slice(8, 10)
+          };
+
           this.suratMasukForm = new FormGroup({
             'tanggalPenerimaanSurat': new FormControl(this.modelDateTanggalPenerimaanSurat, [Validators.required, Validators.minLength(10)]),
             'jamPenerimaanSurat': new FormControl(suratMasuk.jamPenerimaanSurat, [Validators.required, Validators.minLength(5)]),
@@ -201,12 +191,16 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
     this.modelDateTanggalSurat = date;
   }
 
+  onNotificationStatusChange(status: boolean){
+    this.notificationStatusService.changeNotificationStatus(status);
+  }
+
   ngOnDestroy(): void {
     if (this.suratMasukFormSub) {
-        this.suratMasukFormSub.unsubscribe();
+      this.suratMasukFormSub.unsubscribe();
     }
     if (this.suratMasukSub) {
-        this.suratMasukSub.unsubscribe();
+      this.suratMasukSub.unsubscribe();
     }
     if (this.suratMasukParamSub) {
       this.suratMasukParamSub.unsubscribe();

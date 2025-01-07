@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { CurrentDateTimeService } from 'src/app/shared/curent-date-time.service';
 import { Arsip } from '../arsip.model';
 import { ArsipService } from '../arsip.service';
+import { NotificationService } from 'src/app/shared/notification.service';
 
 @Component({
   selector: 'app-arsip-form',
@@ -25,15 +26,18 @@ export class ArsipFormComponent implements OnInit, OnDestroy {
   private id: string = null as any;
   jenisSurat: string = null as any;
   message: string = null as any;
+  currentNotificationStatus: boolean = false;
 
   modelDateTanggalPenerimaanArsip: NgbDateStruct = null as any; // model date NgBootstrap
   modelDateTanggalSurat: NgbDateStruct = null as any; // model date NgBootstrap
 
-  constructor(private arsipService: ArsipService,
-              private route: ActivatedRoute, 
-              private router: Router,
-              private calendar: NgbCalendar, // service calendar NgBootStrap
-              private currentDateTimeService: CurrentDateTimeService) { }
+  constructor(
+    private arsipService: ArsipService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private calendar: NgbCalendar, // service calendar NgBootStrap
+    private currentDateTimeService: CurrentDateTimeService,
+    private notificationStatusService: NotificationService) { }
 
   ngOnInit(): void {
     this.isLoading = false;
@@ -42,49 +46,47 @@ export class ArsipFormComponent implements OnInit, OnDestroy {
     this.modelDateTanggalSurat = this.calendar.getToday();
     this.arsipParamSub = this.route.params
       .subscribe((params: Params) => {
-          this.isEditMode = params['id'] != null;
-          this.id = params['id'];
-    });
+        this.isEditMode = params['id'] != null;
+        this.id = params['id'];
+      });
     this.initForm();
     this.arsipFormSub = this.arsipForm.statusChanges.subscribe(
       // (status) => console.log(status)
-    )
+    );
+    this.notificationStatusService.currentNotificationStatus.subscribe(notification => this.currentNotificationStatus = notification);
   }
 
   initForm() {
-    let jamPenerimaanArsip = this.currentDateTimeService.getCurrentTime();    
-    let diterimaDari = null as any;
-    let nomorSurat = null as any;
-    let perihal = null as any;
-    let lampiran = null as any;
-    let kodePenyimpanan = null as any;
-    let keterangan = null as any;
-    let urlFile = null as any;
+    let jamPenerimaanArsip = this.currentDateTimeService.getCurrentTime();
 
     this.arsipForm = new FormGroup({
       'tanggalPenerimaanArsip': new FormControl(this.modelDateTanggalPenerimaanArsip, [Validators.required, Validators.minLength(10)]),
       'jamPenerimaanArsip': new FormControl(jamPenerimaanArsip, [Validators.required, Validators.minLength(5)]),
-      'diterimaDari': new FormControl(diterimaDari, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]),
-      'nomorSurat': new FormControl(nomorSurat, [Validators.required, Validators.maxLength(255)]),
+      'diterimaDari': new FormControl(null as any, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]),
+      'nomorSurat': new FormControl(null as any, [Validators.required, Validators.maxLength(255)]),
       'tanggalSurat': new FormControl(this.modelDateTanggalSurat, [Validators.required, Validators.minLength(10)]),
-      'perihal': new FormControl(perihal, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
-      'lampiran': new FormControl(lampiran, Validators.maxLength(255)),
-      'kodePenyimpanan': new FormControl(kodePenyimpanan, [Validators.required, Validators.maxLength(255)]),
-      'keterangan': new FormControl(keterangan, Validators.maxLength(255)),
-      'urlFile': new FormControl(urlFile)
+      'perihal': new FormControl(null as any, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
+      'lampiran': new FormControl(null as any, Validators.maxLength(255)),
+      'kodePenyimpanan': new FormControl(null as any, [Validators.required, Validators.maxLength(255)]),
+      'keterangan': new FormControl(null as any, Validators.maxLength(255)),
+      'urlFile': new FormControl(null as any)
     });
 
     if (this.isEditMode) {
       this.isLoadingEditForm = true;
       this.arsipSub = this.arsipService.getOne(this.id).subscribe({
         next: (arsip) => {
-          this.modelDateTanggalPenerimaanArsip = {year: +arsip.tanggalPenerimaanArsip.slice(0, 4), 
-            month: +arsip.tanggalPenerimaanArsip.slice(5, 7), 
-            day: +arsip.tanggalPenerimaanArsip.slice(8, 10)};      
-          this.modelDateTanggalSurat = {year: +arsip.tanggalSurat.slice(0, 4), 
-            month: +arsip.tanggalSurat.slice(5, 7), 
-            day: +arsip.tanggalSurat.slice(8, 10)};
-          
+          this.modelDateTanggalPenerimaanArsip = {
+            year: +arsip.tanggalPenerimaanArsip.slice(0, 4),
+            month: +arsip.tanggalPenerimaanArsip.slice(5, 7),
+            day: +arsip.tanggalPenerimaanArsip.slice(8, 10)
+          };
+          this.modelDateTanggalSurat = {
+            year: +arsip.tanggalSurat.slice(0, 4),
+            month: +arsip.tanggalSurat.slice(5, 7),
+            day: +arsip.tanggalSurat.slice(8, 10)
+          };
+
           this.arsipForm = new FormGroup({
             'tanggalPenerimaanArsip': new FormControl(this.modelDateTanggalPenerimaanArsip, [Validators.required, Validators.minLength(10)]),
             'jamPenerimaanArsip': new FormControl(arsip.jamPenerimaanArsip, [Validators.required, Validators.minLength(5)]),
@@ -120,55 +122,46 @@ export class ArsipFormComponent implements OnInit, OnDestroy {
       this.modelDateTanggalSurat.year,
       this.modelDateTanggalSurat.month,
       this.modelDateTanggalSurat.day);
-    
-    if (this.isEditMode) {
-      const arsip = new Arsip();
-      arsip.id = this.id;
-      arsip.tanggalPenerimaanArsip = dateTanggalPenerimaanArsip;
-      arsip.jamPenerimaanArsip = this.arsipForm.value['jamPenerimaanArsip'];
-      arsip.diterimaDari = this.arsipForm.value['diterimaDari'];
-      arsip.nomorSurat = this.arsipForm.value['nomorSurat'];
-      arsip.tanggalSurat = dateTanggalSurat;
-      arsip.perihal = this.arsipForm.value['perihal'];
-      arsip.lampiran = this.arsipForm.value['lampiran'];
-      arsip.kodePenyimpanan = this.arsipForm.value['kodePenyimpanan'];
-      arsip.keterangan = this.arsipForm.value['keterangan'];
-      arsip.urlFile = this.arsipForm.value['urlFile'];
 
+    const arsip = new Arsip();
+    arsip.tanggalPenerimaanArsip = dateTanggalPenerimaanArsip;
+    arsip.jamPenerimaanArsip = this.arsipForm.value['jamPenerimaanArsip'];
+    arsip.diterimaDari = this.arsipForm.value['diterimaDari'];
+    arsip.nomorSurat = this.arsipForm.value['nomorSurat'];
+    arsip.tanggalSurat = dateTanggalSurat;
+    arsip.perihal = this.arsipForm.value['perihal'];
+    arsip.lampiran = this.arsipForm.value['lampiran'];
+    arsip.kodePenyimpanan = this.arsipForm.value['kodePenyimpanan'];
+    arsip.keterangan = this.arsipForm.value['keterangan'];
+    arsip.urlFile = this.arsipForm.value['urlFile'];
+
+    if (this.isEditMode) {
+      arsip.id = this.id;
       this.arsipSub = this.arsipService.update(arsip).subscribe({
         next: () => {
           this.isLoading = false;
           this.message = 'UpdateSukses';
+          this.onNotificationStatusChange(true);
           this.onCancel();
         },
         error: (errorMessage) => {
           this.error = errorMessage;
           this.isLoading = false;
+          this.onNotificationStatusChange(false);
         }
       });
     } else {
-      const arsip = new Arsip();
-      arsip.tanggalPenerimaanArsip = dateTanggalPenerimaanArsip;
-      arsip.jamPenerimaanArsip = this.arsipForm.value['jamPenerimaanArsip'];
-      arsip.diterimaDari = this.arsipForm.value['diterimaDari'];
-      arsip.nomorSurat = this.arsipForm.value['nomorSurat'];
-      arsip.tanggalSurat = dateTanggalSurat;
-      arsip.perihal = this.arsipForm.value['perihal'];
-      arsip.lampiran = this.arsipForm.value['lampiran'];
-      arsip.kodePenyimpanan = this.arsipForm.value['kodePenyimpanan'];
-      arsip.keterangan = this.arsipForm.value['keterangan'];
-      arsip.urlFile = this.arsipForm.value['urlFile'];
-
       this.arsipSub = this.arsipService.create(arsip).subscribe({
         next: () => {
-          // console.log(responseData);
           this.isLoading = false;
           this.message = 'SimpanSukses';
+          this.onNotificationStatusChange(true);
           this.onCancel();
         },
         error: (errorMessage) => {
           this.error = errorMessage;
           this.isLoading = false;
+          this.onNotificationStatusChange(false);
         }
       });
     }
@@ -176,7 +169,7 @@ export class ArsipFormComponent implements OnInit, OnDestroy {
 
   onCancel() {
     this.arsipForm.reset();
-    this.router.navigate(['/arsip', 'list'], { queryParams: { message: this.message } }); 
+    this.router.navigate(['/arsip', 'list'], { queryParams: { message: this.message } });
   }
 
   onDateTanggalSuratSelect(date: NgbDate) {
@@ -187,12 +180,16 @@ export class ArsipFormComponent implements OnInit, OnDestroy {
     this.modelDateTanggalPenerimaanArsip = date;
   }
 
+  onNotificationStatusChange(status: boolean){
+    this.notificationStatusService.changeNotificationStatus(status);
+  }
+
   ngOnDestroy(): void {
     if (this.arsipFormSub) {
-        this.arsipFormSub.unsubscribe();
+      this.arsipFormSub.unsubscribe();
     }
     if (this.arsipSub) {
-        this.arsipSub.unsubscribe();
+      this.arsipSub.unsubscribe();
     }
     if (this.arsipParamSub) {
       this.arsipParamSub.unsubscribe();

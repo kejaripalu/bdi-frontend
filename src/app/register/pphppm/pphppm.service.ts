@@ -112,7 +112,7 @@ export class RegisterPPHPPMService {
     getSearch(value: string, page: number, size: number, tahun: string) {
         const startDate = tahun + '-01-01';
         const endDate = tahun + '-12-31';
-        const getEndPoint = `${this.endPoint}/search?pages=${page}&sizes=${size}` +
+        const getEndPoint = `${this.endPoint}/search?pages=${page}&sizes=${size}&` +
             `startDate=${startDate}&endDate=${endDate}&value=${value}`;
         return this.httpClient.get<ResponsePPHPPM>(getEndPoint)
             .pipe(

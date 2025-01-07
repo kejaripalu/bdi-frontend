@@ -5,6 +5,8 @@ import { Month } from 'src/app/shared/month';
 import { ToastService } from 'src/app/shared/toast.service';
 import { Arsip } from '../arsip.model';
 import { ArsipService } from '../arsip.service';
+import { NotificationService } from 'src/app/shared/notification.service';
+import { Message } from 'src/app/shared/message';
 
 @Component({
   selector: 'app-arsip-list',
@@ -12,6 +14,8 @@ import { ArsipService } from '../arsip.service';
   styleUrls: ['./arsip-list.component.css']
 })
 export class ArsipListComponent implements OnInit, OnDestroy {
+  private name: string = "Register Arsip";
+  private message: Message = new Message();
   arsip: Arsip[] = [];
   month = Object.keys(Month).filter((v) => isNaN(Number(v)));
   currentMonth = new Date().getMonth() + 1; // get current month
@@ -26,55 +30,61 @@ export class ArsipListComponent implements OnInit, OnDestroy {
   pageSize: number = 10;
   totalElements: number = 0;
   isSearching: boolean = false;
+  currentNotificationStatus: boolean = false;
 
-  constructor(private arsipService: ArsipService,
-              private router: Router,
-              private route: ActivatedRoute,
-              public toastService: ToastService) { }
+  constructor(
+    private arsipService: ArsipService,
+    private router: Router,
+    private route: ActivatedRoute,
+    public toastService: ToastService,
+    private notificationStatusService: NotificationService) { }
 
   ngOnInit(): void {
     this.error = false as any;
     this.isLoading = true;
     this.getYear();
-    this.checkMessage();
     this.loadData();
+    this.checkMessage();
   }
 
   loadData() {
     this.arsipSub = this.arsipService.getAll(
-      this.pageNumber - 1, 
-      this.pageSize, 
-      +this.currentMonth, 
+      this.pageNumber - 1,
+      this.pageSize,
+      +this.currentMonth,
       this.currentYear.toString())
-        .subscribe({
-          next: (responseData) => {
-            // console.log(responseData);
-            this.arsip = responseData.content;
-            this.pageNumber = responseData.number + 1;
-            this.pageSize = responseData.size;
-            this.totalElements = responseData.totalElements;
-            this.isLoading = false;
-          },
-          error: () => {
-            this.error = 'Aduh... Gagal ambil data dari server!!!';
-            this.isLoading = false;
-          }
-        });
+      .subscribe({
+        next: (responseData) => {
+          // console.log(responseData);
+          this.arsip = responseData.content;
+          this.pageNumber = responseData.number + 1;
+          this.pageSize = responseData.size;
+          this.totalElements = responseData.totalElements;
+          this.isLoading = false;
+        },
+        error: () => {
+          this.error = this.message.errorGetData;
+          this.isLoading = false;
+        }
+      });
+    this.notificationStatusService.currentNotificationStatus.subscribe(notification => this.currentNotificationStatus = notification);
   }
 
   checkMessage() {
     this.arsipQueryParamSub = this.route.queryParams
       .subscribe((queryParams: Params) => {
-          if (queryParams['message'] === 'SimpanSukses') {
-            this.toastService.show('Ashiiap.... Berhasil Input Data Arsip!', 
-                                    { classname: 'bg-success text-light', delay: 5000 });
-          } else if (queryParams['message'] === 'UpdateSukses') {
-            this.toastService.show('Ashiiap.... Berhasil Update Data Arsip!', 
-                                    { classname: 'bg-success text-light', delay: 5000 });
-          } else {
-            return;
-          }
-    });
+        if (queryParams['message'] === 'SimpanSukses' && this.currentNotificationStatus) {
+          this.toastService.show(this.message.saveMessage + this.name + '!!!',
+            { classname: 'bg-success text-light', delay: 5000 });
+          this.onNotificationStatusChange(false);
+        } else if (queryParams['message'] === 'UpdateSukses' && this.currentNotificationStatus) {
+          this.toastService.show(this.message.updateMessage + this.name + '!!!',
+            { classname: 'bg-success text-light', delay: 5000 });
+          this.onNotificationStatusChange(false);
+        } else {
+          return;
+        }
+      });
   }
 
   getYear() {
@@ -88,15 +98,15 @@ export class ArsipListComponent implements OnInit, OnDestroy {
   }
 
   onDeleteArsip(id: string) {
-    if (confirm('Yakin ente mau hapus data ini?')) {
+    if (confirm(this.message.deleteConfirm)) {
       this.isLoading = true;
       this.arsipSub = this.arsipService.delete(id)
         .subscribe({
           next: () => {
             this.isLoading = false;
             this.loadData();
-            this.toastService.show('Ashiiap.... Berhasil Hapus Data Arsip!', 
-                                    { classname: 'bg-success text-light', delay: 5000 });
+            this.toastService.show(this.message.deleteMessage + this.name + '!!!',
+              { classname: 'bg-success text-light', delay: 5000 });
           },
           error: (errorMessage) => {
             this.error = errorMessage;
@@ -105,7 +115,7 @@ export class ArsipListComponent implements OnInit, OnDestroy {
         });
     }
   }
-  
+
   updatePageSize(pageSize: number) {
     this.pageSize = pageSize;
     this.pageNumber = 1;
@@ -134,8 +144,8 @@ export class ArsipListComponent implements OnInit, OnDestroy {
   onDateTimeShowData() {
     this.isSearching = false;
   }
-    
-searchingArsip(value: string) {
+
+  searchingArsip(value: string) {
     if (value.trim() === '') {
       return;
     }
@@ -143,31 +153,35 @@ searchingArsip(value: string) {
     this.pageNumber = 1;
     this.arsipSub = this.arsipService.getSearch(
       value,
-      this.pageNumber - 1, 
-      this.pageSize, 
+      this.pageNumber - 1,
+      this.pageSize,
       this.currentYear.toString())
-        .subscribe({
-          next: (responseData) => {
-            // console.log(responseData);
-            this.arsip = responseData.content;
-            this.pageNumber = responseData.number + 1;
-            this.pageSize = responseData.size;
-            this.totalElements = responseData.totalElements;
-            this.isLoading = false;
-          },
-          error: () => {
-            this.error = 'Aduh... Gagal ambil data dari server!!!';
-            this.isLoading = false;
-          }
-        });
+      .subscribe({
+        next: (responseData) => {
+          // console.log(responseData);
+          this.arsip = responseData.content;
+          this.pageNumber = responseData.number + 1;
+          this.pageSize = responseData.size;
+          this.totalElements = responseData.totalElements;
+          this.isLoading = false;
+        },
+        error: () => {
+          this.error = this.message.errorGetData;
+          this.isLoading = false;
+        }
+      });
   }
-    
+
+  onNotificationStatusChange(status: boolean) {
+    this.notificationStatusService.changeNotificationStatus(status);
+  }
+
   ngOnDestroy(): void {
     if (this.arsipSub) {
       this.arsipSub.unsubscribe();
     }
     if (this.arsipQueryParamSub) {
-        this.arsipQueryParamSub.unsubscribe();
+      this.arsipQueryParamSub.unsubscribe();
     }
     this.toastService.clear();
   }

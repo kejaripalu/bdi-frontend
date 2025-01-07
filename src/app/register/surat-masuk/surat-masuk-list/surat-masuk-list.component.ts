@@ -5,6 +5,8 @@ import { Month } from 'src/app/shared/month';
 import { ToastService } from 'src/app/shared/toast.service';
 import { SuratMasuk } from '../surat-masuk.model';
 import { SuratMasukService } from '../surat-masuk.service';
+import { Message } from 'src/app/shared/message';
+import { NotificationService } from 'src/app/shared/notification.service';
 
 @Component({
   selector: 'app-surat-masuk-list',
@@ -12,6 +14,8 @@ import { SuratMasukService } from '../surat-masuk.service';
   styleUrls: ['./surat-masuk-list.component.css']
 })
 export class SuratMasukListComponent implements OnInit, OnDestroy {
+  private name: string = "Register Surat Masuk";
+  private message: Message = new Message();
   suratMasuk: SuratMasuk[] = [];
   month = Object.keys(Month).filter((v) => isNaN(Number(v)));
   currentMonth = new Date().getMonth() + 1; // get current month
@@ -26,60 +30,65 @@ export class SuratMasukListComponent implements OnInit, OnDestroy {
   pageSize: number = 10;
   totalElements: number = 0;
   isSearching: boolean = false;
-  
+  currentNotificationStatus: boolean = false;
+
   constructor(private suratMasukService: SuratMasukService,
-              private router: Router,
-              private route: ActivatedRoute,
-              public toastService: ToastService) { }
+    private router: Router,
+    private route: ActivatedRoute,
+    public toastService: ToastService,
+    private notificationStatusService: NotificationService) { }
 
   ngOnInit(): void {
     this.error = false as any;
     this.isLoading = true;
     this.getYear();
-    this.checkMessage();
     this.suratMasukQueryParamSub = this.route.queryParams
       .subscribe((queryParams: Params) => {
         this.jenisSurat = queryParams['jenisSurat']?.toUpperCase() !== 'RAHASIA' ? 'BIASA' : 'RAHASIA';
-    });
+      });
     this.loadDataSuratMasuk();
+    this.checkMessage();
   }
 
   checkMessage() {
     this.suratMasukQueryParamSub = this.route.queryParams
       .subscribe((queryParams: Params) => {
-          if (queryParams['message'] === 'SimpanSukses') {
-            this.toastService.show('Ashiiap.... Berhasil Input Data Surat Masuk!', 
-                                    { classname: 'bg-success text-light', delay: 5000 });
-          } else if (queryParams['message'] === 'UpdateSukses') {
-            this.toastService.show('Ashiiap.... Berhasil Update Data Surat Masuk!', 
-                                    { classname: 'bg-success text-light', delay: 5000 });
-          } else {
-            return;
-          }
-    });
+        if (queryParams['message'] === 'SimpanSukses' && this.currentNotificationStatus) {
+          this.toastService.show(this.message.saveMessage + this.name + '!!!',
+            { classname: 'bg-success text-light', delay: 5000 });
+          this.onNotificationStatusChange(false);
+        } else if (queryParams['message'] === 'UpdateSukses' && this.currentNotificationStatus) {
+          this.toastService.show(this.message.updateMessage + this.name + '!!!',
+            { classname: 'bg-success text-light', delay: 5000 });
+          this.onNotificationStatusChange(false);
+        } else {
+          return;
+        }
+      });
   }
 
   loadDataSuratMasuk() {
     this.suratMasukSub = this.suratMasukService.getSuratMasuk(
-      this.pageNumber - 1, 
-      this.pageSize, 
-      this.jenisSurat, 
-      +this.currentMonth, 
+      this.pageNumber - 1,
+      this.pageSize,
+      this.jenisSurat,
+      +this.currentMonth,
       this.currentYear.toString())
-        .subscribe({
-          next: (responseData) => {
-            // console.log(responseData);
-            this.suratMasuk = responseData.content;
-            this.pageNumber = responseData.number + 1;
-            this.pageSize = responseData.size;
-            this.totalElements = responseData.totalElements;
-            this.isLoading = false;
-          },
-          error: () => {
-            this.error = 'Aduh... Gagal ambil data dari server!!!';
-            this.isLoading = false;
-          }
-        });
+      .subscribe({
+        next: (responseData) => {
+          // console.log(responseData);
+          this.suratMasuk = responseData.content;
+          this.pageNumber = responseData.number + 1;
+          this.pageSize = responseData.size;
+          this.totalElements = responseData.totalElements;
+          this.isLoading = false;
+        },
+        error: () => {
+          this.error = this.message.errorGetData;
+          this.isLoading = false;
+        }
+      });
+    this.notificationStatusService.currentNotificationStatus.subscribe(notification => this.currentNotificationStatus = notification);
   }
 
   onNewSuratMasuk() {
@@ -95,7 +104,7 @@ export class SuratMasukListComponent implements OnInit, OnDestroy {
         jenisSrt = 'biasa';
     }
     this.router.navigate(['/surat-masuk', jenisSrt, 'form'], {
-      queryParams: {jenisSurat: this.jenisSurat}
+      queryParams: { jenisSurat: this.jenisSurat }
     });
   }
 
@@ -107,8 +116,8 @@ export class SuratMasukListComponent implements OnInit, OnDestroy {
           next: () => {
             this.isLoading = false;
             this.loadDataSuratMasuk();
-            this.toastService.show('Ashiiap.... Berhasil Hapus Data Surat Masuk!', 
-                                    { classname: 'bg-success text-light', delay: 5000 });
+            this.toastService.show(this.message.deleteMessage + this.name + '!!!',
+              { classname: 'bg-success text-light', delay: 5000 });
           },
           error: (errorMessage) => {
             this.error = errorMessage;
@@ -161,34 +170,38 @@ export class SuratMasukListComponent implements OnInit, OnDestroy {
     this.pageNumber = 1;
     this.suratMasukSub = this.suratMasukService.getSearchSuratMasuk(
       value,
-      this.pageNumber - 1, 
-      this.pageSize, 
-      this.jenisSurat, 
+      this.pageNumber - 1,
+      this.pageSize,
+      this.jenisSurat,
       this.currentYear.toString())
-        .subscribe({
-          next: (responseData) => {
-            // console.log(responseData);
-            this.suratMasuk = responseData.content;
-            this.pageNumber = responseData.number + 1;
-            this.pageSize = responseData.size;
-            this.totalElements = responseData.totalElements;
-            this.isLoading = false;
-          },
-          error: () => {
-            this.error = 'Aduh... Gagal ambil data dari server!!!';
-            this.isLoading = false;
-          }
-        });
+      .subscribe({
+        next: (responseData) => {
+          // console.log(responseData);
+          this.suratMasuk = responseData.content;
+          this.pageNumber = responseData.number + 1;
+          this.pageSize = responseData.size;
+          this.totalElements = responseData.totalElements;
+          this.isLoading = false;
+        },
+        error: () => {
+          this.error = this.message.errorGetData;
+          this.isLoading = false;
+        }
+      });
+  }
+
+  onNotificationStatusChange(status: boolean) {
+    this.notificationStatusService.changeNotificationStatus(status);
   }
 
   ngOnDestroy(): void {
-      if (this.suratMasukSub) {
-          this.suratMasukSub.unsubscribe();
-      }
-      if (this.suratMasukQueryParamSub) {
-          this.suratMasukQueryParamSub.unsubscribe();
-      }
-      this.toastService.clear();
+    if (this.suratMasukSub) {
+      this.suratMasukSub.unsubscribe();
+    }
+    if (this.suratMasukQueryParamSub) {
+      this.suratMasukQueryParamSub.unsubscribe();
+    }
+    this.toastService.clear();
   }
 
 }

@@ -5,6 +5,8 @@ import { Subscription } from 'rxjs';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { RegisterPPHPPMService } from '../pphppm.service';
 import { ToastService } from 'src/app/shared/toast.service';
+import { NotificationService } from 'src/app/shared/notification.service';
+import { Message } from 'src/app/shared/message';
 
 @Component({
   selector: 'app-pphppm-list',
@@ -12,7 +14,8 @@ import { ToastService } from 'src/app/shared/toast.service';
   styleUrls: ['./pphppm-list.component.css']
 })
 export class PphppmListComponent implements OnInit, OnDestroy {
-
+  private name: string = "Register PPH & PPM";
+  private message: Message = new Message();
   pphppm: RegisterPPHPPM[] = [];
   month = Object.keys(Month).filter((v) => isNaN(Number(v)));
   currentMonth = new Date().getMonth() + 1; // get current month
@@ -26,18 +29,21 @@ export class PphppmListComponent implements OnInit, OnDestroy {
   pageSize: number = 10;
   totalElements: number = 0;
   isSearching: boolean = false;
+  currentNotificationStatus: boolean = false;
 
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private pphppmService: RegisterPPHPPMService,
-    private toastService: ToastService) { }
+    private toastService: ToastService,
+    private notificationStatusService: NotificationService) { }
 
   ngOnInit(): void {
     this.error = false as any;
     this.isLoading = true;
     this.getYear();
-    this.checkMessage();
     this.loadData();
+    this.checkMessage();
   }
 
   loadData() {
@@ -56,21 +62,24 @@ export class PphppmListComponent implements OnInit, OnDestroy {
           this.isLoading = false;
         },
         error: () => {
-          this.error = 'Aduh... Gagal ambil data dari server!!!';
+          this.error = this.message.errorGetData;
           this.isLoading = false;
         }
       });
+    this.notificationStatusService.currentNotificationStatus.subscribe(notification => this.currentNotificationStatus = notification);
   }
 
   checkMessage() {
     this.pphppmQueryParamSub = this.route.queryParams
       .subscribe((queryParams: Params) => {
-        if (queryParams['message'] === 'SimpanSukses') {
-          this.toastService.show('Ashiiap.... Berhasil Input Data Register Tamu PPH & PPM!',
+        if (queryParams['message'] === 'SimpanSukses' && this.currentNotificationStatus) {
+          this.toastService.show(this.message.saveMessage + this.name + '!!!',
             { classname: 'bg-success text-light', delay: 5000 });
-        } else if (queryParams['message'] === 'UpdateSukses') {
-          this.toastService.show('Ashiiap.... Berhasil Update Data Register Tamu PPH & PPM!',
+          this.onNotificationStatusChange(false);
+        } else if (queryParams['message'] === 'UpdateSukses' && this.currentNotificationStatus) {
+          this.toastService.show(this.message.updateMessage + this.name + '!!!',
             { classname: 'bg-success text-light', delay: 5000 });
+          this.onNotificationStatusChange(false);
         } else {
           return;
         }
@@ -88,14 +97,14 @@ export class PphppmListComponent implements OnInit, OnDestroy {
   }
 
   onDeletePPHPPM(id: string) {
-    if (confirm('Yakin ente mau hapus data ini?')) {
+    if (confirm(this.message.deleteConfirm)) {
       this.isLoading = true;
       this.pphppmSub = this.pphppmService.delete(id)
         .subscribe({
           next: () => {
             this.isLoading = false;
             this.loadData();
-            this.toastService.show('Ashiiap.... Berhasil Hapus Data Register Tamu PPH & PPM!',
+            this.toastService.show(this.message.deleteMessage + this.name + '!!!',
               { classname: 'bg-success text-light', delay: 5000 });
           },
           error: (errorMessage) => {
@@ -149,16 +158,21 @@ export class PphppmListComponent implements OnInit, OnDestroy {
           this.isLoading = false;
         },
         error: () => {
-          this.error = 'Aduh... Gagal ambil data dari server!!!';
+          this.error = this.message.errorGetData;
           this.isLoading = false;
         }
       });
   }
+
   updateMonthSelected(month: number) {
     this.currentMonth = +month;
     this.pageNumber = 1;
     this.isLoading = true;
     this.loadData();
+  }
+
+  onNotificationStatusChange(status: boolean) {
+    this.notificationStatusService.changeNotificationStatus(status);
   }
 
   ngOnDestroy(): void {

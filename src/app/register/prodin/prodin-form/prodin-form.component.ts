@@ -11,6 +11,7 @@ import { Prodin } from 'src/app/shared/prodin/prodin';
 import { ProdinService } from 'src/app/shared/prodin/prodin.service';
 import { ProdukIntelijenService } from '../prodin.service';
 import { ProdukIntelijen } from '../prodin.model';
+import { NotificationService } from 'src/app/shared/notification.service';
 
 @Component({
   selector: 'app-prodin-form',
@@ -35,16 +36,19 @@ export class ProdinFormComponent implements OnInit, OnDestroy {
   jenisProdinList: Prodin[] = [];
   sektorList: Sektor[] = [];
   bidangList: Bidang[] = [];
+  currentNotificationStatus: boolean = false;
 
   modelDateTanggalProduk: NgbDateStruct = null as any; // model date NgBootstrap
 
-  constructor(private produksiIntelijenService: ProdukIntelijenService,
-              private prodinService: ProdinService,
-              private bidangDirektoratSektorService: BidangDirektoratSektorService,
-              private route: ActivatedRoute, 
-              private router: Router,
-              private calendar: NgbCalendar, // service calendar NgBootStrap
-              private currentDateTimeService: CurrentDateTimeService) { }
+  constructor(
+    private produksiIntelijenService: ProdukIntelijenService,
+    private prodinService: ProdinService,
+    private bidangDirektoratSektorService: BidangDirektoratSektorService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private calendar: NgbCalendar, // service calendar NgBootStrap
+    private currentDateTimeService: CurrentDateTimeService,
+    private notificationStatusService: NotificationService) { }
 
   ngOnInit(): void {
     this.isLoading = false;
@@ -52,47 +56,44 @@ export class ProdinFormComponent implements OnInit, OnDestroy {
     this.modelDateTanggalProduk = this.calendar.getToday();
     this.prodinParamSub = this.route.params
       .subscribe((params: Params) => {
-          this.isEditMode = params['id'] != null;
-          this.id = params['id'];
-    });
-    
+        this.isEditMode = params['id'] != null;
+        this.id = params['id'];
+      });
+
     // default value
     this.jenisProdukIntelijenSelected = "LAPINHAR";
     this.bidang = "IPOLHANKAM";
     this.jenisProdinList = this.prodinService.getProdin();
     this.bidangList = this.bidangDirektoratSektorService.getBidangDirektori();
-    
+
     this.initForm();
     this.prodinFormSub = this.prodinForm.statusChanges.subscribe(
       // (status) => console.log(status)
-    )
+    );
+    this.notificationStatusService.currentNotificationStatus.subscribe(notification => this.currentNotificationStatus = notification);
   }
 
   initForm() {
-    let nomorProdin = null as any;
-    let perihal = null as any;
-    let disposisiPimpinan = null as any;
-    let keterangan = null as any;
-    let urlFile = null as any;
-
     this.prodinForm = new FormGroup({
-      'nomorProdin': new FormControl(nomorProdin, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
+      'nomorProdin': new FormControl(null as any, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
       'tanggalProdin': new FormControl(this.modelDateTanggalProduk, [Validators.required, Validators.minLength(8)]),
-      'perihal': new FormControl(perihal, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
-      'disposisiPimpinan': new FormControl(disposisiPimpinan, Validators.maxLength(255)),
-      'keterangan': new FormControl(keterangan, Validators.maxLength(255)),
-      'urlFile': new FormControl(urlFile)
+      'perihal': new FormControl(null as any, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
+      'disposisiPimpinan': new FormControl(null as any, Validators.maxLength(255)),
+      'keterangan': new FormControl(null as any, Validators.maxLength(255)),
+      'urlFile': new FormControl(null as any)
     });
     this.reloadSektorList();
-    
+
     if (this.isEditMode) {
       this.isLoadingEditForm = true;
       this.prodinSub = this.produksiIntelijenService.getOneProdin(this.id).subscribe({
         next: (prodin) => {
-          this.modelDateTanggalProduk = {year: +prodin.tanggalProduk.slice(0, 4), 
-            month: +prodin.tanggalProduk.slice(5, 7), 
-            day: +prodin.tanggalProduk.slice(8, 10)};      
-          
+          this.modelDateTanggalProduk = {
+            year: +prodin.tanggalProduk.slice(0, 4),
+            month: +prodin.tanggalProduk.slice(5, 7),
+            day: +prodin.tanggalProduk.slice(8, 10)
+          };
+
           this.prodinForm = new FormGroup({
             'nomorProdin': new FormControl(prodin.nomorProduk, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
             'tanggalProdin': new FormControl(this.modelDateTanggalProduk, [Validators.required, Validators.minLength(8)]),
@@ -101,16 +102,16 @@ export class ProdinFormComponent implements OnInit, OnDestroy {
             'keterangan': new FormControl(prodin.keterangan, Validators.maxLength(255)),
             'urlFile': new FormControl(prodin.urlFile)
           });
-          
+
           const indexSektor = this.bidangDirektoratSektorService.getSektor()
             .findIndex(obj => {
-                return obj.namaSektor === prodin.sektor;
-          });
+              return obj.namaSektor === prodin.sektor;
+            });
           const indexBidang = this.bidangDirektoratSektorService.getBidangDirektori()
             .findIndex(obj => {
-                return obj.namaBidang === this.bidangDirektoratSektorService.getSektor()[indexSektor].bidangDirektorat;
-          });        
-          this.bidang = this.bidangDirektoratSektorService.getBidangDirektori()[indexBidang].namaBidang!;          
+              return obj.namaBidang === this.bidangDirektoratSektorService.getSektor()[indexSektor].bidangDirektorat;
+            });
+          this.bidang = this.bidangDirektoratSektorService.getBidangDirektori()[indexBidang].namaBidang!;
           this.jenisProdukIntelijenSelected = prodin.jenisProdukIntelijen;
           this.sektorSelected = prodin.sektor;
           this.reloadSektorList();
@@ -134,50 +135,44 @@ export class ProdinFormComponent implements OnInit, OnDestroy {
       this.modelDateTanggalProduk.month,
       this.modelDateTanggalProduk.day);
 
-    if (this.isEditMode) {
-      const prodin = new ProdukIntelijen();    
-      prodin.id = this.id;
-      prodin.jenisProdukIntelijen = this.jenisProdukIntelijenSelected;
-      prodin.nomorProduk = this.prodinForm.value['nomorProdin'];
-      prodin.tanggalProduk = dateTanggalProdin;
-      prodin.sektor = this.sektorSelected;
-      prodin.perihal = this.prodinForm.value['perihal'];
-      prodin.disposisiPimpinan = this.prodinForm.value['disposisiPimpinan'];
-      prodin.keterangan = this.prodinForm.value['keterangan'];
-      prodin.urlFile = this.prodinForm.value['urlFile'];
+    const prodin = new ProdukIntelijen();
+    prodin.jenisProdukIntelijen = this.jenisProdukIntelijenSelected;
+    prodin.nomorProduk = this.prodinForm.value['nomorProdin'];
+    prodin.tanggalProduk = dateTanggalProdin;
+    prodin.sektor = this.sektorSelected;
+    prodin.perihal = this.prodinForm.value['perihal'];
+    prodin.disposisiPimpinan = this.prodinForm.value['disposisiPimpinan'];
+    prodin.keterangan = this.prodinForm.value['keterangan'];
+    prodin.urlFile = this.prodinForm.value['urlFile'];
 
+    if (this.isEditMode) {
+      prodin.id = this.id;
       this.prodinSub = this.produksiIntelijenService.updateProdin(prodin).subscribe({
         next: () => {
           this.isLoading = false;
           this.message = 'UpdateSukses';
+          this.onNotificationStatusChange(true);
           this.onCancel();
         },
         error: (errorMessage) => {
           this.error = errorMessage;
           this.isLoading = false;
+          this.onNotificationStatusChange(false);
         }
       });
     } else {
-      const prodin = new ProdukIntelijen(); 
-      prodin.jenisProdukIntelijen = this.jenisProdukIntelijenSelected;
-      prodin.nomorProduk = this.prodinForm.value['nomorProdin'];
-      prodin.tanggalProduk = dateTanggalProdin;
-      prodin.sektor = this.sektorSelected;
-      prodin.perihal = this.prodinForm.value['perihal'];
-      prodin.disposisiPimpinan = this.prodinForm.value['disposisiPimpinan'];
-      prodin.keterangan = this.prodinForm.value['keterangan'];
-      prodin.urlFile = this.prodinForm.value['urlFile'];
-
       this.prodinSub = this.produksiIntelijenService.createProdin(prodin).subscribe({
         next: () => {
           // console.log(responseData);
           this.isLoading = false;
           this.message = 'SimpanSukses';
+          this.onNotificationStatusChange(true);
           this.onCancel();
         },
         error: (errorMessage) => {
           this.error = errorMessage;
           this.isLoading = false;
+          this.onNotificationStatusChange(false);
         }
       });
     }
@@ -188,7 +183,7 @@ export class ProdinFormComponent implements OnInit, OnDestroy {
   }
 
   sektorChange(value: string) {
-    this.sektorSelected = value; 
+    this.sektorSelected = value;
   }
 
   bidangChange(value: string) {
@@ -199,23 +194,25 @@ export class ProdinFormComponent implements OnInit, OnDestroy {
   onDateTanggalProdinSelect(date: NgbDate) {
     this.modelDateTanggalProduk = date;
   }
-  
+
   reloadSektorList() {
     this.sektorList = [];
     if (this.bidang === 'IPOLHANKAM') {
-      for (let i = 0; i < 13; i++) {        
-          this.sektorList.push(
-            { deskripsiSektor: this.bidangDirektoratSektorService.getSektor()[i].deskripsiSektor!,
-              namaSektor: this.bidangDirektoratSektorService.getSektor()[i].namaSektor!
-            });
+      for (let i = 0; i < 13; i++) {
+        this.sektorList.push(
+          {
+            deskripsiSektor: this.bidangDirektoratSektorService.getSektor()[i].deskripsiSektor!,
+            namaSektor: this.bidangDirektoratSektorService.getSektor()[i].namaSektor!
+          });
       }
       if (!this.isEditMode) {
         this.sektorSelected = this.sektorList[0].namaSektor!;
       }
     } else if (this.bidang === 'SOSBUDMAS') {
-      for (let i = 13; i < 25; i++) {        
+      for (let i = 13; i < 25; i++) {
         this.sektorList.push(
-          { deskripsiSektor: this.bidangDirektoratSektorService.getSektor()[i].deskripsiSektor!,
+          {
+            deskripsiSektor: this.bidangDirektoratSektorService.getSektor()[i].deskripsiSektor!,
             namaSektor: this.bidangDirektoratSektorService.getSektor()[i].namaSektor!
           });
       }
@@ -223,9 +220,10 @@ export class ProdinFormComponent implements OnInit, OnDestroy {
         this.sektorSelected = this.sektorList[0].namaSektor!;
       }
     } else if (this.bidang === 'EKOKEU') {
-      for (let i = 25; i < 41; i++) {        
+      for (let i = 25; i < 41; i++) {
         this.sektorList.push(
-          { deskripsiSektor: this.bidangDirektoratSektorService.getSektor()[i].deskripsiSektor!,
+          {
+            deskripsiSektor: this.bidangDirektoratSektorService.getSektor()[i].deskripsiSektor!,
             namaSektor: this.bidangDirektoratSektorService.getSektor()[i].namaSektor!
           });
       }
@@ -233,9 +231,10 @@ export class ProdinFormComponent implements OnInit, OnDestroy {
         this.sektorSelected = this.sektorList[0].namaSektor!;
       }
     } else if (this.bidang === 'PAMSTRA') {
-      for (let i = 41; i < 61; i++) {        
+      for (let i = 41; i < 61; i++) {
         this.sektorList.push(
-          { deskripsiSektor: this.bidangDirektoratSektorService.getSektor()[i].deskripsiSektor!,
+          {
+            deskripsiSektor: this.bidangDirektoratSektorService.getSektor()[i].deskripsiSektor!,
             namaSektor: this.bidangDirektoratSektorService.getSektor()[i].namaSektor!
           });
       }
@@ -243,33 +242,38 @@ export class ProdinFormComponent implements OnInit, OnDestroy {
         this.sektorSelected = this.sektorList[0].namaSektor!;
       }
     } else if (this.bidang === 'TIPRODIN') {
-      for (let i = 61; i < 75; i++) {        
+      for (let i = 61; i < 75; i++) {
         this.sektorList.push(
-          { deskripsiSektor: this.bidangDirektoratSektorService.getSektor()[i].deskripsiSektor!,
+          {
+            deskripsiSektor: this.bidangDirektoratSektorService.getSektor()[i].deskripsiSektor!,
             namaSektor: this.bidangDirektoratSektorService.getSektor()[i].namaSektor!
           });
       }
       if (!this.isEditMode) {
         this.sektorSelected = this.sektorList[0].namaSektor!;
       }
-    }    
+    }
   }
 
   onCancel() {
     this.prodinForm.reset();
-    this.router.navigate(['/prodin', 'list'], { 
-      queryParams: { 
-        message: this.message 
-      } 
+    this.router.navigate(['/prodin', 'list'], {
+      queryParams: {
+        message: this.message
+      }
     });
+  }
+
+  onNotificationStatusChange(status: boolean) {
+    this.notificationStatusService.changeNotificationStatus(status);
   }
 
   ngOnDestroy(): void {
     if (this.prodinFormSub) {
-        this.prodinFormSub.unsubscribe();
+      this.prodinFormSub.unsubscribe();
     }
     if (this.prodinSub) {
-        this.prodinSub.unsubscribe();
+      this.prodinSub.unsubscribe();
     }
     if (this.prodinParamSub) {
       this.prodinParamSub.unsubscribe();
@@ -277,4 +281,3 @@ export class ProdinFormComponent implements OnInit, OnDestroy {
   }
 
 }
-

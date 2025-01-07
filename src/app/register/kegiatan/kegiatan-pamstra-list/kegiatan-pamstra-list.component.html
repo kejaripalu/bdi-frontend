@@ -49,22 +49,22 @@
         </div>
     </div>
     <div class="table-responsive">
-        <table class="table table-striped table-sm mt-4">
+        <table class="table table-striped table-sm mt-4 table-bordered">
             <thead>
                 <tr>
                     <th scope="col">Sektor</th>
-                    <th scope="col" style="text-align: center;">Nama Kegiatan</th>
-                    <th scope="col" style="text-align: center;">Sumber Dana</th>
-                    <th scope="col" style="text-align: center;">Pagu Anggaran</th>
-                    <th scope="col"></th>
+                    <th scope="col">Nama Kegiatan</th>
+                    <th scope="col">Sumber Dana</th>
+                    <th scope="col">Pagu Anggaran</th>
+                    <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let g of giat">
                     <td class="align-top">{{ g.sektor | sektorPipe }}</td>
-                    <td class="align-top" style="text-align: center;">{{ g.namaKegiatan | shorten: 255 }}</td>
-                    <td class="align-top" style="text-align: center;">{{ g.sumberDana }}</td>
-                    <td class="align-top" style="text-align: center;">{{ g.paguAnggaran | currency: "Rp. " }}</td>
+                    <td class="align-top">{{ g.namaKegiatan | shorten: 255 }}</td>
+                    <td class="align-top">{{ g.sumberDana }}</td>
+                    <td class="align-top">{{ g.paguAnggaran | currency: "Rp. " }}</td>
                     <td class="align-top">
                         <a class="dropdown-item text-primary"
                                         [routerLink]="['/kegiatan', 'list', 'pamstra-list', g.id, 'detail']"

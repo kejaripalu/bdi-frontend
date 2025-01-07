@@ -52,19 +52,19 @@
         <table class="table table-striped table-sm mt-4 table-bordered">
             <thead>
                 <tr>
-                    <th scope="col" style="text-align: center;">Nama Petugas</th>
-                    <th scope="col" style="text-align: center;">Waktu</th>
-                    <th scope="col" style="text-align: center;">Identitas Pelapor</th>
-                    <th scope="col" style="text-align: center;">Nama Organisasi</th>
-                    <th scope="col" style="text-align: center;">Informasi yang disampaikan</th>
-                    <th scope="col" style="text-align: center;">Action</th>
+                    <th scope="col">Nama Petugas</th>
+                    <th scope="col">Waktu</th>
+                    <th scope="col">Identitas Pelapor</th>
+                    <th scope="col">Nama Organisasi</th>
+                    <th scope="col">Informasi yang disampaikan</th>
+                    <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let p of pphppm">
-                    <td class="align-top" style="text-align: center;">{{ p.namaPetugasPenerima }}</td>
-                    <td class="align-top" style="text-align: center;">{{ p.tanggal | date: 'dd-MM-yyyy'}} <br>{{ p.jam }}</td>
-                    <td class="align-top" style="text-align: center;">
+                    <td class="align-top">{{ p.namaPetugasPenerima }}</td>
+                    <td class="align-top">{{ p.tanggal | date: 'dd-MM-yyyy'}} <br>{{ p.jam }}</td>
+                    <td class="align-top">
                         {{ p.namaTamu }}, 
                         {{ (p.tempatLahirTamu !== null) ? (p.tempatLahirTamu + ", ") : "" }} 
                         {{ (p.tanggalLahirTamu !== null) ? (p.tanggalLahirTamu + ", " | date: 'dd-MM-yyyy') : "" }}
@@ -75,7 +75,7 @@
                         {{ (p.pekerjaan != null) ? (p.pekerjaan + ", ") : "" }} 
                         {{ (p.nomorIdentitas != null) ? (p.nomorIdentitas) : "" }}
                     </td>
-                    <td class="align-top" style="text-align: center;">{{ p.namaOrganisasi }}</td>
+                    <td class="align-top">{{ p.namaOrganisasi }}</td>
                     <td class="align-top">{{ p.informasiYangDisampaikan | shorten: 255 }}</td>
                     <td class="align-top">
                         <a class="dropdown-item text-primary"

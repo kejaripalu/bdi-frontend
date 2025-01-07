@@ -6,6 +6,7 @@ import { NgbCalendar, NgbDate, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap'
 import { RegisterPPHPPMService } from '../pphppm.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CurrentDateTimeService } from 'src/app/shared/curent-date-time.service';
+import { NotificationService } from 'src/app/shared/notification.service';
 
 @Component({
   selector: 'app-pphppm-form',
@@ -26,6 +27,7 @@ export class PphppmFormComponent implements OnInit, OnDestroy {
   message: string = null as any;
   pphppmList: RegisterPPHPPM[] = [];
   jenisKelamin: string = null as any;
+  currentNotificationStatus: boolean = false;
 
   modelDateTanggal: NgbDateStruct = null as any; // model date NgBootstrap
   modelDateTanggalLahirTamu: NgbDateStruct = null as any; // model date NgBootstrap
@@ -35,7 +37,8 @@ export class PphppmFormComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private calendar: NgbCalendar, // service calendar NgBootStrap
-    private currentDateTimeService: CurrentDateTimeService) { }
+    private currentDateTimeService: CurrentDateTimeService,
+    private notificationStatusService: NotificationService) { }
 
   ngOnInit(): void {
     this.isLoading = false;
@@ -52,12 +55,13 @@ export class PphppmFormComponent implements OnInit, OnDestroy {
     this.initForm();
     this.pphppmFormSub = this.pphppmForm.statusChanges.subscribe(
       // (status) => console.log(status)
-    )
+    );
+    this.notificationStatusService.currentNotificationStatus.subscribe(notification => this.currentNotificationStatus = notification);
   }
 
   initForm() {
     let jam = this.currentDateTimeService.getCurrentTime();
-    
+
     this.pphppmForm = new FormGroup({
       'namaPetugasPenerima': new FormControl(null as any, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]),
       'tanggal': new FormControl(this.modelDateTanggal, [Validators.required, Validators.minLength(10)]),
@@ -159,11 +163,13 @@ export class PphppmFormComponent implements OnInit, OnDestroy {
         next: () => {
           this.isLoading = false;
           this.message = 'UpdateSukses';
+          this.onNotificationStatusChange(true);
           this.onCancel();
         },
         error: (errorMessage) => {
           this.error = errorMessage;
           this.isLoading = false;
+          this.onNotificationStatusChange(false);
         }
       });
     } else {
@@ -172,11 +178,13 @@ export class PphppmFormComponent implements OnInit, OnDestroy {
           // console.log(responseData);
           this.isLoading = false;
           this.message = 'SimpanSukses';
+          this.onNotificationStatusChange(true);
           this.onCancel();
         },
         error: (errorMessage) => {
           this.error = errorMessage;
           this.isLoading = false;
+          this.onNotificationStatusChange(false);
         }
       });
     }
@@ -197,6 +205,10 @@ export class PphppmFormComponent implements OnInit, OnDestroy {
 
   onJenisKelaminChange(value: string) {
     this.jenisKelamin = value;
+  }
+
+  onNotificationStatusChange(status: boolean) {
+    this.notificationStatusService.changeNotificationStatus(status);
   }
 
   ngOnDestroy(): void {
