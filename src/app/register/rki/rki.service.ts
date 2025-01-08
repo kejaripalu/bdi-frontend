@@ -4,6 +4,7 @@ import { catchError, map, throwError } from "rxjs";
 import { MonthConverterService } from "src/app/shared/month-converter.service";
 import { environment } from "src/environments/environment";
 import { RegisterKerjaIntelijen } from "./rki.model";
+import { Page } from "src/app/shared/page.model";
 
 @Injectable({ providedIn: 'root' })
 export class RegisterKerjaIntelijenService {
@@ -18,7 +19,7 @@ export class RegisterKerjaIntelijenService {
         const endDate = this.monthConverterService.getEndDate(bulan, tahun);    
         const getEndPoint = `${this.endPoint}?pages=${page}&sizes=${size}&bidangDirektorat=${bidang}&` +
             `startDate=${startDate}&endDate=${endDate}`;        
-        return this.httpClient.get<ResponseRKI>(getEndPoint)
+        return this.httpClient.get<Response>(getEndPoint)
             .pipe(
                 map(response => {
                     return response;
@@ -114,7 +115,7 @@ export class RegisterKerjaIntelijenService {
         const endDate = tahun + '-12-31';    
         const getEndPoint = `${this.endPoint}/search?pages=${page}&sizes=${size}&bidangDirektorat=${bidang}&` +
             `startDate=${startDate}&endDate=${endDate}&value=${value}`;  
-        return this.httpClient.get<ResponseRKI>(getEndPoint)
+        return this.httpClient.get<Response>(getEndPoint)
             .pipe(
                 map(response => {
                     return response;
@@ -124,10 +125,18 @@ export class RegisterKerjaIntelijenService {
 
 }
 
-interface ResponseRKI {
+interface Response {
     content: RegisterKerjaIntelijen[],
-    size: number,
-    totalElements: number,
-    totalPages: number,
-    number: number
+    page: Page;
 }
+
+/**
+ * Old version API response from Springboot <= 2.7
+ */
+// interface ResponseRKI {
+//     content: RegisterKerjaIntelijen[],
+//     size: number,
+//     totalElements: number,
+//     totalPages: number,
+//     number: number
+// }

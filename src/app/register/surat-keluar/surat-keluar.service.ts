@@ -4,6 +4,7 @@ import { catchError, map, throwError } from "rxjs";
 import { MonthConverterService } from "src/app/shared/month-converter.service";
 import { environment } from "src/environments/environment";
 import { SuratKeluar } from "./surat-keluar.model";
+import { Page } from "src/app/shared/page.model";
 
 @Injectable({ providedIn: 'root' })
 export class SuratKeluarService {
@@ -18,7 +19,7 @@ export class SuratKeluarService {
         const endDate = this.monthConverterService.getEndDate(bulan, tahun);    
         const getEndPoint = `${this.endPoint}?pages=${page}&sizes=${size}&jenisSurat=${jenisSurat}&` +
             `startDate=${startDate}&endDate=${endDate}`;        
-        return this.httpClient.get<ResponseSuratKeluar>(getEndPoint)
+        return this.httpClient.get<Response>(getEndPoint)
             .pipe(
                 map(response => {
                     return response;
@@ -106,7 +107,7 @@ export class SuratKeluarService {
         const endDate = tahun + '-12-31';    
         const getEndPoint = `${this.endPoint}/search?pages=${page}&sizes=${size}&jenisSurat=${jenisSurat}&` +
             `startDate=${startDate}&endDate=${endDate}&value=${value}`;  
-        return this.httpClient.get<ResponseSuratKeluar>(getEndPoint)
+        return this.httpClient.get<Response>(getEndPoint)
             .pipe(
                 map(response => {
                     return response;
@@ -116,10 +117,18 @@ export class SuratKeluarService {
 
 }
 
-interface ResponseSuratKeluar {
+interface Response {
     content: SuratKeluar[],
-    size: number,
-    totalElements: number,
-    totalPages: number,
-    number: number
+    page: Page;
 }
+
+/**
+ * Old version API response from Springboot <= 2.7
+ */
+// interface ResponseSuratKeluar {
+//     content: SuratKeluar[],
+//     size: number,
+//     totalElements: number,
+//     totalPages: number,
+//     number: number
+// }

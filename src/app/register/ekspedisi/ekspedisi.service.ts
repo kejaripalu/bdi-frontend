@@ -4,6 +4,7 @@ import { catchError, map, throwError } from "rxjs";
 import { MonthConverterService } from "src/app/shared/month-converter.service";
 import { environment } from "src/environments/environment";
 import { Ekspedisi } from "./ekspedisi.model";
+import { Page } from "src/app/shared/page.model";
 
 @Injectable({ providedIn: "root" })
 export class EkspedisiService {
@@ -18,7 +19,7 @@ export class EkspedisiService {
         const endDate = this.monthConverterService.getEndDate(bulan, tahun);    
         const getEndPoint = `${this.endPoint}?pages=${page}&sizes=${size}&jenisSurat=${jenisSurat}&` +
             `startDate=${startDate}&endDate=${endDate}`;        
-        return this.httpClient.get<ResponseEkspedisi>(getEndPoint)
+        return this.httpClient.get<Response>(getEndPoint)
             .pipe(
                 map(response => {
                     return response;
@@ -95,7 +96,7 @@ export class EkspedisiService {
         const endDate = tahun + '-12-31';    
         const getEndPoint = `${this.endPoint}/search?pages=${page}&sizes=${size}&jenisSurat=${jenisSurat}&` +
             `startDate=${startDate}&endDate=${endDate}&value=${value}`;  
-        return this.httpClient.get<ResponseEkspedisi>(getEndPoint)
+        return this.httpClient.get<Response>(getEndPoint)
             .pipe(
                 map(response => {
                     return response;
@@ -124,10 +125,18 @@ export class EkspedisiService {
 
 }
 
-interface ResponseEkspedisi {
+interface Response {
     content: Ekspedisi[],
-    size: number,
-    totalElements: number,
-    totalPages: number,
-    number: number
+    page: Page;
 }
+
+/**
+ * Old version API response from Springboot <= 2.7
+ */
+// interface ResponseEkspedisi {
+//     content: Ekspedisi[],
+//     size: number,
+//     totalElements: number,
+//     totalPages: number,
+//     number: number
+// }

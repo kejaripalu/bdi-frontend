@@ -4,11 +4,14 @@ import { catchError, map, throwError } from "rxjs";
 import { MonthConverterService } from "src/app/shared/month-converter.service";
 import { environment } from "src/environments/environment";
 import { SuratMasuk } from "./surat-masuk.model";
+import { Page } from "src/app/shared/page.model";
+import { Message } from "src/app/shared/message";
 
 @Injectable({ providedIn: 'root' })
 export class SuratMasukService {
     private endPoint = environment.baseUrl + '/surat-masuk';
     registerSuratMasuk: SuratMasuk[] = [];
+    private message: Message = new Message();
 
     constructor(private httpClient: HttpClient, 
                 private monthConverterService: MonthConverterService) { }
@@ -18,7 +21,7 @@ export class SuratMasukService {
         const endDate = this.monthConverterService.getEndDate(bulan, tahun);    
         const getEndPoint = `${this.endPoint}?pages=${page}&sizes=${size}&jenisSurat=${jenisSurat}&` +
             `startDate=${startDate}&endDate=${endDate}`;        
-        return this.httpClient.get<ResponseSuratMasuk>(getEndPoint)
+        return this.httpClient.get<Response>(getEndPoint)
             .pipe(
                 map(response => {
                     return response;
@@ -31,7 +34,7 @@ export class SuratMasukService {
         const endDate = tahun + '-12-31';    
         const getEndPoint = `${this.endPoint}/search?pages=${page}&sizes=${size}&jenisSurat=${jenisSurat}&` +
             `startDate=${startDate}&endDate=${endDate}&value=${value}`;  
-        return this.httpClient.get<ResponseSuratMasuk>(getEndPoint)
+        return this.httpClient.get<Response>(getEndPoint)
             .pipe(
                 map(response => {
                     return response;
@@ -47,16 +50,16 @@ export class SuratMasukService {
                     return response;
                 }),
                 catchError(errorResponse => {
-                    let errorMessage =  'Aduh... Parah nih bos.. gagal ambil data dari server!!!';
+                    let errorMessage =  this.message.errorGetData;
                     if (!errorResponse.error) {
                         return throwError(() => errorMessage);
                     }
                     switch (errorResponse.error.message) {
                         case 'ID_NOT_FOUND':
-                            errorMessage = 'Bro... Data tidak ditemukan!!!'
+                            errorMessage = this.message.errorDataNotFound;
                             break;
                         default:
-                            errorMessage = 'GAGAL Menampilkan data!!!';
+                            errorMessage = this.message.errorShowData;
                     }
                     return throwError(() => errorMessage);
                 })
@@ -66,16 +69,16 @@ export class SuratMasukService {
     createSuratMasuk(suratMasuk: SuratMasuk) {
         return this.httpClient.post<SuratMasuk>(this.endPoint, suratMasuk)
             .pipe(catchError(errorResponse => {
-                let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
+                let errorMessage = this.message.errorConnection;
                 if (!errorResponse.error) {
                     return throwError(() => errorMessage);
                 }
                 switch (errorResponse.error.message) {
                     case 'INVALID_DATA_INTEGRITY':
-                      errorMessage = 'Bro.. Gagal Simpan Data, Cek lagi data isian!!!, data yang dimasukan sudah ada atau format data yang dimasukan invalid!';
+                      errorMessage = this.message.errorDataInvalid;
                       break;
                     default:
-                      errorMessage = 'GAGAL Simpan data!!!';
+                      errorMessage = this.message.errorSaveData;
                   }
                 return throwError(() => errorMessage);
             }));
@@ -85,19 +88,19 @@ export class SuratMasukService {
         const putEndPoint = `${this.endPoint}/${suratMasuk.id}`;
         return this.httpClient.put<SuratMasuk>(putEndPoint, suratMasuk)
             .pipe(catchError(errorResponse => {
-                let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
+                let errorMessage = this.message.errorConnection;
                 if (!errorResponse.error) {
                     return throwError(() => errorMessage);
                 }
                 switch (errorResponse.error.message) {
                     case 'ID_NOT_FOUND':
-                        errorMessage = 'Bro... Data tidak ditemukan!!!'
+                        errorMessage = this.message.errorDataNotFound;
                         break;
                     case 'INVALID_DATA_INTEGRITY':
-                        errorMessage = 'Bro.. Gagal Simpan Data, Cek lagi data isian!!!, data yang dimasukan sudah ada atau format data yang dimasukan invalid!';
+                        errorMessage = this.message.errorDataInvalid;
                         break;
                     default:
-                        errorMessage = 'GAGAL Update data!!!';
+                        errorMessage = this.message.errorSaveData;
                 }
                 return throwError(() => errorMessage);
             }));
@@ -107,16 +110,16 @@ export class SuratMasukService {
         const deleteEndPoint = `${this.endPoint}/${id}`;
         return this.httpClient.delete<SuratMasuk>(deleteEndPoint)
             .pipe(catchError(errorResponse => {
-                let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
+                let errorMessage = this.message.errorConnection;;
                 if (!errorResponse.error) {
                     return throwError(() => errorMessage);
                 }
                 switch (errorResponse.error.message) {
                     case 'ID_NOT_FOUND':
-                        errorMessage = 'Bro... Data tidak ditemukan!!!'
+                        errorMessage = this.message.errorDataNotFound;
                         break;
                     default:
-                        errorMessage = 'GAGAL menghapus data!!!';
+                        errorMessage = this.message.errorSaveData;
                 }
                 return throwError(() => errorMessage);
         }));
@@ -124,10 +127,18 @@ export class SuratMasukService {
 
 }
 
-interface ResponseSuratMasuk {
+interface Response {
     content: SuratMasuk[],
-    size: number,
-    totalElements: number,
-    totalPages: number,
-    number: number
+    page: Page;
 }
+
+/**
+ * Old version API response from Springboot <= 2.7
+ */
+// interface ResponseSuratMasuk {
+//     content: SuratMasuk[],
+//     size: number,
+//     totalElements: number,
+//     totalPages: number,
+//     number: number
+// }

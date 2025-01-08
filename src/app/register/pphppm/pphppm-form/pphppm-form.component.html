@@ -196,6 +196,11 @@
                             *ngIf="pphppmForm.get('nomorHandphone')?.errors?.['maxlength'] && 
                                 pphppmForm.get('nomorHandphone')?.touched">
                                 Tidak boleh lebih dari 13 karakter!!!</small>
+                        <small 
+                            class="text-alert" 
+                            *ngIf="pphppmForm.get('nomorHandphone')?.errors?.['pattern'] && 
+                                pphppmForm.get('nomorHandphone')?.touched">
+                                Format nomor Telepon/HP harus angka!!!</small>
                     </div>
                 </div>
                 <div class="row">
@@ -220,6 +225,7 @@
                                 type="text" 
                                 name="email" 
                                 class="form-control"
+                                email
                                 formControlName="email">
                         </div>
                         <small 
@@ -227,6 +233,11 @@
                             *ngIf="pphppmForm.get('email')?.errors?.['maxlength'] && 
                                 pphppmForm.get('email')?.touched">
                                 Tidak boleh lebih dari 50 karakter!!!</small>
+                        <small 
+                            class="text-alert" 
+                            *ngIf="pphppmForm.get('email')?.invalid && 
+                                pphppmForm.get('email')?.touched">
+                                Format Email tidak sesuai!!!</small>
                     </div>
                 </div>
                 <div class="row">
