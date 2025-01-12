@@ -4,7 +4,6 @@ import { catchError, map, throwError } from "rxjs";
 import { MonthConverterService } from "src/app/shared/month-converter.service";
 import { environment } from "src/environments/environment";
 import { RegisterOpsin } from "./opsin.model";
-import { Page } from "src/app/shared/page.model";
 
 @Injectable({ providedIn: 'root' })
 export class RegisterOpsinService {
@@ -126,16 +125,8 @@ export class RegisterOpsinService {
 
 interface Response {
     content: RegisterOpsin[],
-    page: Page;
+    size: number,
+    totalElements: number,
+    totalPages: number,
+    number: number
 }
-
-/**
- * Old version API response from Springboot <= 2.7
- */
-// interface ResponseOpsin {
-//     content: RegisterOpsin[],
-//     size: number,
-//     totalElements: number,
-//     totalPages: number,
-//     number: number
-// }

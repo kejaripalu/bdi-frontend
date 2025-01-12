@@ -69,7 +69,7 @@
                         {{ (p.tempatLahirTamu !== null) ? (p.tempatLahirTamu + ", ") : "" }} 
                         {{ (p.tanggalLahirTamu !== null) ? (p.tanggalLahirTamu + ", " | date: 'dd-MM-yyyy') : "" }}
                         {{ (p.alamat !== null) ? (p.alamat + ", ") : "" }}
-                        {{ (p.jenisKelamin != null) ? (p.jenisKelamin + ", " | lowercase) : "" }} 
+                        {{ (p.jenisKelamin != null) ? (((p.jenisKelamin === 'TIDAK_DITENTUKAN') ? 'jenis kelamin tidak disebutkan' : p.jenisKelamin) + ", " | lowercase) : "" }} 
                         {{ (p.nomorHandphone != null) ? (p.nomorHandphone + ", ") : "" }}
                         {{ (p.email != null) ? (p.email + ", ") : "" }}
                         {{ (p.pekerjaan != null) ? (p.pekerjaan + ", ") : "" }} 

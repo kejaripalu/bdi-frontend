@@ -4,7 +4,6 @@ import { MonthConverterService } from "src/app/shared/month-converter.service";
 import { environment } from "src/environments/environment";
 import { RegisterLahin } from "./lahin.model";
 import { catchError, map, throwError } from "rxjs";
-import { Page } from "src/app/shared/page.model";
 
 @Injectable({ providedIn: 'root' })
 export class RegisterTelaahanIntelijenService {
@@ -127,16 +126,8 @@ export class RegisterTelaahanIntelijenService {
 
 interface Response {
     content: RegisterLahin[],
-    page: Page;
+    size: number,
+    totalElements: number,
+    totalPages: number,
+    number: number
 }
-
-/**
- * Old version API response from Springboot <= 2.7
- */
-// interface ResponseLahin {
-//     content: RegisterLahin[],
-//     size: number,
-//     totalElements: number,
-//     totalPages: number,
-//     number: number
-// }

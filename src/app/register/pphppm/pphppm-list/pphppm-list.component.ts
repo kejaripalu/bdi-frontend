@@ -7,6 +7,7 @@ import { RegisterPPHPPMService } from '../pphppm.service';
 import { ToastService } from 'src/app/shared/toast.service';
 import { NotificationService } from 'src/app/shared/notification.service';
 import { Message } from 'src/app/shared/message';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-pphppm-list',
@@ -31,12 +32,17 @@ export class PphppmListComponent implements OnInit, OnDestroy {
   isSearching: boolean = false;
   currentNotificationStatus: boolean = false;
 
+  private userSub: Subscription = null as any;
+  isAuthenticated: boolean = false;
+  token = null as any;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private pphppmService: RegisterPPHPPMService,
     private toastService: ToastService,
-    private notificationStatusService: NotificationService) { }
+    private notificationStatusService: NotificationService,
+    private authService: AuthService) { }
 
   ngOnInit(): void {
     this.error = false as any;
@@ -47,6 +53,12 @@ export class PphppmListComponent implements OnInit, OnDestroy {
   }
 
   loadData() {
+    this.authService.user.subscribe(user => {
+      this.isAuthenticated = !!user;
+      this.token = user.getToken()?.toString();
+    });
+    console.log('Is authentication = ' + this.isAuthenticated);
+
     this.pphppmSub = this.pphppmService.getAll(
       this.pageNumber - 1,
       this.pageSize,
@@ -56,9 +68,9 @@ export class PphppmListComponent implements OnInit, OnDestroy {
         next: (responseData) => {
           // console.log(responseData);
           this.pphppm = responseData.content;
-          this.pageNumber = responseData.page.number + 1;
-          this.pageSize = responseData.page.size;
-          this.totalElements = responseData.page.totalElements;
+          this.pageNumber = responseData.number + 1;
+          this.pageSize = responseData.size;
+          this.totalElements = responseData.totalElements;
           this.isLoading = false;
         },
         error: () => {
@@ -152,9 +164,9 @@ export class PphppmListComponent implements OnInit, OnDestroy {
         next: (responseData) => {
           // console.log(responseData);
           this.pphppm = responseData.content;
-          this.pageNumber = responseData.page.number + 1;
-          this.pageSize = responseData.page.size;
-          this.totalElements = responseData.page.totalElements;
+          this.pageNumber = responseData.number + 1;
+          this.pageSize = responseData.size;
+          this.totalElements = responseData.totalElements;
           this.isLoading = false;
         },
         error: () => {
@@ -181,6 +193,9 @@ export class PphppmListComponent implements OnInit, OnDestroy {
     }
     if (this.pphppmSub) {
       this.pphppmSub.unsubscribe();
+    }
+    if (this.userSub) {
+      this.userSub.unsubscribe();
     }
     this.toastService.clear();
   }

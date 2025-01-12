@@ -4,7 +4,6 @@ import { catchError, map, throwError } from "rxjs";
 import { MonthConverterService } from "src/app/shared/month-converter.service";
 import { environment } from "src/environments/environment";
 import { RegisterKegiatanIntelijen } from "./kegiatan.model";
-import { Page } from "src/app/shared/page.model";
 
 @Injectable({ providedIn: 'root' })
 export class RegisterKegiatanIntelijenService {
@@ -126,16 +125,8 @@ export class RegisterKegiatanIntelijenService {
 
 interface Response {
     content: RegisterKegiatanIntelijen[],
-    page: Page;
+    size: number,
+    totalElements: number,
+    totalPages: number,
+    number: number
 }
-
-/**
- * Old version API response from Springboot <= 2.7
- */
-// interface ResponseGiat {
-//     content: RegisterKegiatanIntelijen[],
-//     size: number,
-//     totalElements: number,
-//     totalPages: number,
-//     number: number
-// }

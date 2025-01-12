@@ -45,6 +45,7 @@ import { PphppmComponent } from "./register/pphppm/pphppm.component";
 import { PphppmListComponent } from "./register/pphppm/pphppm-list/pphppm-list.component";
 import { PphppmFormComponent } from "./register/pphppm/pphppm-form/pphppm-form.component";
 import { PphppmDetailComponent } from "./register/pphppm/pphppm-detail/pphppm-detail.component";
+import { AuthComponent } from "./auth/auth.component";
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -136,6 +137,7 @@ const appRoutes: Routes = [
         { path: 'list/:id/detail', component: PphppmDetailComponent}
      ]},
     { path: 'page-not-found', component: PageNotFoundComponent },
+    { path: 'auth', component: AuthComponent },
     { path: '**', redirectTo: 'page-not-found', pathMatch: 'full' }
 ];
 

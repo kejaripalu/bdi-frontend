@@ -4,7 +4,6 @@ import { catchError, map, throwError } from "rxjs";
 import { MonthConverterService } from "src/app/shared/month-converter.service";
 import { environment } from "src/environments/environment";
 import { SuratKeluar } from "./surat-keluar.model";
-import { Page } from "src/app/shared/page.model";
 
 @Injectable({ providedIn: 'root' })
 export class SuratKeluarService {
@@ -119,16 +118,8 @@ export class SuratKeluarService {
 
 interface Response {
     content: SuratKeluar[],
-    page: Page;
+    size: number,
+    totalElements: number,
+    totalPages: number,
+    number: number
 }
-
-/**
- * Old version API response from Springboot <= 2.7
- */
-// interface ResponseSuratKeluar {
-//     content: SuratKeluar[],
-//     size: number,
-//     totalElements: number,
-//     totalPages: number,
-//     number: number
-// }

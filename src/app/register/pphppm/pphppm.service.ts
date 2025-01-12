@@ -4,7 +4,6 @@ import { RegisterPPHPPM } from "./pphppm.model";
 import { HttpClient } from "@angular/common/http";
 import { MonthConverterService } from "src/app/shared/month-converter.service";
 import { catchError, map, throwError } from "rxjs";
-import { Page } from "src/app/shared/page.model";
 
 @Injectable({ providedIn: "root" })
 export class RegisterPPHPPMService {
@@ -127,16 +126,8 @@ export class RegisterPPHPPMService {
 
 interface Response {
     content: RegisterPPHPPM[],
-    page: Page;
+    size: number,
+    totalElements: number,
+    totalPages: number,
+    number: number
 }
-
-/**
- * Old version API response from Springboot <= 2.7
- */
-// interface ResponsePPHPPM {
-//     content: RegisterPPHPPM[],
-//     size: number,
-//     totalElements: number,
-//     totalPages: number,
-//     number: number
-// }

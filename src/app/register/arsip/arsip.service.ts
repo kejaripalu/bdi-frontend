@@ -4,7 +4,6 @@ import { catchError, map, throwError } from "rxjs";
 import { MonthConverterService } from "src/app/shared/month-converter.service";
 import { environment } from "src/environments/environment";
 import { Arsip } from "./arsip.model";
-import { Page } from "src/app/shared/page.model";
 
 @Injectable({ providedIn: "root" })
 export class ArsipService {
@@ -127,16 +126,8 @@ export class ArsipService {
 
 interface Response {
     content: Arsip[],
-    page: Page;
+    size: number,
+    totalElements: number,
+    totalPages: number,
+    number: number
 }
-
-/**
- * Old version API response from Springboot <= 2.7
- */
-// interface ResponseArsip {
-//     content: Arsip[],
-//     size: number,
-//     totalElements: number,
-//     totalPages: number,
-//     number: number
-// }

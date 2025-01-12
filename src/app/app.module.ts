@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './templates/navbar/navbar.component';
@@ -73,6 +73,8 @@ import { PphppmDetailComponent } from './register/pphppm/pphppm-detail/pphppm-de
 import { PphppmFormComponent } from './register/pphppm/pphppm-form/pphppm-form.component';
 import { PphppmHelpComponent } from './register/pphppm/pphppm-help/pphppm-help.component';
 import { PphppmListComponent } from './register/pphppm/pphppm-list/pphppm-list.component';
+import { AuthComponent } from './auth/auth.component';
+import { AuthInterceptorsService } from './auth/auth-interceptors.service';
 
 @NgModule({
   declarations: [
@@ -142,7 +144,8 @@ import { PphppmListComponent } from './register/pphppm/pphppm-list/pphppm-list.c
     PphppmDetailComponent,
     PphppmFormComponent,
     PphppmHelpComponent,
-    PphppmListComponent
+    PphppmListComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
@@ -153,7 +156,10 @@ import { PphppmListComponent } from './register/pphppm/pphppm-list/pphppm-list.c
     NgbModule,
     NgxCurrencyModule
   ],
-  providers: [],
+  providers: [{ 
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptorsService,
+    multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

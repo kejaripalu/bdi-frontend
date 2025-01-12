@@ -62,9 +62,9 @@ export class EkspedisiListComponent implements OnInit, OnDestroy {
         next: (responseData) => {
           // console.log(responseData);
           this.ekspedisi = responseData.content;
-          this.pageNumber = responseData.page.number + 1;
-          this.pageSize = responseData.page.size;
-          this.totalElements = responseData.page.totalElements;
+          this.pageNumber = responseData.number + 1;
+          this.pageSize = responseData.size;
+          this.totalElements = responseData.totalElements;
           this.isLoading = false;
         },
         error: () => {
@@ -131,9 +131,9 @@ export class EkspedisiListComponent implements OnInit, OnDestroy {
         next: (responseData) => {
           // console.log(responseData);
           this.ekspedisi = responseData.content;
-          this.pageNumber = responseData.page.number + 1;
-          this.pageSize = responseData.page.size;
-          this.totalElements = responseData.page.totalElements;
+          this.pageNumber = responseData.number + 1;
+          this.pageSize = responseData.size;
+          this.totalElements = responseData.totalElements;
           this.isLoading = false;
         },
         error: () => {

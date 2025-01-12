@@ -4,7 +4,6 @@ import { catchError, map, throwError } from "rxjs";
 import { MonthConverterService } from "src/app/shared/month-converter.service";
 import { environment } from "src/environments/environment";
 import { RegisterKerjaIntelijen } from "./rki.model";
-import { Page } from "src/app/shared/page.model";
 
 @Injectable({ providedIn: 'root' })
 export class RegisterKerjaIntelijenService {
@@ -127,16 +126,8 @@ export class RegisterKerjaIntelijenService {
 
 interface Response {
     content: RegisterKerjaIntelijen[],
-    page: Page;
+    size: number,
+    totalElements: number,
+    totalPages: number,
+    number: number
 }
-
-/**
- * Old version API response from Springboot <= 2.7
- */
-// interface ResponseRKI {
-//     content: RegisterKerjaIntelijen[],
-//     size: number,
-//     totalElements: number,
-//     totalPages: number,
-//     number: number
-// }

@@ -1,5 +1,5 @@
 <div id="layoutSidenav_nav">
-    <nav class="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
+    <nav class="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion" *ngIf="isAuthenticated">
         <div class="sb-sidenav-menu">
             <div class="nav">
                 <div class="sb-sidenav-menu-heading">Menu</div>
@@ -105,10 +105,10 @@
                 </a>
                 <div class="collapse" id="collapsePPMPPH" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link"  
-                            href="/pphppm">Register Tamu</a>
-                        <a class="nav-link"  
-                            href="/page-not-found">Informasi Publik</a>
+                        <a class="nav-link" routerLinkActive="active" 
+                            [routerLink]="['/pphppm', 'list']">Register Tamu</a>                      
+                        <!-- <a class="nav-link"  
+                            href="/page-not-found">Informasi Publik</a> -->
                     </nav>
                 </div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
