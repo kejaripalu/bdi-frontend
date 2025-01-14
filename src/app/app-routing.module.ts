@@ -47,6 +47,7 @@ import { PphppmFormComponent } from "./register/pphppm/pphppm-form/pphppm-form.c
 import { PphppmDetailComponent } from "./register/pphppm/pphppm-detail/pphppm-detail.component";
 import { AuthComponent } from "./auth/auth.component";
 import { AuthGuard } from "./auth/auth.guard";
+import { AuthAfterLoginGuard } from "./auth/auth-after-login.guard";
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -157,8 +158,8 @@ const appRoutes: Routes = [
         { path: 'list/:id/form', component: PphppmFormComponent },
         { path: 'list/:id/detail', component: PphppmDetailComponent}
      ]},
-    { path: 'page-not-found', component: PageNotFoundComponent, canActivate: [AuthGuard], },
-    { path: 'auth', component: AuthComponent },
+    { path: 'page-not-found', component: PageNotFoundComponent, canActivate: [AuthGuard] },
+    { path: 'auth', component: AuthComponent, canActivate: [AuthAfterLoginGuard] },
     { path: '**', redirectTo: 'page-not-found', pathMatch: 'full' }
 ];
 
