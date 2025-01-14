@@ -51,7 +51,8 @@ import { AuthAfterLoginGuard } from "./auth/auth-after-login.guard";
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-    { path: 'dashboard', component: DashboardComponent },
+    { path: 'auth', component: AuthComponent, canActivate: [AuthAfterLoginGuard] },
+    { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard,] },
     { path: 'surat-masuk', component: SuratMasukComponent,
         canActivate: [AuthGuard],
         children: [
@@ -159,7 +160,6 @@ const appRoutes: Routes = [
         { path: 'list/:id/detail', component: PphppmDetailComponent}
      ]},
     { path: 'page-not-found', component: PageNotFoundComponent, canActivate: [AuthGuard] },
-    { path: 'auth', component: AuthComponent, canActivate: [AuthAfterLoginGuard] },
     { path: '**', redirectTo: 'page-not-found', pathMatch: 'full' }
 ];
 
