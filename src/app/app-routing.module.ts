@@ -46,11 +46,14 @@ import { PphppmListComponent } from "./register/pphppm/pphppm-list/pphppm-list.c
 import { PphppmFormComponent } from "./register/pphppm/pphppm-form/pphppm-form.component";
 import { PphppmDetailComponent } from "./register/pphppm/pphppm-detail/pphppm-detail.component";
 import { AuthComponent } from "./auth/auth.component";
+import { AuthGuard } from "./auth/auth.guard";
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     { path: 'dashboard', component: DashboardComponent },
-    { path: 'surat-masuk', component: SuratMasukComponent, children: [
+    { path: 'surat-masuk', component: SuratMasukComponent,
+        canActivate: [AuthGuard],
+        children: [
         { path: '', redirectTo: '/surat-masuk/biasa', pathMatch: 'full' },
         { path: 'biasa', component: SuratMasukListComponent },
         { path: 'biasa/form', component: SuratMasukFormComponent },
@@ -61,7 +64,9 @@ const appRoutes: Routes = [
         { path: 'rahasia/:id/form', component: SuratMasukFormComponent },
         { path: 'rahasia/:id/detail', component: SuratMasukDetailComponent }
     ]},
-    { path: 'surat-keluar', component: SuratKeluarComponent, children: [
+    { path: 'surat-keluar', component: SuratKeluarComponent, 
+        canActivate: [AuthGuard],
+        children: [
         { path: '', redirectTo: '/surat-keluar/biasa', pathMatch: 'full' },
         { path: 'biasa', component: SuratKeluarListComponent },
         { path: 'biasa/form', component: SuratKeluarFormComponent },
@@ -72,14 +77,18 @@ const appRoutes: Routes = [
         { path: 'rahasia/:id/form', component: SuratKeluarFormComponent },
         { path: 'rahasia/:id/detail', component: SuratKeluarDetailComponent }
     ]},
-    { path: 'rki', component: RkiComponent, children: [
+    { path: 'rki', component: RkiComponent, 
+        canActivate: [AuthGuard],
+        children: [
         { path: '', redirectTo: '/rki/list', pathMatch: 'full' },
         { path: 'list', component: RkiListComponent },
         { path: 'list/:id/detail', component: RkiDetailComponent },
         { path: 'list/form', component: RkiFormComponent },
         { path: 'list/:id/form', component: RkiFormComponent }
     ]},
-    { path: 'ekspedisi', component: EkspedisiComponent, children: [
+    { path: 'ekspedisi', component: EkspedisiComponent, 
+        canActivate: [AuthGuard],
+        children: [
         { path: '', redirectTo: '/ekspedisi/biasa', pathMatch: 'full' },
         { path: 'biasa', component: EkspedisiListComponent },
         { path: 'biasa/form', component: EkspedisiFormComponent },
@@ -90,21 +99,27 @@ const appRoutes: Routes = [
         { path: 'rahasia/:id/form', component: EkspedisiFormComponent },
         { path: 'rahasia/:id/detail', component: EkspedisiDetailComponent }
     ]},
-    { path: 'prodin', component: ProdinComponent, children:[
+    { path: 'prodin', component: ProdinComponent,
+        canActivate: [AuthGuard],
+        children:[
         { path: '', redirectTo: '/prodin/list', pathMatch: 'full' },
         { path: 'list', component: ProdinListComponent },
         { path: 'list/:id/detail', component: ProdinDetailComponent },
         { path: 'list/form', component: ProdinFormComponent },
         { path: 'list/:id/form', component: ProdinFormComponent }
     ]},
-    { path: 'arsip', component: ArsipComponent, children:[
+    { path: 'arsip', component: ArsipComponent, 
+        canActivate: [AuthGuard],
+        children:[
         { path: '', redirectTo: '/arsip/list', pathMatch: 'full' },
         { path: 'list', component: ArsipListComponent },
         { path: 'list/form', component: ArsipFormComponent },
         { path: 'list/:id/form', component: ArsipFormComponent },
         { path: 'list/:id/detail', component: ArsipDetailComponent }
     ]},
-    { path: 'kegiatan', component: KegiatanComponent, children:[
+    { path: 'kegiatan', component: KegiatanComponent, 
+        canActivate: [AuthGuard],
+        children:[
         { path: '', redirectTo: '/kegiatan/list', pathMatch: 'full' },
         { path: 'list', component: KegiatanListComponent },
         { path: 'list/form', component: KegiatanFormComponent },
@@ -115,28 +130,34 @@ const appRoutes: Routes = [
         { path: 'list/pamstra-form', component: KegiatanPamstraFormComponent },
         { path: 'list/:id/pamstra-form', component: KegiatanPamstraFormComponent }
     ]},
-    { path: 'opsin', component: OpsinComponent, children:[
+    { path: 'opsin', component: OpsinComponent, 
+        canActivate: [AuthGuard],
+        children:[
         { path: '', redirectTo: '/opsin/list', pathMatch: 'full' },
         { path: 'list', component: OpsinListComponent },
         { path: 'list/form', component: OpsinFormComponent },
         { path: 'list/:id/form', component: OpsinFormComponent },
         { path: 'list/:id/detail', component: OpsinDetailComponent }
     ]},
-    { path: 'lahin', component: LahinComponent, children:[
-       { path: '', redirectTo: '/lahin/list', pathMatch: 'full' },
+    { path: 'lahin', component: LahinComponent, 
+        canActivate: [AuthGuard],
+        children:[
+        { path: '', redirectTo: '/lahin/list', pathMatch: 'full' },
         { path: 'list', component: LahinListComponent },
         { path: 'list/form', component: LahinFormComponent },
         { path: 'list/:id/form', component: LahinFormComponent },
         { path: 'list/:id/detail', component: LahinDetailComponent }
     ]},
-    { path: 'pphppm', component: PphppmComponent, children:[
+    { path: 'pphppm', component: PphppmComponent,
+        canActivate: [AuthGuard],
+        children:[
         { path: '', redirectTo: '/pphppm/list', pathMatch: 'full' },
         { path: 'list', component: PphppmListComponent },
         { path: 'list/form', component: PphppmFormComponent },
         { path: 'list/:id/form', component: PphppmFormComponent },
         { path: 'list/:id/detail', component: PphppmDetailComponent}
      ]},
-    { path: 'page-not-found', component: PageNotFoundComponent },
+    { path: 'page-not-found', component: PageNotFoundComponent, canActivate: [AuthGuard], },
     { path: 'auth', component: AuthComponent },
     { path: '**', redirectTo: 'page-not-found', pathMatch: 'full' }
 ];
