@@ -75,6 +75,7 @@ import { PphppmHelpComponent } from './register/pphppm/pphppm-help/pphppm-help.c
 import { PphppmListComponent } from './register/pphppm/pphppm-list/pphppm-list.component';
 import { AuthComponent } from './auth/auth.component';
 import { AuthInterceptorsService } from './auth/auth-interceptors.service';
+import { TruncatePipe } from './shared/truncate.pipe';
 
 @NgModule({
   declarations: [
@@ -145,7 +146,8 @@ import { AuthInterceptorsService } from './auth/auth-interceptors.service';
     PphppmFormComponent,
     PphppmHelpComponent,
     PphppmListComponent,
-    AuthComponent
+    AuthComponent,
+    TruncatePipe
   ],
   imports: [
     BrowserModule,

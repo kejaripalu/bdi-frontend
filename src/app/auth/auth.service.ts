@@ -4,6 +4,7 @@ import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from './user.model';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -38,9 +39,19 @@ export class AuthService {
               }
             return throwError(() => errorMessage);
       }), tap(resData => {
-            const user = new User(resData.token, new Date(new Date().getTime() + 30 * 60 * 1000)); //set user with time
+            //decode token dengan jwt-decode
+            const decoded = jwtDecode(resData.token);
+            const username = decoded.sub!;
+            
+            //set Unix Timestamp untuk mendapatkan nilai tanggal seconds -> milliseconds *1000
+            const startTime = new Date(decoded.iat! * 1000);
+            const expireTime = new Date(decoded.exp! * 1000);
+            //set time durasi waktu ekspire token dalam menit
+            const expirationDuration = (expireTime.getTime() - startTime.getTime());
+            
+            const user = new User(resData.token, expireTime, username);
             this.user.next(user);
-            this.autoLogout(30 * 60000); //set auto logout ke 30 x 60000 milidetik (30 menit) 
+            this.autoLogout(expirationDuration);
             localStorage.setItem('userData', JSON.stringify(user));
           })
       );
@@ -49,17 +60,23 @@ export class AuthService {
   autoLogin() {
     const userData: {
       token: string,
-      tokenExpirationDate: string
+      tokenExpirationDate: string,
+      username: string
     } = JSON.parse(localStorage.getItem('userData')!);
 
     if (!userData) {
       return;
     }    
-    const loadedUser = new User(userData.token, new Date(userData.tokenExpirationDate));
+    const loadedUser = new User(userData.token, new Date(userData.tokenExpirationDate), userData.username);
 
     if (loadedUser.token) {
       this.user.next(loadedUser);
-      const expirationDuration = new Date(loadedUser.tokenExpirationDate).getTime() - (new Date().getTime()); //set sisa waktu auto logout
+
+      const timeNow = new Date().getTime(); 
+      const expireTime = new Date(loadedUser.tokenExpirationDate).getTime();
+
+      //set sisa waktu auto logout
+      const expirationDuration = expireTime - timeNow;      
       this.autoLogout(expirationDuration)
     }
   }
@@ -76,7 +93,6 @@ export class AuthService {
   }
 
   autoLogout(expirationDuration: number) {
-    console.log('Expired time: ' + expirationDuration);
     this.tokenExpirationTimer = setTimeout(() => {
         this.logout();
     }, expirationDuration);
