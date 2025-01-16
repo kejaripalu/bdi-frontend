@@ -76,7 +76,7 @@ import { PphppmListComponent } from './register/pphppm/pphppm-list/pphppm-list.c
 import { AuthComponent } from './auth/auth.component';
 import { AuthInterceptorsService } from './auth/auth-interceptors.service';
 import { TruncatePipe } from './shared/truncate.pipe';
-import { AuthLoginPageComponent } from './auth/auth-login-page/auth-login-page.component';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
 
 @NgModule({
   declarations: [
@@ -149,7 +149,7 @@ import { AuthLoginPageComponent } from './auth/auth-login-page/auth-login-page.c
     PphppmListComponent,
     AuthComponent,
     TruncatePipe,
-    AuthLoginPageComponent
+    LoginPageComponent
   ],
   imports: [
     BrowserModule,
