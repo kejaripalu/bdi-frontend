@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 
@@ -18,6 +19,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.isAuthenticated = !!user;
     });
     console.log('Is authentication = ' + this.isAuthenticated);
+    this.checkLogedReloadPage();
+  }
+
+  checkLogedReloadPage() {
+    const loged = localStorage.getItem('loged');
+    if (!loged) {
+      localStorage.setItem('loged', 'yes');
+      window.location.reload();
+    }
   }
 
   ngOnDestroy(): void {

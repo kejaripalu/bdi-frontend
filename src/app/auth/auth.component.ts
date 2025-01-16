@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit {
+  tahun = new Date().getFullYear();
   isLoading: boolean = false;
   errorText: string = null as any;
 

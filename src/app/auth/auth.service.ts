@@ -87,9 +87,10 @@ export class AuthService {
     localStorage.removeItem('userData');
     
     if(this.tokenExpirationTimer) {
-        clearTimeout(this.tokenExpirationTimer);
+      clearTimeout(this.tokenExpirationTimer);
     }
     this.tokenExpirationTimer = null;
+    localStorage.removeItem('loged');
   }
 
   autoLogout(expirationDuration: number) {
