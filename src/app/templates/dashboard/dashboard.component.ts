@@ -18,14 +18,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.authService.user.subscribe(user => {
       this.isAuthenticated = !!user;
     });
-    console.log('Is authentication = ' + this.isAuthenticated);
     this.checkLogedReloadPage();
   }
 
   checkLogedReloadPage() {
-    const loged = localStorage.getItem('loged');
-    if (!loged) {
-      localStorage.setItem('loged', 'yes');
+    const appData: {
+      loged: string
+    } = JSON.parse(localStorage.getItem('appData')!);    
+    
+    if (!appData) {
+      const appData = {
+        'loged': 'yes'
+      }
+      localStorage.setItem('appData', JSON.stringify(appData));
       window.location.reload();
     }
   }
