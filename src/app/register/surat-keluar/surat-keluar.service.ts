@@ -64,8 +64,8 @@ export class SuratKeluarService {
             );
     }
 
-    updateSuratKeluar(suratKeluar: SuratKeluar) {
-        const putEndPoint = `${this.endPoint}/${suratKeluar.id}`;
+    updateSuratKeluar(suratKeluar: SuratKeluar, id: string) {
+        const putEndPoint = `${this.endPoint}/${id}`;
         return this.httpClient.put<SuratKeluar>(putEndPoint, suratKeluar)
             .pipe(catchError(errorResponse => {
                 let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';

@@ -83,8 +83,8 @@ export class SuratMasukService {
             }));
     }
 
-    updateSuratMasuk(suratMasuk: SuratMasuk) {
-        const putEndPoint = `${this.endPoint}/${suratMasuk.id}`;
+    updateSuratMasuk(suratMasuk: SuratMasuk, id: string) {
+        const putEndPoint = `${this.endPoint}/${id}`;
         return this.httpClient.put<SuratMasuk>(putEndPoint, suratMasuk)
             .pipe(catchError(errorResponse => {
                 let errorMessage = this.message.errorConnection;

@@ -33,6 +33,17 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-sm-4 col-md-4 col-xl-4">
+                            <p class="fw-bold">Jenis Pelayanan</p>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-xl-8">
+                            : {{ ((pphppm.jenisPelayanan === 'PPH') ? ('Pelayanan Hukum') : '') || 
+                                 ((pphppm.jenisPelayanan === 'PPM') ? ('Pengaduan Masyarakat') : '') }}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-xl-4">
                             <p class="fw-bold">Nama Petugas Penerima</p>
                         </div>
                         <div class="col-sm-8 col-md-8 col-xl-8">

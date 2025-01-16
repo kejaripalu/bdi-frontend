@@ -117,8 +117,7 @@ export class LahinFormComponent implements OnInit, OnDestroy {
     lahin.urlFile = this.lahinForm.value['urlFile'];
 
     if (this.isEditMode) {
-      lahin.id = this.id;
-      this.lahinSub = this.lahinService.update(lahin).subscribe({
+      this.lahinSub = this.lahinService.update(lahin, this.id).subscribe({
         next: () => {
           this.isLoading = false;
           this.message = 'UpdateSukses';

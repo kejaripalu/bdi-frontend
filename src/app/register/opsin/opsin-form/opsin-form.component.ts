@@ -185,8 +185,7 @@ export class OpsinFormComponent implements OnInit, OnDestroy {
     opsin.urlFile = this.opsinForm.value['urlFile'];
 
     if (this.isEditMode) {
-      opsin.id = this.id;
-      this.opsinSub = this.opsinService.update(opsin).subscribe({
+      this.opsinSub = this.opsinService.update(opsin, this.id).subscribe({
         next: () => {
           this.isLoading = false;
           this.message = 'UpdateSukses';

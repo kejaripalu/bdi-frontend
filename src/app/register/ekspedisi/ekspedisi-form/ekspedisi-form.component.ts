@@ -142,8 +142,7 @@ export class EkspedisiFormComponent implements OnInit, OnDestroy {
     ekspedisi.urlFile = this.ekspedisiForm.value['urlFile'];
 
     if (this.isEditMode) {
-      ekspedisi.id = this.id;
-      this.ekspedisiSub = this.ekspedisiService.updateEkspedisi(ekspedisi).subscribe({
+      this.ekspedisiSub = this.ekspedisiService.updateEkspedisi(ekspedisi, this.id).subscribe({
         next: () => {
           this.isLoading = false;
           this.message = 'UpdateSukses';

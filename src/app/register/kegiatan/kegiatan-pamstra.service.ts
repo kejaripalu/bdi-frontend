@@ -67,8 +67,8 @@ export class RegisterKegiatanIntelijenPamstraService {
         }));
     }
 
-    update(giat: RegisterKegiatanIntelijenPamstra) {
-        const putEndPoint = `${this.endPoint}/${giat.id}`;
+    update(giat: RegisterKegiatanIntelijenPamstra, id: string) {
+        const putEndPoint = `${this.endPoint}/${id}`;
         return this.httpClient.put<RegisterKegiatanIntelijenPamstra>(putEndPoint, giat)
             .pipe(catchError(errorResponse => {
                 let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';

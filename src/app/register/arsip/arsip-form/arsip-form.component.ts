@@ -136,8 +136,7 @@ export class ArsipFormComponent implements OnInit, OnDestroy {
     arsip.urlFile = this.arsipForm.value['urlFile'];
 
     if (this.isEditMode) {
-      arsip.id = this.id;
-      this.arsipSub = this.arsipService.update(arsip).subscribe({
+      this.arsipSub = this.arsipService.update(arsip, this.id).subscribe({
         next: () => {
           this.isLoading = false;
           this.message = 'UpdateSukses';

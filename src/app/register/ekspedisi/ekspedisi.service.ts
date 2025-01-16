@@ -68,8 +68,8 @@ export class EkspedisiService {
             );
     }
 
-    updateEkspedisi(ekspedisi: Ekspedisi) {
-        const putEndPoint = `${this.endPoint}/${ekspedisi.id}`;
+    updateEkspedisi(ekspedisi: Ekspedisi, id: string) {
+        const putEndPoint = `${this.endPoint}/${id}`;
         return this.httpClient.put<Ekspedisi>(putEndPoint, ekspedisi)
             .pipe(catchError(errorResponse => {
                 let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';

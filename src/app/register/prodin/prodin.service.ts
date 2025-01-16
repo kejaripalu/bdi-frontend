@@ -68,8 +68,8 @@ export class ProdukIntelijenService {
         }));
     }
 
-    updateProdin(prodin: ProdukIntelijen) {
-        const putEndPoint = `${this.endPoint}/${prodin.id}`;
+    updateProdin(prodin: ProdukIntelijen, id: string) {
+        const putEndPoint = `${this.endPoint}/${id}`;
         return this.httpClient.put<ProdukIntelijen>(putEndPoint, prodin)
             .pipe(catchError(errorResponse => {
                 let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';

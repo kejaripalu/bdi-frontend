@@ -146,8 +146,7 @@ export class ProdinFormComponent implements OnInit, OnDestroy {
     prodin.urlFile = this.prodinForm.value['urlFile'];
 
     if (this.isEditMode) {
-      prodin.id = this.id;
-      this.prodinSub = this.produksiIntelijenService.updateProdin(prodin).subscribe({
+      this.prodinSub = this.produksiIntelijenService.updateProdin(prodin, this.id).subscribe({
         next: () => {
           this.isLoading = false;
           this.message = 'UpdateSukses';

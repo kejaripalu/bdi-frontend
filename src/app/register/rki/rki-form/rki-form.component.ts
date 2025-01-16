@@ -222,8 +222,7 @@ export class RkiFormComponent implements OnInit, OnDestroy {
     rki.sektor = this.namaSektorSelected;
 
     if (this.isEditMode) {
-      rki.id = this.id;
-      this.rkiSub = this.rkiService.updateRKI(rki).subscribe({
+      this.rkiSub = this.rkiService.updateRKI(rki, this.id).subscribe({
         next: () => {
           this.isLoading = false;
           this.message = 'UpdateSukses';

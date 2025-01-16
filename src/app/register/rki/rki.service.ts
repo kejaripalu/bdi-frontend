@@ -68,8 +68,8 @@ export class RegisterKerjaIntelijenService {
         }));
     }
 
-    updateRKI(rki: RegisterKerjaIntelijen) {
-        const putEndPoint = `${this.endPoint}/${rki.id}`;
+    updateRKI(rki: RegisterKerjaIntelijen, id: string) {
+        const putEndPoint = `${this.endPoint}/${id}`;
         return this.httpClient.put<RegisterKerjaIntelijen>(putEndPoint, rki)
             .pipe(catchError(errorResponse => {
                 let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';

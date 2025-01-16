@@ -184,8 +184,7 @@ export class KegiatanFormComponent implements OnInit, OnDestroy {
     giat.urlFile = this.giatForm.value['urlFile'];
 
     if (this.isEditMode) {
-      giat.id = this.id;
-      this.giatSub = this.giatService.update(giat).subscribe({
+      this.giatSub = this.giatService.update(giat, this.id).subscribe({
         next: () => {
           this.isLoading = false;
           this.message = 'UpdateSukses';

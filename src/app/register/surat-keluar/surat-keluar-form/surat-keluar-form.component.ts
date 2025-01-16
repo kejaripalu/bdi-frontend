@@ -117,8 +117,7 @@ export class SuratKeluarFormComponent implements OnInit, OnDestroy {
     suratKeluar.jenisSurat = this.jenisSurat;
 
     if (this.isEditMode) {
-      suratKeluar.id = this.id;
-      this.suratKeluarSub = this.suratKeluarService.updateSuratKeluar(suratKeluar).subscribe({
+      this.suratKeluarSub = this.suratKeluarService.updateSuratKeluar(suratKeluar, this.id).subscribe({
         next: () => {
           this.isLoading = false;
           this.message = 'UpdateSukses';

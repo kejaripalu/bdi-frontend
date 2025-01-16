@@ -68,8 +68,8 @@ export class RegisterTelaahanIntelijenService {
         }));
     }
 
-    update(lahin: RegisterLahin) {
-        const putEndPoint = `${this.endPoint}/${lahin.id}`;
+    update(lahin: RegisterLahin, id: string) {
+        const putEndPoint = `${this.endPoint}/${id}`;
         return this.httpClient.put<RegisterLahin>(putEndPoint, lahin)
             .pipe(catchError(errorResponse => {
                 let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';

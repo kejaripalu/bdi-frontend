@@ -68,8 +68,8 @@ export class ArsipService {
         );
     }
 
-    update(arsip: Arsip) {
-        const putEndPoint = `${this.endPoint}/${arsip.id}`;
+    update(arsip: Arsip, id: string) {
+        const putEndPoint = `${this.endPoint}/${id}`;
         return this.httpClient.put<Arsip>(putEndPoint, arsip)
             .pipe(catchError(errorResponse => {
                 let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';

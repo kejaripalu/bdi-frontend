@@ -87,8 +87,7 @@ export class SuratMasukFormComponent implements OnInit, OnDestroy {
       suratMasuk.urlFile = this.suratMasukForm.value['urlFile'];
       
       if (this.isEditMode) {
-      suratMasuk.id = this.id;
-      this.suratMasukSub = this.suratMasukService.updateSuratMasuk(suratMasuk).subscribe({
+      this.suratMasukSub = this.suratMasukService.updateSuratMasuk(suratMasuk, this.id).subscribe({
         next: () => {
           this.isLoading = false;
           this.message = 'UpdateSukses';

@@ -1,6 +1,7 @@
 export class RegisterPPHPPM {
     id!: string;
     deleted!: boolean;
+    jenisPelayanan!: string;
     namaPetugasPenerima!: string;
     tanggal!: string;
     jam!: string;

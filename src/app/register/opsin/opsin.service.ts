@@ -67,8 +67,8 @@ export class RegisterOpsinService {
         }));
     }
 
-    update(opsin: RegisterOpsin) {
-        const putEndPoint = `${this.endPoint}/${opsin.id}`;
+    update(opsin: RegisterOpsin, id: string) {
+        const putEndPoint = `${this.endPoint}/${id}`;
         return this.httpClient.put<RegisterOpsin>(putEndPoint, opsin)
             .pipe(catchError(errorResponse => {
                 let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';

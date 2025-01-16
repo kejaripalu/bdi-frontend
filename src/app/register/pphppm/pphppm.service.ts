@@ -68,8 +68,8 @@ export class RegisterPPHPPMService {
             }));
     }
 
-    update(pphppm: RegisterPPHPPM) {
-        const putEndPoint = `${this.endPoint}/${pphppm.id}`;
+    update(pphppm: RegisterPPHPPM, id: string) {
+        const putEndPoint = `${this.endPoint}/${id}`;
         return this.httpClient.put<RegisterPPHPPM>(putEndPoint, pphppm)
             .pipe(catchError(errorResponse => {
                 let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';

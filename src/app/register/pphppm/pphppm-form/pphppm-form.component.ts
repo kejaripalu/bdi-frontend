@@ -27,6 +27,7 @@ export class PphppmFormComponent implements OnInit, OnDestroy {
   message: string = null as any;
   pphppmList: RegisterPPHPPM[] = [];
   jenisKelamin: string = null as any;
+  jenisPelayanan: string = null as any;
   currentNotificationStatus: boolean = false;
 
   modelDateTanggal: NgbDateStruct = null as any; // model date NgBootstrap
@@ -46,6 +47,7 @@ export class PphppmFormComponent implements OnInit, OnDestroy {
     this.modelDateTanggal = this.calendar.getToday();
     this.modelDateTanggalLahirTamu = this.calendar.getToday();
     this.jenisKelamin = 'TIDAK_DITENTUKAN';
+    this.jenisPelayanan = 'PPM';
     this.pphppmParamSub = this.route.params
       .subscribe((params: Params) => {
         this.isEditMode = params['id'] != null;
@@ -147,6 +149,7 @@ export class PphppmFormComponent implements OnInit, OnDestroy {
     pphppm.tanggalLahirTamu = dateTanggalLahirTamu;
     pphppm.alamat = this.pphppmForm.value['alamat'];
     pphppm.jenisKelamin = this.jenisKelamin;
+    pphppm.jenisPelayanan = this.jenisPelayanan;
     pphppm.nomorHandphone = this.pphppmForm.value['nomorHandphone'];
     pphppm.email = this.pphppmForm.value['email'];
     pphppm.pekerjaan = this.pphppmForm.value['pekerjaan'];
@@ -158,8 +161,7 @@ export class PphppmFormComponent implements OnInit, OnDestroy {
     pphppm.urlFile = this.pphppmForm.value['urlFile'];
 
     if (this.isEditMode) {
-      pphppm.id = this.id;
-      this.pphppmSub = this.pphppmService.update(pphppm).subscribe({
+      this.pphppmSub = this.pphppmService.update(pphppm, this.id).subscribe({
         next: () => {
           this.isLoading = false;
           this.message = 'UpdateSukses';
@@ -205,6 +207,10 @@ export class PphppmFormComponent implements OnInit, OnDestroy {
 
   onJenisKelaminChange(value: string) {
     this.jenisKelamin = value;
+  }
+
+  onJenisPelayananChange(value: string) {
+    this.jenisPelayanan = value;
   }
 
   onNotificationStatusChange(status: boolean) {
