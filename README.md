@@ -25,3 +25,50 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+
+
+## Build to production
+
+### Using ng
+
+* Build Angular
+
+```
+ng build
+```
+
+or using profile
+
+```
+ng build --configuration=production
+
+ng build -c production
+```
+
+* install angular-http-server
+
+```
+npm install angular-http-server -g
+```
+
+* run in dist project local root directory
+
+```
+angular-http-server
+```
+
+### Using npm
+
+* install http-server
+```
+npm install --global http-server
+```
+* build
+```
+npm run build
+```
+* run in local root directory
+```
+http-server
+```
