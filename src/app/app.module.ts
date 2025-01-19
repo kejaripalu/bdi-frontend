@@ -5,7 +5,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './templates/navbar/navbar.component';
 import { SidebarComponent } from './templates/sidebar/sidebar.component';
-import { DashboardComponent } from './templates/dashboard/dashboard.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { SuratMasukComponent } from './register/surat-masuk/surat-masuk.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';

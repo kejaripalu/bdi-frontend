@@ -18,7 +18,7 @@ import { SuratMasukDetailComponent } from "./register/surat-masuk/surat-masuk-de
 import { SuratMasukFormComponent } from "./register/surat-masuk/surat-masuk-form/surat-masuk-form.component";
 import { SuratMasukListComponent } from "./register/surat-masuk/surat-masuk-list/surat-masuk-list.component";
 import { SuratMasukComponent } from "./register/surat-masuk/surat-masuk.component";
-import { DashboardComponent } from "./templates/dashboard/dashboard.component";
+import { DashboardComponent } from "./dashboard/dashboard.component";
 import { ProdinDetailComponent } from "./register/prodin/prodin-detail/prodin-detail.component";
 import { ProdinFormComponent } from "./register/prodin/prodin-form/prodin-form.component";
 import { ArsipComponent } from "./register/arsip/arsip.component";
