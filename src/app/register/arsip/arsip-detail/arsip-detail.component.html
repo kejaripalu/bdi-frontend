@@ -19,7 +19,7 @@
                         </div>
                         <div class="p-2">
                             <button type="button" class="btn btn-warning"
-                            [routerLink]="['/arsip', 'list', arsip.id, 'form']"
+                            [routerLink]="['/arsip', 'list', arsip.ids, 'form']"
                             [queryParams]="{ edit: 1 }"><i class="bi bi-pencil-square"></i> Ubah</button>
                         </div>
                     </div>
@@ -108,7 +108,7 @@
                         <div class="col-sm-8 col-md-8 col-xl-8">
                             : <a href="{{ arsip.urlFile }}" 
                                 target="_blank"
-                                *ngIf="arsip.urlFile">{{ arsip.id }}</a>
+                                *ngIf="arsip.urlFile">{{ arsip.ids }}</a>
                         </div>
                     </div>
                 </li>

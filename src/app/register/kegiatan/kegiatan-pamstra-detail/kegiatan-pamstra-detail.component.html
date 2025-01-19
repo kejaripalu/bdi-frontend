@@ -20,7 +20,7 @@
                         </div>
                         <div class="p-2">
                             <button type="button" class="btn btn-warning"
-                            [routerLink]="['/kegiatan', 'list', giat.id, 'pamstra-form']"
+                            [routerLink]="['/kegiatan', 'list', giat.ids, 'pamstra-form']"
                             [queryParams]="{edit: 1, bidang: namaBidang}"><i class="bi bi-pencil-square"></i> Ubah</button>
                         </div>
                     </div>
@@ -189,7 +189,7 @@
                         <div class="col-sm-8 col-md-8 col-xl-8">
                             : <a href="{{ giat.urlFile }}" 
                                 target="_blank"
-                                *ngIf="giat.urlFile">{{ giat.id }}</a>
+                                *ngIf="giat.urlFile">{{ giat.ids }}</a>
                         </div>
                     </div>
                 </li>

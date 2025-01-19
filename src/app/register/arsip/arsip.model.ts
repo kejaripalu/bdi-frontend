@@ -1,6 +1,5 @@
 export class Arsip {
-    id!: string;
-    deleted!: boolean;
+    ids!: string;
     tanggalPenerimaanArsip!: string;
     jamPenerimaanArsip!: string;
     diterimaDari!: string;

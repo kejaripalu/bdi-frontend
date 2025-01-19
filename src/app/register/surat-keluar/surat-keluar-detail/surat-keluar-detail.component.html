@@ -20,7 +20,7 @@
                         </div>
                         <div class="p-2">
                             <button type="button" class="btn btn-warning"
-                            [routerLink]="['/surat-keluar', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa', suratKeluar.id, 'form']"
+                            [routerLink]="['/surat-keluar', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa', suratKeluar.ids, 'form']"
                             [queryParams]="{edit: 1, jenisSurat: jenisSurat === 'RAHASIA' ? 'R' : 'B'}"><i class="bi bi-pencil-square"></i> Ubah</button>
                         </div>
                     </div>
@@ -111,7 +111,7 @@
                         <div class="col-sm-8 col-md-8 col-xl-8">
                             : <a href="{{ suratKeluar.urlFile }}" 
                                 target="_blank"
-                                *ngIf="suratKeluar.urlFile">{{ suratKeluar.id }}</a>
+                                *ngIf="suratKeluar.urlFile">{{ suratKeluar.ids }}</a>
                         </div>
                     </div>
                 </li>

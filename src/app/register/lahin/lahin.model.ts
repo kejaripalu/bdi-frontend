@@ -1,6 +1,5 @@
 export class RegisterLahin {
-    id!: string;
-    deleted!: boolean;
+    ids!: string;
     nomor!: string;
     tanggal!: string;
     pembuat!: string;

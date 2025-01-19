@@ -1,6 +1,5 @@
 export class RegisterOpsin {
-    id!: string;
-    deleted!: boolean;
+    ids!: string;
     bidangDirektorat!: string;
     sektor!: string;
     nomor!: string;

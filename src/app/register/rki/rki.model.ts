@@ -1,6 +1,5 @@
 export class RegisterKerjaIntelijen {
-    id!: string;
-    deleted!: boolean;
+    ids!: string;
     tanggalWaktuDiterima!: string;
     jamWaktuDiterima!: string;
     sumberBapul!: string;

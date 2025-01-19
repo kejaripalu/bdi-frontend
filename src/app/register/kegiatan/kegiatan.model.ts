@@ -1,6 +1,5 @@
 export class RegisterKegiatanIntelijen {
-    id!: string;
-    deleted!: boolean;
+    ids!: string;
     bidangDirektorat!: string;
     sektor!: string;
     nomor!: string;

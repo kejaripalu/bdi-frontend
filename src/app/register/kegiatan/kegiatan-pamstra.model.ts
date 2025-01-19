@@ -1,6 +1,5 @@
 export class RegisterKegiatanIntelijenPamstra {
-    id!: string;
-    deleted!: boolean;
+    ids!: string;
     sektor!: string;
     namaKegiatan!: string;
     sumberDana!: string;

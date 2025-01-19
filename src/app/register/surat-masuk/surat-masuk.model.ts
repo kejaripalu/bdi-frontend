@@ -1,6 +1,5 @@
 export class SuratMasuk {
-    id!: string;
-    deleted!: boolean;
+    ids!: string;
     tanggalPenerimaanSurat!: string;
     jamPenerimaanSurat!: string;
     asal!: string;

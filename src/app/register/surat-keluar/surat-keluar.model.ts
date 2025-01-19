@@ -1,6 +1,5 @@
 export class SuratKeluar {
-    id!: string;
-    deleted!: boolean;
+    ids!: string;
     tanggalSurat!: string;
     nomorSurat!: string;
     kepada!: string;

@@ -19,7 +19,7 @@
                         </div>
                         <div class="p-2">
                             <button type="button" class="btn btn-warning"
-                            [routerLink]="['/prodin', 'list', prodin.id, 'form']"
+                            [routerLink]="['/prodin', 'list', prodin.ids, 'form']"
                             [queryParams]="{edit: 1}"><i class="bi bi-pencil-square"></i> Ubah</button>
                         </div>
                     </div>
@@ -98,7 +98,7 @@
                         <div class="col-sm-8 col-md-8 col-xl-8">
                             : <a href="{{ prodin.urlFile }}" 
                                 target="_blank"
-                                *ngIf="prodin.urlFile">{{ prodin.id }}</a>
+                                *ngIf="prodin.urlFile">{{ prodin.ids }}</a>
                         </div>
                     </div>
                 </li>

@@ -20,7 +20,7 @@
                         </div>
                         <div class="p-2">
                             <button type="button" class="btn btn-warning"
-                            [routerLink]="['/rki', 'list', rki.id, 'form']"
+                            [routerLink]="['/rki', 'list', rki.ids, 'form']"
                             [queryParams]="{edit: 1, namaBidang: namaBidang}"><i class="bi bi-pencil-square"></i> Ubah</button>
                         </div>
                     </div>
@@ -129,7 +129,7 @@
                         <div class="col-sm-8 col-md-8 col-xl-8">
                             : <a href="{{ rki.urlFile }}" 
                                 target="_blank"
-                                *ngIf="rki.urlFile">{{ rki.id }}</a>
+                                *ngIf="rki.urlFile">{{ rki.ids }}</a>
                         </div>
                     </div>
                 </li>

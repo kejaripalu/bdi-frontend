@@ -1,6 +1,5 @@
 export class ProdukIntelijen {
-    id!: string;
-    deleted!: boolean;
+    ids!: string;
     jenisProdukIntelijen!: string;
     nomorProduk!: string;
     tanggalProduk!: string;

@@ -67,12 +67,12 @@
                     <td class="align-top">{{ l.tindakLanjut | shorten: 255 }}</td>
                     <td class="align-top">
                         <a class="dropdown-item text-primary"
-                                        [routerLink]="['/lahin', 'list', l.id, 'detail']">
+                                        [routerLink]="['/lahin', 'list', l.ids, 'detail']">
                                         <i class="bi bi-list-check"></i> Detail</a>                   
                         <a class="dropdown-item text-success"
-                                        [routerLink]="['/lahin', 'list', l.id, 'form']">
+                                        [routerLink]="['/lahin', 'list', l.ids, 'form']">
                                         <i class="bi bi-pencil-square"></i> Ubah</a>
-                        <a class="dropdown-item text-danger" (click)="onDelete(l.id)" style="cursor: pointer;"><i
+                        <a class="dropdown-item text-danger" (click)="onDelete(l.ids)" style="cursor: pointer;"><i
                                         class="bi bi-trash3-fill"></i> Hapus</a>
                     </td>
                 </tr>

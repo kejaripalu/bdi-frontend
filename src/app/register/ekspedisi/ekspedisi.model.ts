@@ -1,8 +1,7 @@
 export class Ekspedisi {
-    id!: string;
+    ids!: string;
     nomorSurat!: string;
     tanggalSurat!: string;
-    deleted!: boolean;
     kepada!: string;
     perihal!: string;
     lampiran!: string;
