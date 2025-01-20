@@ -12,10 +12,13 @@ import { DashboardService } from './dashboard.service';
 export class DashboardComponent implements OnInit, OnDestroy {
   private userSub: Subscription = null as any;
   private countProdinSub: Subscription = null as any;
+  private countPphPpmSub: Subscription = null as any;
   countLapinhar: number = 0;
   countLapinsus: number = 0;
   countLaphastug: number = 0;
   countLapopsin: number = 0;
+  countPPH: number = 0;
+  countPPM: number = 0;
   isAuthenticated: boolean = false;
   currentYear = new Date().getFullYear(); // get current year
   error: string = null as any;
@@ -31,8 +34,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.isAuthenticated = !!user;
     });
     this.checkLogedReloadPage();
-
-    this.isLoading = true;
     this.getYear();
     this.loadCardDataView();
   }
@@ -52,33 +53,40 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   loadCardDataView() {
-    this.countProdin('LAPINHAR');
-    this.countProdin('LAPINSUS');
-    this.countProdin('LAPHASTUG');
-    this.countProdin('LAPOPSIN');
+    this.loadCardProdin();
+    this.loadCardPphPpm();
   }
-
-  countProdin(jenisProdin: string) {
-    this.countProdinSub = this.dasboardService.getCountProdin(
-      this.currentYear.toString(),
-      jenisProdin)
+  
+  loadCardProdin() {
+    this.isLoading = true;
+    this.countProdinSub = this.dasboardService.getProdinCount(
+      this.currentYear.toString())
       .subscribe({
         next: (response) => {
-          switch(jenisProdin) {
-            case 'LAPINHAR': 
-              this.countLapinhar = response.count;
-              break;
-              case 'LAPINSUS': 
-                this.countLapinsus = response.count;
-                break;
-                case 'LAPHASTUG':
-                  this.countLaphastug = response.count;
-                  break;
-                  case 'LAPOPSIN':
-                    this.countLapopsin = response.count
-                    break;
-          }
-          this.isLoading = false;            
+          this.countLapinhar = response.countLapinhar;
+          this.countLapinsus = response.countLapinsus;
+          this.countLaphastug = response.countLaphastug;
+          this.countLapopsin = response.countLapopsin;
+          this.isLoading = false;
+        },
+        error: () => {
+          this.error = "Error show data";
+          this.isLoading = false;
+        }
+      });
+  }
+
+  loadCardPphPpm() {
+    this.isLoading = true;
+    this.countPphPpmSub = this.dasboardService.getPphPpmCount(
+      this.currentYear.toString())
+      .subscribe({
+        next: (response) => {
+          this.countPPH = response.countPPH;
+          this.countPPM = response.countPPM;
+          console.log('PPH: ' + this.countPPH);
+          console.log('PPM: ' + this.countPPM);          
+          this.isLoading = false;
         },
         error: () => {
           this.error = "Error show data";
@@ -105,6 +113,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
     if (this.countProdinSub) {
       this.countProdinSub.unsubscribe();
+    }
+    if (this.countPphPpmSub) {
+      this.countPphPpmSub.unsubscribe();
     }
   }
 

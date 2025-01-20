@@ -1,23 +1,33 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
-import { MonthConverterService } from "../shared/month-converter.service";
 import { map } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 export class DashboardService {
     private endPointProdin = environment.baseUrl + '/prodin';
-
+    private endPointPphPpm = environment.baseUrl + '/pphppm';
+    
     constructor(
-        private httpClient: HttpClient,
-        private monthConverterService: MonthConverterService) { }
+        private httpClient: HttpClient) { }
 
-    getCountProdin(tahun: string, jenisProdin: string) {
+    getProdinCount(tahun: string) {
         const startDate = tahun + '-01-01';        
         const endDate = tahun + '-12-31';  
-        const getEndPoint = `${this.endPointProdin}/count?jenisProdin=${jenisProdin}&` +
-            `startDate=${startDate}&endDate=${endDate}`;
-        return this.httpClient.get<Response>(getEndPoint)
+        const getEndPoint = `${this.endPointProdin}/count?&startDate=${startDate}&endDate=${endDate}`;
+        return this.httpClient.get<ResponseProdinCount>(getEndPoint)
+            .pipe(
+                map(response => {
+                    return response;
+                })
+            );
+    }
+
+    getPphPpmCount(tahun: string) {
+        const startDate = tahun + '-01-01';        
+        const endDate = tahun + '-12-31';  
+        const getEndPoint = `${this.endPointPphPpm}/count?&startDate=${startDate}&endDate=${endDate}`;
+        return this.httpClient.get<ResponsePpmPphCount>(getEndPoint)
             .pipe(
                 map(response => {
                     return response;
@@ -27,6 +37,14 @@ export class DashboardService {
 
 }
 
-interface Response {
-    count: number
+interface ResponseProdinCount {
+    countLapinhar: number;
+    countLapinsus: number;
+    countLaphastug: number;
+    countLapopsin: number;
+}
+
+interface ResponsePpmPphCount {
+    countPPH: number;
+    countPPM: number;
 }

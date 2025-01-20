@@ -54,6 +54,7 @@
                 <tr>
                     <th scope="col">Nama Petugas</th>
                     <th scope="col">Waktu</th>
+                    <th scope="col">Jenis Pelayanan</th>
                     <th scope="col">Identitas Pelapor</th>
                     <th scope="col">Nama Organisasi</th>
                     <th scope="col">Informasi yang disampaikan</th>
@@ -64,6 +65,7 @@
                 <tr *ngFor="let p of pphppm">
                     <td class="align-top">{{ p.namaPetugasPenerima }}</td>
                     <td class="align-top">{{ p.tanggal | date: 'dd-MM-yyyy'}} <br>{{ p.jam }}</td>
+                    <td class="align-top">{{ p.jenisPelayanan == 'PPM' ? 'Pengaduan Masyarakat' : 'Pelayanan Hukum' }}</td>
                     <td class="align-top">
                         {{ p.namaTamu }}, 
                         {{ (p.tempatLahirTamu !== null) ? (p.tempatLahirTamu + ", ") : "" }} 

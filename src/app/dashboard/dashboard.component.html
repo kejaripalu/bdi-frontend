@@ -36,13 +36,18 @@
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
-                        <!-- <a class="small text-white stretched-link" href="#"></a> -->
+                        <!-- <a class="small text-white stretched-link" href="#"> -->
+                            <i class="bi bi-chevron-right"></i>
+                        <!-- </a> -->
                         <div class="small text-white">Laporan</div>
                     </div>
                 </div>
             </div>
             <div class="col-xl-3 col-md-6">
-                <div class="card bg-success text-white mb-4">
+                <div class="mt-4" *ngIf="isLoading" style="text-align: center;">
+                    <app-loading-spinner></app-loading-spinner>
+                </div>
+                <div class="card bg-success text-white mb-4" *ngIf="!isLoading">
                     <div class="card-body">
                         <div class="row">
                             <div class="d-flex justify-content-between">
@@ -54,13 +59,18 @@
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
-                        <!-- <a class="small text-white stretched-link" href="#"></a> -->
+                        <!-- <a class="small text-white stretched-link" href="#"> -->
+                            <i class="bi bi-chevron-right"></i>
+                        <!-- </a> -->
                         <div class="small text-white">Laporan</div>
                     </div>
                 </div>
             </div>
             <div class="col-xl-3 col-md-6">
-                <div class="card bg-success text-white mb-4">
+                <div class="mt-4" *ngIf="isLoading" style="text-align: center;">
+                    <app-loading-spinner></app-loading-spinner>
+                </div>
+                <div class="card bg-success text-white mb-4" *ngIf="!isLoading">
                     <div class="card-body">
                         <div class="row">
                             <div class="d-flex justify-content-between">
@@ -72,13 +82,18 @@
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
-                        <!-- <a class="small text-white stretched-link" href="#"></a> -->
+                        <!-- <a class="small text-white stretched-link" href="#"> -->
+                            <i class="bi bi-chevron-right"></i>
+                        <!-- </a> -->
                         <div class="small text-white">Laporan</div>
                     </div>
                 </div>
             </div>
             <div class="col-xl-3 col-md-6">
-                <div class="card bg-success text-white mb-4">
+                <div class="mt-4" *ngIf="isLoading" style="text-align: center;">
+                    <app-loading-spinner></app-loading-spinner>
+                </div>
+                <div class="card bg-success text-white mb-4" *ngIf="!isLoading">
                     <div class="card-body">
                         <div class="row">
                             <div class="d-flex justify-content-between">
@@ -90,7 +105,9 @@
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
-                        <!-- <a class="small text-white stretched-link" href="#"></a> -->
+                        <!-- <a class="small text-white stretched-link" href="#"> -->
+                            <i class="bi bi-chevron-right"></i>
+                        <!-- </a> -->
                         <div class="small text-white">Laporan</div>
                     </div>
                 </div>
@@ -98,55 +115,43 @@
         </div>
         <div class="row">
             <div class="col-xl-3 col-md-6">
-                <div class="card bg-primary text-white mb-4">
+                <div class="mt-4" *ngIf="isLoading" style="text-align: center;">
+                    <app-loading-spinner></app-loading-spinner>
+                </div>
+                <div class="card bg-primary text-white mb-4" *ngIf="!isLoading">
                     <div class="card-body">
                         <div class="row">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <i class="bi bi-journal-text"></i><span class="fw-normal"> Informasi <br>Publik</span>
+                                    <i class="bi bi-chat-square-text-fill"></i><span class="fw-normal"> Pelayanan <br>Hukum</span>
                                 </div>
-                                <h2>{{ 1000000 | number:'1.' : 'it' }}</h2>
+                                <h2>{{ countPPH | number:'1.' : 'it' }}</h2>
                             </div>
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="#"></a>
+                        <a class="small text-white stretched-link" href="#"><i class="bi bi-chevron-right"></i></a>
                         <div class="small text-white">Kegiatan</div>
                     </div>
                 </div>
             </div>
             <div class="col-xl-3 col-md-6">
-                <div class="card bg-primary text-white mb-4">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="d-flex justify-content-between">
-                                <div>
-                                    <i class="bi bi-journal-text"></i><span class="fw-normal"> Pengaduan <br>Masyarakat</span>
-                                </div>
-                                <h2>{{ 4000 | number:'1.' : 'it' }}</h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="#"></a>
-                        <div class="small text-white">Kegiatan</div>
-                    </div>
+                <div class="mt-4" *ngIf="isLoading" style="text-align: center;">
+                    <app-loading-spinner></app-loading-spinner>
                 </div>
-            </div>
-            <div class="col-xl-3 col-md-6">
-                <div class="card bg-danger text-white mb-4">
+                <div class="card bg-primary text-white mb-4" *ngIf="!isLoading">
                     <div class="card-body">
                         <div class="row">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <i class="bi bi-journal-text"></i><span class="fw-normal"> JMS</span>
+                                    <i class="bi bi-chat-square-text"></i><span class="fw-normal"> Pengaduan <br>Masyarakat</span>
                                 </div>
-                                <h2>{{ 0 | number:'1.' : 'it' }}</h2>
+                                <h2>{{ countPPM | number:'1.' : 'it' }}</h2>
                             </div>
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="#"></a>
+                        <a class="small text-white stretched-link" href="#"><i class="bi bi-chevron-right"></i></a>
                         <div class="small text-white">Kegiatan</div>
                     </div>
                 </div>
@@ -157,14 +162,32 @@
                         <div class="row">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <i class="bi bi-journal-text"></i><span class="fw-normal"> BINMATKUM</span>
+                                    <i class="bi bi-megaphone"></i><span class="fw-normal"> JMS</span>
                                 </div>
                                 <h2>{{ 0 | number:'1.' : 'it' }}</h2>
                             </div>
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="#"></a>
+                        <a class="small text-white stretched-link" href="#"><i class="bi bi-chevron-right"></i></a>
+                        <div class="small text-white">Kegiatan</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="card bg-danger text-white mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <i class="bi bi-megaphone-fill"></i><span class="fw-normal"> BINMATKUM</span>
+                                </div>
+                                <h2>{{ 0 | number:'1.' : 'it' }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                        <a class="small text-white stretched-link" href="#"><i class="bi bi-chevron-right"></i></a>
                         <div class="small text-white">Kegiatan</div>
                     </div>
                 </div>
