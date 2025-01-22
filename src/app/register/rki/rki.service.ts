@@ -26,8 +26,8 @@ export class RegisterKerjaIntelijenService {
         );
     }
 
-    getOneRKI(id: string) {
-        const getEndPoint = `${this.endPoint}/${id}/detail`;
+    getOneRKI(ids: string) {
+        const getEndPoint = `${this.endPoint}/${ids}/detail`;
         return this.httpClient.get<RegisterKerjaIntelijen>(getEndPoint)
             .pipe(
                 map(response => {
@@ -68,8 +68,8 @@ export class RegisterKerjaIntelijenService {
         }));
     }
 
-    updateRKI(rki: RegisterKerjaIntelijen, id: string) {
-        const putEndPoint = `${this.endPoint}/${id}`;
+    updateRKI(rki: RegisterKerjaIntelijen, ids: string) {
+        const putEndPoint = `${this.endPoint}/${ids}`;
         return this.httpClient.put<RegisterKerjaIntelijen>(putEndPoint, rki)
             .pipe(catchError(errorResponse => {
                 let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
@@ -90,8 +90,8 @@ export class RegisterKerjaIntelijenService {
         }));
     }
 
-    deleteRKI(id: string) {
-        const deleteEndPoint = `${this.endPoint}/${id}`;
+    deleteRKI(ids: string) {
+        const deleteEndPoint = `${this.endPoint}/${ids}`;
         return this.httpClient.delete<RegisterKerjaIntelijen>(deleteEndPoint)
             .pipe(catchError(errorResponse => {
                 let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';

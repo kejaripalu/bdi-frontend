@@ -26,8 +26,8 @@ export class ProdukIntelijenService {
         );
     }
 
-    getOneProdin(id: string) {
-        const getEndPoint = `${this.endPoint}/${id}/detail`;
+    getOneProdin(ids: string) {
+        const getEndPoint = `${this.endPoint}/${ids}/detail`;
         return this.httpClient.get<ProdukIntelijen>(getEndPoint)
             .pipe(
                 map(response => {
@@ -68,8 +68,8 @@ export class ProdukIntelijenService {
         }));
     }
 
-    updateProdin(prodin: ProdukIntelijen, id: string) {
-        const putEndPoint = `${this.endPoint}/${id}`;
+    updateProdin(prodin: ProdukIntelijen, ids: string) {
+        const putEndPoint = `${this.endPoint}/${ids}`;
         return this.httpClient.put<ProdukIntelijen>(putEndPoint, prodin)
             .pipe(catchError(errorResponse => {
                 let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
@@ -90,8 +90,8 @@ export class ProdukIntelijenService {
         }));
     }
 
-    deleteProdin(id: string) {
-        const deleteEndPoint = `${this.endPoint}/${id}`;
+    deleteProdin(ids: string) {
+        const deleteEndPoint = `${this.endPoint}/${ids}`;
         return this.httpClient.delete<ProdukIntelijen>(deleteEndPoint)
             .pipe(catchError(errorResponse => {
                 let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';

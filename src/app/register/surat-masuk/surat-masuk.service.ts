@@ -41,8 +41,8 @@ export class SuratMasukService {
             );
     }
 
-    getOneSuratMasuk(id: string) {
-        const getEndPoint = `${this.endPoint}/${id}/detail`;
+    getOneSuratMasuk(ids: string) {
+        const getEndPoint = `${this.endPoint}/${ids}/detail`;
         return this.httpClient.get<SuratMasuk>(getEndPoint)
             .pipe(
                 map(response => {
@@ -83,8 +83,8 @@ export class SuratMasukService {
             }));
     }
 
-    updateSuratMasuk(suratMasuk: SuratMasuk, id: string) {
-        const putEndPoint = `${this.endPoint}/${id}`;
+    updateSuratMasuk(suratMasuk: SuratMasuk, ids: string) {
+        const putEndPoint = `${this.endPoint}/${ids}`;
         return this.httpClient.put<SuratMasuk>(putEndPoint, suratMasuk)
             .pipe(catchError(errorResponse => {
                 let errorMessage = this.message.errorConnection;
@@ -105,8 +105,8 @@ export class SuratMasukService {
             }));
     }
 
-    deleteSuratMasuk(id: string) {
-        const deleteEndPoint = `${this.endPoint}/${id}`;
+    deleteSuratMasuk(ids: string) {
+        const deleteEndPoint = `${this.endPoint}/${ids}`;
         return this.httpClient.delete<SuratMasuk>(deleteEndPoint)
             .pipe(catchError(errorResponse => {
                 let errorMessage = this.message.errorConnection;;

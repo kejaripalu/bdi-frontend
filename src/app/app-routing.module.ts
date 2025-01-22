@@ -48,6 +48,8 @@ import { PphppmDetailComponent } from "./register/pphppm/pphppm-detail/pphppm-de
 import { AuthComponent } from "./auth/auth.component";
 import { AuthGuard } from "./auth/auth.guard";
 import { AuthAfterLoginGuard } from "./auth/auth-after-login.guard";
+import { PenkumluhkumComponent } from "./register/penkumluhkum/penkumluhkum.component";
+import { PenkumluhkumListComponent } from "./register/penkumluhkum/penkumluhkum-list/penkumluhkum-list.component";
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -158,6 +160,17 @@ const appRoutes: Routes = [
         { path: 'list/form', component: PphppmFormComponent },
         { path: 'list/:id/form', component: PphppmFormComponent },
         { path: 'list/:id/detail', component: PphppmDetailComponent}
+     ]},
+     { path: 'penkumluhkum', component: PenkumluhkumComponent,
+        canActivate: [AuthGuard],
+        children:[
+        { path: '', redirectTo: '/penkumluhkum/list', pathMatch: 'full' },
+        { path: 'list', component: PenkumluhkumListComponent },
+        { path: 'list/penkum', component: PenkumluhkumListComponent },
+        { path: 'list/luhkum', component: PenkumluhkumListComponent },
+        // { path: 'list/form', component: PphppmFormComponent },
+        // { path: 'list/:id/form', component: PphppmFormComponent },
+        // { path: 'list/:id/detail', component: PphppmDetailComponent}
      ]},
     { path: 'page-not-found', component: PageNotFoundComponent, canActivate: [AuthGuard] },
     { path: '**', redirectTo: 'page-not-found', pathMatch: 'full' }

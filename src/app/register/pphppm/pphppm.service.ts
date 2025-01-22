@@ -26,8 +26,8 @@ export class RegisterPPHPPMService {
             );
     }
 
-    getOne(id: string) {
-        const getEndPoint = `${this.endPoint}/${id}/detail`;
+    getOne(ids: string) {
+        const getEndPoint = `${this.endPoint}/${ids}/detail`;
         return this.httpClient.get<RegisterPPHPPM>(getEndPoint)
             .pipe(
                 map(response => {
@@ -68,8 +68,8 @@ export class RegisterPPHPPMService {
             }));
     }
 
-    update(pphppm: RegisterPPHPPM, id: string) {
-        const putEndPoint = `${this.endPoint}/${id}`;
+    update(pphppm: RegisterPPHPPM, ids: string) {
+        const putEndPoint = `${this.endPoint}/${ids}`;
         return this.httpClient.put<RegisterPPHPPM>(putEndPoint, pphppm)
             .pipe(catchError(errorResponse => {
                 let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
@@ -90,8 +90,8 @@ export class RegisterPPHPPMService {
             }));
     }
 
-    delete(id: string) {
-        const deleteEndPoint = `${this.endPoint}/${id}`;
+    delete(ids: string) {
+        const deleteEndPoint = `${this.endPoint}/${ids}`;
         return this.httpClient.delete<RegisterPPHPPM>(deleteEndPoint)
             .pipe(catchError(errorResponse => {
                 let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';

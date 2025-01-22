@@ -42,8 +42,8 @@ export class SuratKeluarService {
             }));
     }
 
-    getOneSuratKeluar(id: string) {
-        const getEndPoint = `${this.endPoint}/${id}/detail`;
+    getOneSuratKeluar(ids: string) {
+        const getEndPoint = `${this.endPoint}/${ids}/detail`;
         return this.httpClient.get<SuratKeluar>(getEndPoint)
             .pipe(
                 map(response => {
@@ -64,8 +64,8 @@ export class SuratKeluarService {
             );
     }
 
-    updateSuratKeluar(suratKeluar: SuratKeluar, id: string) {
-        const putEndPoint = `${this.endPoint}/${id}`;
+    updateSuratKeluar(suratKeluar: SuratKeluar, ids: string) {
+        const putEndPoint = `${this.endPoint}/${ids}`;
         return this.httpClient.put<SuratKeluar>(putEndPoint, suratKeluar)
             .pipe(catchError(errorResponse => {
                 let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
@@ -84,8 +84,8 @@ export class SuratKeluarService {
             }));
     }
 
-    deleteSuratKeluar(id: string) {
-        const deleteEndPoint = `${this.endPoint}/${id}`;
+    deleteSuratKeluar(ids: string) {
+        const deleteEndPoint = `${this.endPoint}/${ids}`;
         return this.httpClient.delete<SuratKeluar>(deleteEndPoint)
             .pipe(catchError(errorResponse => {
                 let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';

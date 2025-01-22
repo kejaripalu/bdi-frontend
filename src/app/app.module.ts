@@ -77,6 +77,8 @@ import { AuthComponent } from './auth/auth.component';
 import { AuthInterceptorsService } from './auth/auth-interceptors.service';
 import { TruncatePipe } from './shared/truncate.pipe';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { PenkumluhkumComponent } from './register/penkumluhkum/penkumluhkum.component';
+import { PenkumluhkumListComponent } from './register/penkumluhkum/penkumluhkum-list/penkumluhkum-list.component';
 
 @NgModule({
   declarations: [
@@ -149,7 +151,9 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
     PphppmListComponent,
     AuthComponent,
     TruncatePipe,
-    LoginPageComponent
+    LoginPageComponent,
+    PenkumluhkumComponent,
+    PenkumluhkumListComponent
   ],
   imports: [
     BrowserModule,
