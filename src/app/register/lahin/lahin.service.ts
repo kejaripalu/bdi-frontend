@@ -26,8 +26,8 @@ export class RegisterTelaahanIntelijenService {
         );
     }
 
-    getOne(id: string) {
-        const getEndPoint = `${this.endPoint}/${id}/detail`;
+    getOne(ids: string) {
+        const getEndPoint = `${this.endPoint}/${ids}/detail`;
         return this.httpClient.get<RegisterLahin>(getEndPoint)
             .pipe(
                 map(response => {
@@ -68,8 +68,8 @@ export class RegisterTelaahanIntelijenService {
         }));
     }
 
-    update(lahin: RegisterLahin, id: string) {
-        const putEndPoint = `${this.endPoint}/${id}`;
+    update(lahin: RegisterLahin, ids: string) {
+        const putEndPoint = `${this.endPoint}/${ids}`;
         return this.httpClient.put<RegisterLahin>(putEndPoint, lahin)
             .pipe(catchError(errorResponse => {
                 let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
@@ -90,8 +90,8 @@ export class RegisterTelaahanIntelijenService {
         }));
     }
 
-    delete(id: string) {
-        const deleteEndPoint = `${this.endPoint}/${id}`;
+    delete(ids: string) {
+        const deleteEndPoint = `${this.endPoint}/${ids}`;
         return this.httpClient.delete<RegisterLahin>(deleteEndPoint)
             .pipe(catchError(errorResponse => {
                 let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';

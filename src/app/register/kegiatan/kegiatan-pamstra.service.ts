@@ -25,8 +25,8 @@ export class RegisterKegiatanIntelijenPamstraService {
         );
     }
 
-    getOne(id: string) {
-        const getEndPoint = `${this.endPoint}/${id}/detail`;
+    getOne(ids: string) {
+        const getEndPoint = `${this.endPoint}/${ids}/detail`;
         return this.httpClient.get<RegisterKegiatanIntelijenPamstra>(getEndPoint)
             .pipe(
                 map(response => {
@@ -67,8 +67,8 @@ export class RegisterKegiatanIntelijenPamstraService {
         }));
     }
 
-    update(giat: RegisterKegiatanIntelijenPamstra, id: string) {
-        const putEndPoint = `${this.endPoint}/${id}`;
+    update(giat: RegisterKegiatanIntelijenPamstra, ids: string) {
+        const putEndPoint = `${this.endPoint}/${ids}`;
         return this.httpClient.put<RegisterKegiatanIntelijenPamstra>(putEndPoint, giat)
             .pipe(catchError(errorResponse => {
                 let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';

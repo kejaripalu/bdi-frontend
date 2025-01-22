@@ -44,8 +44,8 @@ export class EkspedisiService {
             }));
     }
 
-    getOneEkspedisi(id: string) {
-        const getEndPoint = `${this.endPoint}/${id}/detail`;
+    getOneEkspedisi(ids: string) {
+        const getEndPoint = `${this.endPoint}/${ids}/detail`;
         return this.httpClient.get<Ekspedisi>(getEndPoint)
             .pipe(
                 map(response => {
@@ -68,8 +68,8 @@ export class EkspedisiService {
             );
     }
 
-    updateEkspedisi(ekspedisi: Ekspedisi, id: string) {
-        const putEndPoint = `${this.endPoint}/${id}`;
+    updateEkspedisi(ekspedisi: Ekspedisi, ids: string) {
+        const putEndPoint = `${this.endPoint}/${ids}`;
         return this.httpClient.put<Ekspedisi>(putEndPoint, ekspedisi)
             .pipe(catchError(errorResponse => {
                 let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
@@ -103,8 +103,8 @@ export class EkspedisiService {
             );
     }
 
-    deleteEkspedisi(id: string) {
-        const deleteEndPoint = `${this.endPoint}/${id}`;
+    deleteEkspedisi(ids: string) {
+        const deleteEndPoint = `${this.endPoint}/${ids}`;
         return this.httpClient.delete<Ekspedisi>(deleteEndPoint)
             .pipe(catchError(errorResponse => {
                 let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';

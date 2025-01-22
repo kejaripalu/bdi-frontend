@@ -25,8 +25,8 @@ export class RegisterOpsinService {
         );
     }
 
-    getOne(id: string) {
-        const getEndPoint = `${this.endPoint}/${id}/detail`;
+    getOne(ids: string) {
+        const getEndPoint = `${this.endPoint}/${ids}/detail`;
         return this.httpClient.get<RegisterOpsin>(getEndPoint)
             .pipe(
                 map(response => {
@@ -67,8 +67,8 @@ export class RegisterOpsinService {
         }));
     }
 
-    update(opsin: RegisterOpsin, id: string) {
-        const putEndPoint = `${this.endPoint}/${id}`;
+    update(opsin: RegisterOpsin, ids: string) {
+        const putEndPoint = `${this.endPoint}/${ids}`;
         return this.httpClient.put<RegisterOpsin>(putEndPoint, opsin)
             .pipe(catchError(errorResponse => {
                 let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
@@ -89,8 +89,8 @@ export class RegisterOpsinService {
         }));
     }
 
-    delete(id: string) {
-        const deleteEndPoint = `${this.endPoint}/${id}`;
+    delete(ids: string) {
+        const deleteEndPoint = `${this.endPoint}/${ids}`;
         return this.httpClient.delete<RegisterOpsin>(deleteEndPoint)
             .pipe(catchError(errorResponse => {
                 let errorMessage = 'Aduh!!!... Gawat nih bro... GAGAL terhubung ke server';
