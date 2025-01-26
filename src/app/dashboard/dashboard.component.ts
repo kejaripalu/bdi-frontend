@@ -13,12 +13,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private userSub: Subscription = null as any;
   private countProdinSub: Subscription = null as any;
   private countPphPpmSub: Subscription = null as any;
+  private countProgramPenkumLuhkumSub: Subscription = null as any;
   countLapinhar: number = 0;
   countLapinsus: number = 0;
   countLaphastug: number = 0;
   countLapopsin: number = 0;
   countPPH: number = 0;
   countPPM: number = 0;
+  countBinmatkum: number = 0;
+  countJms: number = 0;
+  countJaksaMenyapa: number = 0;
   isAuthenticated: boolean = false;
   currentYear = new Date().getFullYear(); // get current year
   error: string = null as any;
@@ -55,6 +59,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   loadCardDataView() {
     this.loadCardProdin();
     this.loadCardPphPpm();
+    this.loadCardProgramPenkumLuhkum();
   }
   
   loadCardProdin() {
@@ -84,8 +89,24 @@ export class DashboardComponent implements OnInit, OnDestroy {
         next: (response) => {
           this.countPPH = response.countPPH;
           this.countPPM = response.countPPM;
-          console.log('PPH: ' + this.countPPH);
-          console.log('PPM: ' + this.countPPM);          
+          this.isLoading = false;
+        },
+        error: () => {
+          this.error = "Error show data";
+          this.isLoading = false;
+        }
+      });
+  }
+
+  loadCardProgramPenkumLuhkum() {
+    this.isLoading = true;
+    this.countProgramPenkumLuhkumSub = this.dasboardService.getProgramPenkumLuhkumCount(
+      this.currentYear.toString())
+      .subscribe({
+        next: (response) => {
+          this.countBinmatkum = response.countBinmatkum;
+          this.countJms = response.countJms;
+          this.countJaksaMenyapa = response.countJaksaMenyapa;
           this.isLoading = false;
         },
         error: () => {

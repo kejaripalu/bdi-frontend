@@ -7,6 +7,7 @@ import { map } from "rxjs";
 export class DashboardService {
     private endPointProdin = environment.baseUrl + '/prodin';
     private endPointPphPpm = environment.baseUrl + '/pphppm';
+    private endPointPenkumLuhkum = environment.baseUrl + '/penkumluhkum';
     
     constructor(
         private httpClient: HttpClient) { }
@@ -35,6 +36,19 @@ export class DashboardService {
             );
     }
 
+    getProgramPenkumLuhkumCount(tahun: string) {
+        const startDate = tahun + '-01-01';        
+        const endDate = tahun + '-12-31';  
+        const getEndPoint = `${this.endPointPenkumLuhkum}/count?&startDate=${startDate}&endDate=${endDate}`;
+        return this.httpClient.get<ResponseProgramPenkumLuhkumCount>(getEndPoint)
+            .pipe(
+                map(response => {
+                    return response;
+                })
+            );
+    }
+
+
 }
 
 interface ResponseProdinCount {
@@ -47,4 +61,10 @@ interface ResponseProdinCount {
 interface ResponsePpmPphCount {
     countPPH: number;
     countPPM: number;
+}
+
+interface ResponseProgramPenkumLuhkumCount {
+    countBinmatkum: number;
+    countJms: number;
+    countJaksaMenyapa: number;
 }

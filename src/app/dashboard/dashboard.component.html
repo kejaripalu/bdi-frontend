@@ -157,14 +157,17 @@
                 </div>
             </div>
             <div class="col-xl-3 col-md-6">
-                <div class="card bg-danger text-white mb-4">
+                <div class="mt-4" *ngIf="isLoading" style="text-align: center;">
+                    <app-loading-spinner></app-loading-spinner>
+                </div>
+                <div class="card bg-danger text-white mb-4" *ngIf="!isLoading">
                     <div class="card-body">
                         <div class="row">
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <i class="bi bi-megaphone"></i><span class="fw-normal"> JMS</span>
                                 </div>
-                                <h2>{{ 0 | number:'1.' : 'it' }}</h2>
+                                <h2>{{ countJms | number:'1.' : 'it' }}</h2>
                             </div>
                         </div>
                     </div>
@@ -175,14 +178,17 @@
                 </div>
             </div>
             <div class="col-xl-3 col-md-6">
-                <div class="card bg-danger text-white mb-4">
+                <div class="mt-4" *ngIf="isLoading" style="text-align: center;">
+                    <app-loading-spinner></app-loading-spinner>
+                </div>
+                <div class="card bg-danger text-white mb-4" *ngIf="!isLoading">
                     <div class="card-body">
                         <div class="row">
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <i class="bi bi-megaphone-fill"></i><span class="fw-normal"> BINMATKUM</span>
                                 </div>
-                                <h2>{{ 0 | number:'1.' : 'it' }}</h2>
+                                <h2>{{ countBinmatkum | number:'1.' : 'it' }}</h2>
                             </div>
                         </div>
                     </div>
