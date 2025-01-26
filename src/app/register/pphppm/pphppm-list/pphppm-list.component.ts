@@ -56,7 +56,6 @@ export class PphppmListComponent implements OnInit, OnDestroy {
     this.authService.user.subscribe(user => {
       this.isAuthenticated = !!user;
     });
-    console.log('Is authentication = ' + this.isAuthenticated);
 
     this.pphppmSub = this.pphppmService.getAll(
       this.pageNumber - 1,

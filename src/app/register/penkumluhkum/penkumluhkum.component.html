@@ -3,25 +3,24 @@
         <div class="d-flex bd-highlight">
             <div class="p-2 w-100 bd-highlight">
                 <h2 class="mt-4">
-                    <i class="bi bi-layout-text-sidebar-reverse"></i> Register Pelaksanaan Kegiatan Penerangan Hukum /
-                    Penyuluhan Hukum
+                    <i class="bi bi-layout-text-sidebar-reverse"></i> {{ namaBidang }}
                 </h2>
             </div>
             <div class="p-2 flex-shrink-1 bd-highlight">
-                <h4 class="mt-4 text-success" placement="start" ngbTooltip="Register " (click)="onOpenHelp()"
-                    style="cursor: pointer;">R.IN.22</h4>
+                <h4 class="mt-4 text-success" placement="start" ngbTooltip="{{ namaBidang }}" (click)="onOpenHelp()"
+                    style="cursor: pointer;">{{ kodeRegister }}</h4>
             </div>
         </div>
         <hr>
         <nav class="nav nav-pills nav-justified">
             <a class="nav-link" aria-current="page" 
-                    [routerLink]="['/penkumluhkum', 'list', 'penkum']"
-                    [queryParams]="{ jenisKegiatan: 'penkum' }" 
+                    [routerLink]="['/penkumluhkum', 'penkum']"
+                    [queryParams]="{ jenisKegiatan: 'PENERANGAN_HUKUM' }" 
                     routerLinkActive="active">
                 <i class="bi bi-megaphone-fill"></i> Penerangan Hukum</a>
             <a class="nav-link" 
-                    [routerLink]="['/penkumluhkum', 'list', 'luhkum']"
-                    [queryParams]="{ jenisKegiatan: 'luhkum' }" 
+                    [routerLink]="['/penkumluhkum', 'luhkum']"
+                    [queryParams]="{ jenisKegiatan: 'PENYULUHAN_HUKUM' }" 
                     routerLinkActive="active">
                 <i class="bi bi-megaphone-fill"></i> Penyuluhan Hukum</a>
         </nav>

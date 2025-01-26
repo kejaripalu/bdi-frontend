@@ -7,7 +7,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./surat-masuk-help.component.css']
 })
 export class SuratMasukHelpComponent implements OnInit {
-
+  kodeSurat: string = 'R.IN.1';
+  
   constructor(public activeModal: NgbActiveModal) { }
 
   ngOnInit(): void {

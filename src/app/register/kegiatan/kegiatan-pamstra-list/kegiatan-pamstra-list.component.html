@@ -64,7 +64,7 @@
                     <td class="align-top">{{ g.sektor | sektorPipe }}</td>
                     <td class="align-top">{{ g.namaKegiatan | shorten: 255 }}</td>
                     <td class="align-top">{{ g.sumberDana }}</td>
-                    <td class="align-top">{{ g.paguAnggaran | currency: "Rp. " }}</td>
+                    <td class="align-top">Rp. {{ g.paguAnggaran | number : '1.2-2' : 'it' }}</td>
                     <td class="align-top">
                         <a class="dropdown-item text-primary"
                                         [routerLink]="['/kegiatan', 'list', 'pamstra-list', g.ids, 'detail']"

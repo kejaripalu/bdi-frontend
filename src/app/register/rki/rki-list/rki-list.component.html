@@ -63,7 +63,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let r of rki">
-                    <td class="align-top">{{ r.tanggalWaktuDiterima }} {{ r.jamWaktuDiterima }}</td>
+                    <td class="align-top">{{ r.tanggalWaktuDiterima | date: 'dd-MM-yyyy' }}<br>{{ r.jamWaktuDiterima }}</td>
                     <td class="align-top">{{ r.sumberBapul }}</td>
                     <td class="align-top">{{ r.nilaiDataInformasi }}</td>
                     <td class="align-top">{{ r.uraianPeristiwaMasalah | shorten: 255 }}</td>

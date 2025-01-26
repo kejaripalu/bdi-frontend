@@ -1,0 +1,17 @@
+.penkum {
+    color: darkgreen;
+}
+.luhkum {
+    color: royalblue;
+}
+
+img {
+    max-width: 200px;
+    height: 200px;
+}
+
+.item {
+    float: left;
+    margin: 3px 10px 3px 3px;
+    padding: 3px;
+}

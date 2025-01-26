@@ -7,6 +7,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./pphppm-help.component.css']
 })
 export class PphppmHelpComponent implements OnInit {
+  kodeSurat: string = 'R.IN.21';
 
   constructor(public activeModal: NgbActiveModal) { }
 

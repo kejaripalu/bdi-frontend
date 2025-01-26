@@ -57,11 +57,7 @@ export class SuratMasukDetailComponent implements OnInit, OnDestroy {
       this.router.navigate(['/surat-masuk', 'biasa'], {queryParams: {jenisSurat: this.jenisSurat}});
     }
   }
-
-  getColor() {
-    return this.suratMasuk.jenisSurat === 'RAHASIA' ? 'red' : 'green';
-  }
-
+  
   ngOnDestroy(): void {
       if (this.suratMasukChangeSub) {
           this.suratMasukChangeSub.unsubscribe();

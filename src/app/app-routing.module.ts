@@ -50,6 +50,8 @@ import { AuthGuard } from "./auth/auth.guard";
 import { AuthAfterLoginGuard } from "./auth/auth-after-login.guard";
 import { PenkumluhkumComponent } from "./register/penkumluhkum/penkumluhkum.component";
 import { PenkumluhkumListComponent } from "./register/penkumluhkum/penkumluhkum-list/penkumluhkum-list.component";
+import { PenkumluhkumFormComponent } from "./register/penkumluhkum/penkumluhkum-form/penkumluhkum-form.component";
+import { PenkumluhkumDetailComponent } from "./register/penkumluhkum/penkumluhkum-detail/penkumluhkum-detail.component";
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -164,13 +166,15 @@ const appRoutes: Routes = [
      { path: 'penkumluhkum', component: PenkumluhkumComponent,
         canActivate: [AuthGuard],
         children:[
-        { path: '', redirectTo: '/penkumluhkum/list', pathMatch: 'full' },
-        { path: 'list', component: PenkumluhkumListComponent },
-        { path: 'list/penkum', component: PenkumluhkumListComponent },
-        { path: 'list/luhkum', component: PenkumluhkumListComponent },
-        // { path: 'list/form', component: PphppmFormComponent },
-        // { path: 'list/:id/form', component: PphppmFormComponent },
-        // { path: 'list/:id/detail', component: PphppmDetailComponent}
+        { path: '', redirectTo: '/penkumluhkum/penkum', pathMatch: 'full' },
+        { path: 'penkum', component: PenkumluhkumListComponent },
+        { path: 'penkum/form', component: PenkumluhkumFormComponent },
+        { path: 'penkum/:id/form', component: PenkumluhkumFormComponent },
+        { path: 'penkum/:id/detail', component: PenkumluhkumDetailComponent },
+        { path: 'luhkum', component: PenkumluhkumListComponent },
+        { path: 'luhkum/form', component: PenkumluhkumFormComponent },
+        { path: 'luhkum/:id/form', component: PenkumluhkumFormComponent },
+        { path: 'luhkum/:id/detail', component: PenkumluhkumDetailComponent }
      ]},
     { path: 'page-not-found', component: PageNotFoundComponent, canActivate: [AuthGuard] },
     { path: '**', redirectTo: 'page-not-found', pathMatch: 'full' }

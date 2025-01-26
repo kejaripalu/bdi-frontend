@@ -1,8 +1,10 @@
 export class RegisterPenkumLuhkum {
     ids!: string;
     nomorSuratPerintah!: string;
+    tanggalSuratPerintah!: string;
     sasaranKegiatan!: string;
     tanggalKegiatan!: string;
+    tempat!: string;
     materi!: string;
     jumlahPeserta!: number;
     keterangan!: string;

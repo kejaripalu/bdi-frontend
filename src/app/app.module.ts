@@ -79,6 +79,11 @@ import { TruncatePipe } from './shared/truncate.pipe';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { PenkumluhkumComponent } from './register/penkumluhkum/penkumluhkum.component';
 import { PenkumluhkumListComponent } from './register/penkumluhkum/penkumluhkum-list/penkumluhkum-list.component';
+import { PenkumluhkumFormComponent } from './register/penkumluhkum/penkumluhkum-form/penkumluhkum-form.component';
+import { CustomMaxValidatorDirective } from './shared/custom-directive/custom-max-validator.directive';
+import { CustomMinValidatorDirective } from './shared/custom-directive/custom-min-validator.directive';
+import { PenkumluhkumDetailComponent } from './register/penkumluhkum/penkumluhkum-detail/penkumluhkum-detail.component';
+import { PenkumluhkumHelpComponent } from './register/penkumluhkum/penkumluhkum-help/penkumluhkum-help.component';
 
 @NgModule({
   declarations: [
@@ -153,7 +158,12 @@ import { PenkumluhkumListComponent } from './register/penkumluhkum/penkumluhkum-
     TruncatePipe,
     LoginPageComponent,
     PenkumluhkumComponent,
-    PenkumluhkumListComponent
+    PenkumluhkumListComponent,
+    PenkumluhkumFormComponent,
+    CustomMaxValidatorDirective,
+    CustomMinValidatorDirective,
+    PenkumluhkumDetailComponent,
+    PenkumluhkumHelpComponent
   ],
   imports: [
     BrowserModule,

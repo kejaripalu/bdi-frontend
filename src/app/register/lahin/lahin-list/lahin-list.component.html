@@ -61,7 +61,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let l of lahin">
-                    <td class="align-top">{{ l.nomor }}<br>{{ l.tanggal }}</td>
+                    <td class="align-top">{{ l.nomor }}<br>{{ l.tanggal | date: 'dd-MM-yyyy' }}</td>
                     <td class="align-top">{{ l.pembuat | shorten: 255 }}</td>
                     <td class="align-top">{{ l.perihal | shorten: 255 }}</td>
                     <td class="align-top">{{ l.tindakLanjut | shorten: 255 }}</td>

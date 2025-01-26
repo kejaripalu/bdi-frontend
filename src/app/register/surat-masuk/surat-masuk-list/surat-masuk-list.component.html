@@ -61,7 +61,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let sm of suratMasuk">
-                    <td class="align-top">{{ sm.tanggalPenerimaanSurat }} {{ sm.jamPenerimaanSurat }}</td>
+                    <td class="align-top">{{ sm.tanggalPenerimaanSurat | date: 'dd-MM-yyyy'}}<br>{{ sm.jamPenerimaanSurat }}</td>
                     <td class="align-top">{{ sm.asal }}</td>
                     <td class="align-top">{{ sm.nomorSurat }} <br> {{ sm.tanggalSurat }}</td>
                     <td class="align-top">{{ sm.perihal }}</td>

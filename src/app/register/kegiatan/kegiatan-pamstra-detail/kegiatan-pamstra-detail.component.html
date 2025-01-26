@@ -127,7 +127,7 @@
                             <p class="fw-bold">Nomor dan Tanggal Sprint Walpam</p>
                         </div>
                         <div class="col-sm-8 col-md-8 col-xl-8">
-                            : {{ giat.nomorSprintWalpam }} - {{ giat.tanggalSprintWalpam }}
+                            : {{ giat.nomorSprintWalpam }} - {{ giat.tanggalSprintWalpam | date: 'dd-MM-yyyy' }}
                         </div>
                     </div>
                 </li>
@@ -167,7 +167,7 @@
                             <p class="fw-bold">Nomor dan Tanggal Kertas Kerja</p>
                         </div>
                         <div class="col-sm-8 col-md-8 col-xl-8">
-                            : {{ giat.nomorKertasKerja }} - {{ giat.tanggalKertasKerja }}
+                            : {{ giat.nomorKertasKerja }} - {{ giat.tanggalKertasKerja | date: 'dd-MM-yyyy' }}
                         </div>
                     </div>
                 </li>

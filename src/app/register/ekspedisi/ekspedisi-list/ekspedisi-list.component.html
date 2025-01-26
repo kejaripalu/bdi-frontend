@@ -61,10 +61,10 @@
             </thead>
             <tbody>
                 <tr *ngFor="let ex of ekspedisi">
-                    <td class="align-top">{{ ex.nomorSurat }}<br>{{ ex.tanggalSurat }}</td>
+                    <td class="align-top">{{ ex.nomorSurat }}<br>{{ ex.tanggalSurat | date: 'dd-MM-yyyy' }}</td>
                     <td class="align-top">{{ ex.kepada }}</td>
                     <td class="align-top">{{ ex.perihal }}</td>
-                    <td class="align-top">{{ ex.tanggalTandaTerima }}<br>{{ ex.jamTandaTerima }}</td>
+                    <td class="align-top">{{ ex.tanggalTandaTerima | date: 'dd-MM-yyyy' }}<br>{{ ex.jamTandaTerima }}</td>
                     <td class="align-top">
                         <a class="dropdown-item text-primary"
                                         [routerLink]="['/ekspedisi', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa', ex.ids, 'detail']"

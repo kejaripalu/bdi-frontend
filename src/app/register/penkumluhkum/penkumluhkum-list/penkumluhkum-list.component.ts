@@ -14,7 +14,8 @@ import { PenkuluhkumService } from '../penkuluhkum.service';
   styleUrls: ['./penkumluhkum-list.component.css']
 })
 export class PenkumluhkumListComponent implements OnInit, OnDestroy {
-  private name: string = "Register Penerangan Hukum / Penyuluhan Hukum";
+
+  private name: string = "Register Kegiatan Penerangan Hukum / Penyuluhan Hukum";
   private message: Message = new Message();
   penkumluhkum: RegisterPenkumLuhkum[] = [];
   month = Object.keys(Month).filter((v) => isNaN(Number(v)));
@@ -44,15 +45,14 @@ export class PenkumluhkumListComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.getYear();
     this.penkumluhkumQueryParamSub = this.route.queryParams.subscribe((params: Params) => {
-      this.jenisKegiatan = (params['jenisKegiatan'] == 'penkum' ? 'PENERANGAN_HUKUM' :
-        (params['jenisKegiatan'] == 'luhkum' ? 'PENYULUHAN_HUKUM' : 'PENERANGAN_HUKUM'));
+      this.jenisKegiatan = params['jenisKegiatan'];
     });
     this.loadData();
     this.checkMessage();
   }
 
   loadData() {
-     this.penkumLuhkumSub = this.penkumluhkumService.getAll(
+    this.penkumLuhkumSub = this.penkumluhkumService.getAll(
       this.pageNumber - 1,
       this.pageSize,
       this.jenisKegiatan,
@@ -73,6 +73,7 @@ export class PenkumluhkumListComponent implements OnInit, OnDestroy {
             this.isLoading = false;
           }
         });
+    this.notificationStatusService.currentNotificationStatus.subscribe(notification => this.currentNotificationStatus = notification);
   }
 
   onNew() {
@@ -87,8 +88,8 @@ export class PenkumluhkumListComponent implements OnInit, OnDestroy {
       default:
         jenisGiat = 'PENERANGAN_HUKUM';
     }
-    this.router.navigate(['/penkumluhkum', 'form'], {
-      queryParams: { jenisSurat: jenisGiat }
+    this.router.navigate(['/penkumluhkum', jenisGiat, 'form'], {
+      queryParams: { jenisKegiatan: this.jenisKegiatan }
     });
   }
 
@@ -107,6 +108,25 @@ export class PenkumluhkumListComponent implements OnInit, OnDestroy {
           return;
         }
       });
+  }
+
+  onDelete(ids: string) {
+    if (confirm(this.message.deleteConfirm)) {
+      this.isLoading = true;
+      this.penkumLuhkumSub = this.penkumluhkumService.delete(ids)
+        .subscribe({
+          next: () => {
+            this.isLoading = false;
+            this.loadData();
+            this.toastService.show(this.message.deleteMessage + this.name + '!!!',
+              { classname: 'bg-success text-light', delay: 5000 });
+          },
+          error: (errorMessage) => {
+            this.error = errorMessage;
+            this.isLoading = false;
+          }
+        });
+    }
   }
 
   getYear() {

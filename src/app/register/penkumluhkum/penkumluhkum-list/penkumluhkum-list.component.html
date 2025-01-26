@@ -6,7 +6,7 @@
     <div class="d-flex bd-highlight">
         <div class="p-2 w-100 bd-highlight">
             <button type="button" class="btn btn-success" (click)="onNew()">
-                <i class="bi bi-window-plus"></i> Tambah Surat Masuk</button>
+                <i class="bi bi-window-plus"></i> Tambah Kegiatan</button>
         </div>
         <div class="p-2 w-100 bd-highlight">
             <div class="row">
@@ -55,6 +55,7 @@
                     <th scope="col">Nomor Surat Perintah</th>
                     <th scope="col">Sasaran</th>
                     <th scope="col">Tanggal Kegiatan</th>
+                    <th scope="col">Tempat</th>
                     <th scope="col">Materi</th>
                     <th scope="col">Jumlah Peserta</th>
                     <th scope="col">Program</th>
@@ -65,20 +66,22 @@
                 <tr *ngFor="let p of penkumluhkum">
                     <td class="align-top">{{ p.nomorSuratPerintah }}</td>
                     <td class="align-top">{{ p.sasaranKegiatan }}</td>
-                    <td class="align-top">{{ p.tanggalKegiatan }}</td>
+                    <td class="align-top">{{ p.tanggalKegiatan | date: 'dd-MM-yyyy' }}</td>
+                    <td class="align-top">{{ p.tempat }}</td>
                     <td class="align-top">{{ p.materi }}</td>
-                    <td class="align-top">{{ p.jumlahPeserta }}</td>
-                    <td class="align-top">{{ p.program }}</td>
+                    <td class="align-top">{{ p.jumlahPeserta | number:'1.0-0' : 'it' }}</td>
+                    <td class="align-top">{{ p.program == 'JAKSA_MENYAPA' ? 'Jaksa Menyapa' : 
+                                            (p.program == 'JMS' ? 'Jaksa Masuk Sekolah (JMS)' : 'Pembinaan Masyarakat Taat Hukum (BINMATKUM)') }}</td>
                     <td class="align-top">
-                        <!-- <a class="dropdown-item text-primary"
-                                        [routerLink]="['/surat-masuk', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa', p.ids, 'detail']"
-                                        [queryParams]="{jenisSurat: jenisSurat}"><i class="bi bi-list-check"></i> Detail</a>                   
+                        <a class="dropdown-item text-primary"
+                                        [routerLink]="['/penkumluhkum', jenisKegiatan === 'PENERANGAN_HUKUM' ? 'penkum' : 'luhkum', p.ids, 'detail']"
+                                        [queryParams]="{jenisKegiatan: jenisKegiatan}"><i class="bi bi-list-check"></i> Detail</a>                   
                         <a class="dropdown-item text-success"
-                                        [routerLink]="['/surat-masuk', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa', p.ids, 'form']"
-                                        [queryParams]="{edit: 1, jenisSurat: jenisSurat}">
+                                        [routerLink]="['/penkumluhkum', jenisKegiatan === 'PENYULUHAN_HUKUM' ? 'luhkum' : 'penkum', p.ids, 'form']"
+                                        [queryParams]="{edit: 1, jenisKegiatan: jenisKegiatan}">
                                         <i class="bi bi-pencil-square"></i> Ubah</a>
-                        <a class="dropdown-item text-danger" (click)="onDeleteSuratMasuk(p.ids)" style="cursor: pointer;"><i
-                                        class="bi bi-trash3-fill"></i> Hapus</a> -->
+                        <a class="dropdown-item text-danger" (click)="onDelete(p.ids)" style="cursor: pointer;"><i
+                                        class="bi bi-trash3-fill"></i> Hapus</a>
                     </td>
                 </tr>
                 <router-outlet></router-outlet>
