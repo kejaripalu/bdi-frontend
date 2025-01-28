@@ -8,6 +8,7 @@ import { ToastService } from 'src/app/shared/toast.service';
 import { NotificationService } from 'src/app/shared/notification.service';
 import { Message } from 'src/app/shared/message';
 import { AuthService } from 'src/app/auth/auth.service';
+import { ConfirmDeleteService } from 'src/app/shared/delete-modal/confirm-delete.service';
 
 @Component({
   selector: 'app-pphppm-list',
@@ -42,7 +43,8 @@ export class PphppmListComponent implements OnInit, OnDestroy {
     private pphppmService: RegisterPPHPPMService,
     private toastService: ToastService,
     private notificationStatusService: NotificationService,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private confirmDeleteService: ConfirmDeleteService) { }
 
   ngOnInit(): void {
     this.error = false as any;
@@ -106,10 +108,10 @@ export class PphppmListComponent implements OnInit, OnDestroy {
     this.router.navigate(['/pphppm', 'list', 'form']);
   }
 
-  onDeletePPHPPM(id: string) {
-    if (confirm(this.message.deleteConfirm)) {
+  onDelete(ids: string) {
+    if (ids != null || ids != '') {
       this.isLoading = true;
-      this.pphppmSub = this.pphppmService.delete(id)
+      this.pphppmSub = this.pphppmService.delete(ids)
         .subscribe({
           next: () => {
             this.isLoading = false;
@@ -183,6 +185,14 @@ export class PphppmListComponent implements OnInit, OnDestroy {
 
   onNotificationStatusChange(status: boolean) {
     this.notificationStatusService.changeNotificationStatus(status);
+  }
+
+  openModalDelete(ids: string) {
+    this.confirmDeleteService.openModal()
+      .result.then(
+        () => { this.onDelete(ids); }, //If Confirm button is pressed
+        () => { } //If Dismissed button is pressed
+      );
   }
 
   ngOnDestroy(): void {

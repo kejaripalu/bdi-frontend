@@ -84,6 +84,7 @@ import { CustomMaxValidatorDirective } from './shared/custom-directive/custom-ma
 import { CustomMinValidatorDirective } from './shared/custom-directive/custom-min-validator.directive';
 import { PenkumluhkumDetailComponent } from './register/penkumluhkum/penkumluhkum-detail/penkumluhkum-detail.component';
 import { PenkumluhkumHelpComponent } from './register/penkumluhkum/penkumluhkum-help/penkumluhkum-help.component';
+import { DeleteModalComponent } from './shared/delete-modal/delete-modal.component';
 
 @NgModule({
   declarations: [
@@ -163,7 +164,8 @@ import { PenkumluhkumHelpComponent } from './register/penkumluhkum/penkumluhkum-
     CustomMaxValidatorDirective,
     CustomMinValidatorDirective,
     PenkumluhkumDetailComponent,
-    PenkumluhkumHelpComponent
+    PenkumluhkumHelpComponent,
+    DeleteModalComponent
   ],
   imports: [
     BrowserModule,

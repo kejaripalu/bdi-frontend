@@ -8,6 +8,7 @@ import { RegisterKegiatanIntelijenPamstra } from '../kegiatan-pamstra.model';
 import { RegisterKegiatanIntelijenPamstraService } from '../kegiatan-pamstra.service';
 import { Message } from 'src/app/shared/message';
 import { NotificationService } from 'src/app/shared/notification.service';
+import { ConfirmDeleteService } from 'src/app/shared/delete-modal/confirm-delete.service';
 
 @Component({
   selector: 'app-kegiatan-pamstra-list',
@@ -40,7 +41,8 @@ export class KegiatanPamstraListComponent implements OnInit, OnDestroy {
     private bidangDirektoratSektorService: BidangDirektoratSektorService,
     private giatService: RegisterKegiatanIntelijenPamstraService,
     public toastService: ToastService,
-    private notificationStatusService: NotificationService) { }
+    private notificationStatusService: NotificationService,
+    private confirmDeleteService: ConfirmDeleteService) { }
 
   ngOnInit(): void {
     this.error = false as any;
@@ -114,10 +116,10 @@ export class KegiatanPamstraListComponent implements OnInit, OnDestroy {
     });
   }
 
-  onDelete(id: string) {
-    if (confirm(this.message.deleteConfirm)) {
+  onDelete(ids: string) {
+    if (ids != null || ids != '') {
       this.isLoading = true;
-      this.giatSub = this.giatService.delete(id)
+      this.giatSub = this.giatService.delete(ids)
         .subscribe({
           next: () => {
             this.isLoading = false;
@@ -191,6 +193,14 @@ export class KegiatanPamstraListComponent implements OnInit, OnDestroy {
 
   onNotificationStatusChange(status: boolean) {
     this.notificationStatusService.changeNotificationStatus(status);
+  }
+
+  openModalDelete(ids: string) {
+    this.confirmDeleteService.openModal()
+      .result.then(
+        () => { this.onDelete(ids); }, //If Confirm button is pressed
+        () => { } //If Dismissed button is pressed
+      );
   }
 
   ngOnDestroy(): void {

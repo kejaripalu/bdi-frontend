@@ -7,6 +7,7 @@ import { SuratKeluar } from '../surat-keluar.model';
 import { SuratKeluarService } from '../surat-keluar.service';
 import { Message } from 'src/app/shared/message';
 import { NotificationService } from 'src/app/shared/notification.service';
+import { ConfirmDeleteService } from 'src/app/shared/delete-modal/confirm-delete.service';
 
 @Component({
   selector: 'app-surat-keluar-list',
@@ -37,7 +38,8 @@ export class SuratKeluarListComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     public toastService: ToastService,
-    private notificationStatusService: NotificationService) { }
+    private notificationStatusService: NotificationService,
+    private confirmDeleteService: ConfirmDeleteService) { }
 
   ngOnInit(): void {
     this.error = false as any;
@@ -171,15 +173,15 @@ export class SuratKeluarListComponent implements OnInit, OnDestroy {
     this.isSearching = false;
   }
 
-  onDeleteSuratKeluar(id: string) {
-    if (confirm('Yakin ente mau hapus data ini?')) {
+  onDeleteSuratKeluar(ids: string) {
+    if (ids != null || ids != '') {
       this.isLoading = true;
-      this.suratKeluarSub = this.suratKeluarService.deleteSuratKeluar(id)
+      this.suratKeluarSub = this.suratKeluarService.deleteSuratKeluar(ids)
         .subscribe({
           next: () => {
             this.isLoading = false;
             this.loadDataSuratKeluar();
-            this.toastService.show('Ashiiap.... Berhasil Hapus Data Surat Keluar!',
+            this.toastService.show(this.message.deleteMessage + this.name + '!!!',
               { classname: 'bg-success text-light', delay: 5000 });
           },
           error: (errorMessage) => {
@@ -188,6 +190,14 @@ export class SuratKeluarListComponent implements OnInit, OnDestroy {
           }
         });
     }
+  }
+
+  openModalDelete(ids: string) {
+    this.confirmDeleteService.openModal()
+      .result.then(
+        () => { this.onDeleteSuratKeluar(ids); }, //If Confirm button is pressed
+        () => { } //If Dismissed button is pressed
+      );
   }
 
   onNotificationStatusChange(status: boolean) {

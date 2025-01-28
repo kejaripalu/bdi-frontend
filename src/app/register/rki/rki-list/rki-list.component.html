@@ -54,6 +54,7 @@
         <table class="table table-striped table-sm mt-4 table-bordered">
             <thead>
                 <tr>
+                    <th scope="col">#</th>
                     <th scope="col">Waktu Diterima</th>
                     <th scope="col">Sumber / Bapul</th>
                     <th scope="col">Nilai Data / Informasi</th>
@@ -62,7 +63,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let r of rki">
+                <tr *ngFor="let r of rki; let i = index">
+                    <td class="align-top">{{ i + 1 }}</td>
                     <td class="align-top">{{ r.tanggalWaktuDiterima | date: 'dd-MM-yyyy' }}<br>{{ r.jamWaktuDiterima }}</td>
                     <td class="align-top">{{ r.sumberBapul }}</td>
                     <td class="align-top">{{ r.nilaiDataInformasi }}</td>
@@ -75,7 +77,7 @@
                                         [routerLink]="['/rki', 'list', r.ids, 'form']"
                                         [queryParams]="{ edit: 1, bidang: namaBidang }">
                                         <i class="bi bi-pencil-square"></i> Ubah</a>
-                        <a class="dropdown-item text-danger" (click)="onDelete(r.ids)" style="cursor: pointer;"><i
+                        <a class="dropdown-item text-danger" (click)="openModalDelete(r.ids)" style="cursor: pointer;"><i
                                         class="bi bi-trash3-fill"></i> Hapus</a>
                     </td>
                 </tr>

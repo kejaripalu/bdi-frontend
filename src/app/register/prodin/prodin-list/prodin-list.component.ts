@@ -8,6 +8,7 @@ import { ProdukIntelijen } from '../prodin.model';
 import { ProdukIntelijenService } from '../prodin.service';
 import { Message } from 'src/app/shared/message';
 import { NotificationService } from 'src/app/shared/notification.service';
+import { ConfirmDeleteService } from 'src/app/shared/delete-modal/confirm-delete.service';
 
 @Component({
   selector: 'app-prodin-list',
@@ -39,7 +40,8 @@ export class ProdinListComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private prodinService: ProdukIntelijenService,
     public toastService: ToastService,
-    private notificationStatusService: NotificationService) { }
+    private notificationStatusService: NotificationService,
+    private confirmDeleteService: ConfirmDeleteService) { }
 
   ngOnInit(): void {
     this.error = false as any;
@@ -99,10 +101,10 @@ export class ProdinListComponent implements OnInit, OnDestroy {
     this.router.navigate(['/prodin', 'list', 'form']);
   }
 
-  onDeleteProdin(id: string) {
-    if (confirm(this.message.deleteConfirm)) {
+  onDelete(ids: string) {
+    if (ids != null || ids != '') {
       this.isLoading = true;
-      this.prodinSub = this.prodinService.deleteProdin(id)
+      this.prodinSub = this.prodinService.deleteProdin(ids)
         .subscribe({
           next: () => {
             this.isLoading = false;
@@ -176,6 +178,14 @@ export class ProdinListComponent implements OnInit, OnDestroy {
 
   onNotificationStatusChange(status: boolean) {
     this.notificationStatusService.changeNotificationStatus(status);
+  }
+
+  openModalDelete(ids: string) {
+    this.confirmDeleteService.openModal()
+      .result.then(
+        () => { this.onDelete(ids); }, //If Confirm button is pressed
+        () => { } //If Dismissed button is pressed
+      );
   }
 
   ngOnDestroy(): void {

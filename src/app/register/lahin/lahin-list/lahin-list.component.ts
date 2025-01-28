@@ -7,6 +7,7 @@ import { ToastService } from 'src/app/shared/toast.service';
 import { Month } from 'src/app/shared/month';
 import { Message } from 'src/app/shared/message';
 import { NotificationService } from 'src/app/shared/notification.service';
+import { ConfirmDeleteService } from 'src/app/shared/delete-modal/confirm-delete.service';
 
 @Component({
   selector: 'app-lahin-list',
@@ -36,7 +37,8 @@ export class LahinListComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private lahinService: RegisterTelaahanIntelijenService,
     public toastService: ToastService,
-    private notificationStatusService: NotificationService) { }
+    private notificationStatusService: NotificationService,
+    private confirmDeleteService: ConfirmDeleteService) { }
 
   ngOnInit(): void {
     this.error = false as any;
@@ -96,10 +98,10 @@ export class LahinListComponent implements OnInit, OnDestroy {
     this.router.navigate(['/lahin', 'list', 'form']);
   }
 
-  onDelete(id: string) {
-    if (confirm(this.message.deleteConfirm)) {
+  onDelete(ids: string) {
+    if (ids != null || ids != '') {
       this.isLoading = true;
-      this.lahinSub = this.lahinService.delete(id)
+      this.lahinSub = this.lahinService.delete(ids)
         .subscribe({
           next: () => {
             this.isLoading = false;
@@ -173,6 +175,14 @@ export class LahinListComponent implements OnInit, OnDestroy {
 
   onNotificationStatusChange(status: boolean) {
     this.notificationStatusService.changeNotificationStatus(status);
+  }
+
+  openModalDelete(ids: string) {
+    this.confirmDeleteService.openModal()
+      .result.then(
+        () => { this.onDelete(ids); }, //If Confirm button is pressed
+        () => { } //If Dismissed button is pressed
+      );
   }
   
   ngOnDestroy(): void {

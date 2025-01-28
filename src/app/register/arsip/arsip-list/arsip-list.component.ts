@@ -7,6 +7,7 @@ import { Arsip } from '../arsip.model';
 import { ArsipService } from '../arsip.service';
 import { NotificationService } from 'src/app/shared/notification.service';
 import { Message } from 'src/app/shared/message';
+import { ConfirmDeleteService } from 'src/app/shared/delete-modal/confirm-delete.service';
 
 @Component({
   selector: 'app-arsip-list',
@@ -37,7 +38,8 @@ export class ArsipListComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     public toastService: ToastService,
-    private notificationStatusService: NotificationService) { }
+    private notificationStatusService: NotificationService,
+   private confirmDeleteService: ConfirmDeleteService) { }
 
   ngOnInit(): void {
     this.error = false as any;
@@ -97,10 +99,10 @@ export class ArsipListComponent implements OnInit, OnDestroy {
     this.router.navigate(['/arsip', 'list', 'form']);
   }
 
-  onDeleteArsip(id: string) {
-    if (confirm(this.message.deleteConfirm)) {
+  onDeleteArsip(ids: string) {
+    if (ids != null || ids != '') {
       this.isLoading = true;
-      this.arsipSub = this.arsipService.delete(id)
+      this.arsipSub = this.arsipService.delete(ids)
         .subscribe({
           next: () => {
             this.isLoading = false;
@@ -174,6 +176,14 @@ export class ArsipListComponent implements OnInit, OnDestroy {
 
   onNotificationStatusChange(status: boolean) {
     this.notificationStatusService.changeNotificationStatus(status);
+  }
+
+  openModalDelete(ids: string) {
+    this.confirmDeleteService.openModal()
+      .result.then(
+        () => { this.onDeleteArsip(ids); }, //If Confirm button is pressed
+        () => { } //If Dismissed button is pressed
+      );
   }
 
   ngOnDestroy(): void {

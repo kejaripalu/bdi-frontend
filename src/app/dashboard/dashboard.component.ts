@@ -138,6 +138,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     if (this.countPphPpmSub) {
       this.countPphPpmSub.unsubscribe();
     }
+    if (this.countProgramPenkumLuhkumSub) {
+      this.countProgramPenkumLuhkumSub.unsubscribe();
+    }
   }
 
 }

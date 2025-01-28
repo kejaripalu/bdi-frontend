@@ -7,6 +7,7 @@ import { SuratMasuk } from '../surat-masuk.model';
 import { SuratMasukService } from '../surat-masuk.service';
 import { Message } from 'src/app/shared/message';
 import { NotificationService } from 'src/app/shared/notification.service';
+import { ConfirmDeleteService } from 'src/app/shared/delete-modal/confirm-delete.service';
 
 @Component({
   selector: 'app-surat-masuk-list',
@@ -28,6 +29,7 @@ export class SuratMasukListComponent implements OnInit, OnDestroy {
   private suratMasukQueryParamSub!: Subscription;
   pageNumber: number = 1;
   pageSize: number = 10;
+  indexValue: number = 0;
   totalElements: number = 0;
   isSearching: boolean = false;
   currentNotificationStatus: boolean = false;
@@ -36,7 +38,8 @@ export class SuratMasukListComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     public toastService: ToastService,
-    private notificationStatusService: NotificationService) { }
+    private notificationStatusService: NotificationService,
+    private confirmDeleteService: ConfirmDeleteService) { }
 
   ngOnInit(): void {
     this.error = false as any;
@@ -108,10 +111,10 @@ export class SuratMasukListComponent implements OnInit, OnDestroy {
     });
   }
 
-  onDeleteSuratMasuk(id: string) {
-    if (confirm('Yakin ente mau hapus data ini?')) {
+  onDeleteSuratMasuk(ids: string) {
+    if (ids != null || ids != '') {
       this.isLoading = true;
-      this.suratMasukSub = this.suratMasukService.deleteSuratMasuk(id)
+      this.suratMasukSub = this.suratMasukService.deleteSuratMasuk(ids)
         .subscribe({
           next: () => {
             this.isLoading = false;
@@ -192,6 +195,14 @@ export class SuratMasukListComponent implements OnInit, OnDestroy {
 
   onNotificationStatusChange(status: boolean) {
     this.notificationStatusService.changeNotificationStatus(status);
+  }
+
+  openModalDelete(ids: string) {
+    this.confirmDeleteService.openModal()
+      .result.then(
+        () => { this.onDeleteSuratMasuk(ids); }, //If Confirm button is pressed
+        () => { } //If Dismissed button is pressed
+      );
   }
 
   ngOnDestroy(): void {

@@ -7,6 +7,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ToastService } from 'src/app/shared/toast.service';
 import { NotificationService } from 'src/app/shared/notification.service';
 import { PenkuluhkumService } from '../penkuluhkum.service';
+import { ConfirmDeleteService } from 'src/app/shared/delete-modal/confirm-delete.service';
 
 @Component({
   selector: 'app-penkumluhkum-list',
@@ -38,7 +39,8 @@ export class PenkumluhkumListComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private toastService: ToastService,
-    private notificationStatusService: NotificationService) { }
+    private notificationStatusService: NotificationService,
+        private confirmDeleteService: ConfirmDeleteService) { }
 
   ngOnInit(): void {
     this.error = false as any;
@@ -111,7 +113,7 @@ export class PenkumluhkumListComponent implements OnInit, OnDestroy {
   }
 
   onDelete(ids: string) {
-    if (confirm(this.message.deleteConfirm)) {
+    if (ids != null || ids != '') {
       this.isLoading = true;
       this.penkumLuhkumSub = this.penkumluhkumService.delete(ids)
         .subscribe({
@@ -194,6 +196,14 @@ export class PenkumluhkumListComponent implements OnInit, OnDestroy {
 
   onNotificationStatusChange(status: boolean) {
     this.notificationStatusService.changeNotificationStatus(status);
+  }
+
+  openModalDelete(ids: string) {
+    this.confirmDeleteService.openModal()
+      .result.then(
+        () => { this.onDelete(ids); }, //If Confirm button is pressed
+        () => { } //If Dismissed button is pressed
+      );
   }
 
   ngOnDestroy(): void {

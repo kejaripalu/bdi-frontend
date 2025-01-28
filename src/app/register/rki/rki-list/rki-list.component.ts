@@ -8,6 +8,7 @@ import { RegisterKerjaIntelijen } from '../rki.model';
 import { RegisterKerjaIntelijenService } from '../rki.service';
 import { Message } from 'src/app/shared/message';
 import { NotificationService } from 'src/app/shared/notification.service';
+import { ConfirmDeleteService } from 'src/app/shared/delete-modal/confirm-delete.service';
 
 @Component({
   selector: 'app-rki-list',
@@ -41,7 +42,8 @@ export class RkiListComponent implements OnInit, OnDestroy {
     private bidangDirektoratSektorService: BidangDirektoratSektorService,
     private rkiService: RegisterKerjaIntelijenService,
     public toastService: ToastService,
-    private notificationStatusService: NotificationService) { }
+    private notificationStatusService: NotificationService,
+    private confirmDeleteService: ConfirmDeleteService) { }
 
   ngOnInit(): void {
     this.error = false as any;
@@ -124,10 +126,10 @@ export class RkiListComponent implements OnInit, OnDestroy {
     this.loadDataRKI();
   }
 
-  onDelete(id: string) {
-    if (confirm(this.message.deleteConfirm)) {
+  onDelete(ids: string) {
+    if (ids != null || ids != '') {
       this.isLoading = true;
-      this.rkiSub = this.rkiService.deleteRKI(id)
+      this.rkiSub = this.rkiService.deleteRKI(ids)
         .subscribe({
           next: () => {
             this.isLoading = false;
@@ -195,6 +197,14 @@ export class RkiListComponent implements OnInit, OnDestroy {
 
   onNotificationStatusChange(status: boolean) {
     this.notificationStatusService.changeNotificationStatus(status);
+  }
+
+  openModalDelete(ids: string) {
+    this.confirmDeleteService.openModal()
+      .result.then(
+        () => { this.onDelete(ids); }, //If Confirm button is pressed
+        () => { } //If Dismissed button is pressed
+      );
   }
 
   ngOnDestroy(): void {

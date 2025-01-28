@@ -8,6 +8,7 @@ import { RegisterOpsinService } from '../opsin.service';
 import { ToastService } from 'src/app/shared/toast.service';
 import { Message } from 'src/app/shared/message';
 import { NotificationService } from 'src/app/shared/notification.service';
+import { ConfirmDeleteService } from 'src/app/shared/delete-modal/confirm-delete.service';
 
 @Component({
   selector: 'app-opsin-list',
@@ -40,7 +41,8 @@ export class OpsinListComponent implements OnInit, OnDestroy {
     private bidangDirektoratSektorService: BidangDirektoratSektorService,
     private opsinService: RegisterOpsinService,
     public toastService: ToastService,
-    private notificationStatusService: NotificationService) { }
+    private notificationStatusService: NotificationService,
+    private confirmDeleteService: ConfirmDeleteService) { }
 
   ngOnInit(): void {
     this.error = false as any;
@@ -115,10 +117,10 @@ export class OpsinListComponent implements OnInit, OnDestroy {
     });
   }
 
-  onDelete(id: string) {
-    if (confirm(this.message.deleteConfirm)) {
+  onDelete(ids: string) {
+    if (ids != null || ids != '') {
       this.isLoading = true;
-      this.opsinSub = this.opsinService.delete(id)
+      this.opsinSub = this.opsinService.delete(ids)
         .subscribe({
           next: () => {
             this.isLoading = false;
@@ -193,6 +195,14 @@ export class OpsinListComponent implements OnInit, OnDestroy {
     this.pageNumber = 1;
     this.isLoading = true;
     this.loadDataOpsin();
+  }
+
+  openModalDelete(ids: string) {
+    this.confirmDeleteService.openModal()
+      .result.then(
+        () => { this.onDelete(ids); }, //If Confirm button is pressed
+        () => { } //If Dismissed button is pressed
+      );
   }
 
   ngOnDestroy(): void {

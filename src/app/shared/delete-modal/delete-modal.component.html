@@ -1,0 +1,11 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="deleteModalLabel">Hapus data</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    Anda yakin mau menghapus data ini?
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary float-left" data-dismiss="modal" (click)="activeModal.dismiss('Cross click')"><i class="bi bi-x-circle-fill"></i> Batal</button>
+    <button type="button" class="btn btn-danger" (click)="onClickDelete()"><i class="bi bi-trash3-fill"></i> Hapus</button>
+</div>
