@@ -53,7 +53,7 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Tgl & No. Surat</th>
+                    <th scope="col">Tgl & No. Surat <span (click)="sortTanggal()"><i class="bi bi-caret-up-fill" style="cursor: pointer;" *ngIf="!orderDate"></i><i class="bi bi-caret-down-fill" style="cursor: pointer;" *ngIf="orderDate"></i></span></th>
                     <th scope="col">Kepada</th>
                     <th scope="col">Perihal</th>
                     <th scope="col">Lampiran</th>
@@ -67,8 +67,8 @@
                     <td class="align-top">{{ sk.tanggalSurat | date: 'dd-MM-yyyy' }} <br> {{ sk.nomorSurat }}</td>
                     <td class="align-top">{{ sk.kepada }}</td>
                     <td class="align-top">{{ sk.perihal }}</td>
-                    <td class="align-top">{{ sk.lampiran }}</td>
-                    <td class="align-top">{{ sk.keterangan }}</td>
+                    <td class="align-top">{{ sk.lampiran == '' || sk.lampiran == null ? '-' : sk.lampiran }}</td>
+                    <td class="align-top">{{ sk.keterangan  == '' || sk.keterangan == null ? '-' : sk.keterangan}}</td>
                     <td class="align-top">
                         <a class="dropdown-item text-primary"
                                         [routerLink]="['/surat-keluar', jenisSurat === 'RAHASIA' ? 'rahasia' : 'biasa', sk.ids, 'detail']"

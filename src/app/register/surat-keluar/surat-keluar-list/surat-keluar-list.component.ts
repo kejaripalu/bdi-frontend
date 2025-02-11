@@ -32,6 +32,7 @@ export class SuratKeluarListComponent implements OnInit, OnDestroy {
   totalElements: number = 0;
   isSearching: boolean = false;
   currentNotificationStatus: boolean = false;
+  orderDate: boolean = false;
 
   constructor(
     private suratKeluarService: SuratKeluarService,
@@ -202,6 +203,20 @@ export class SuratKeluarListComponent implements OnInit, OnDestroy {
 
   onNotificationStatusChange(status: boolean) {
     this.notificationStatusService.changeNotificationStatus(status);
+  }
+
+  sortTanggal() {
+    if (!this.orderDate) {
+      const asc = this.suratKeluar.sort((a, b) =>
+        new Date(a.tanggalSurat).getDate() - new Date(b.tanggalSurat).getDate());
+      this.suratKeluar = asc;
+    } else {
+      const desc = this.suratKeluar.sort((a, b) =>
+        new Date(b.tanggalSurat).getDate() - new Date(a.tanggalSurat).getDate());
+      this.suratKeluar = desc;
+    }
+
+    this.orderDate = !this.orderDate;
   }
 
   ngOnDestroy(): void {
