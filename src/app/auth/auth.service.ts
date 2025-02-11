@@ -35,7 +35,6 @@ export class AuthService {
                   break;
                 default:
                   errorMessage = 'GAGAL Login!!! ' //+ errorResponse.error.message;
-                  console.log('GAGAL Login!!!' + errorResponse.error.message);
               }
             return throwError(() => errorMessage);
       }), tap(resData => {

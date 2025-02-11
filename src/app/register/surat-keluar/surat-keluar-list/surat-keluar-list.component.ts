@@ -15,25 +15,42 @@ import { ConfirmDeleteService } from 'src/app/shared/delete-modal/confirm-delete
   styleUrls: ['./surat-keluar-list.component.css']
 })
 export class SuratKeluarListComponent implements OnInit, OnDestroy {
+  
+  // Variable
   private name: string = "Register Surat Keluar";
   private message: Message = new Message();
   suratKeluar: SuratKeluar[] = [];
+  jenisSurat: string = null as any;
+  
+  // Month and Year
   month = Object.keys(Month).filter((v) => isNaN(Number(v)));
   currentMonth = new Date().getMonth() + 1; // get current month
   currentYear = new Date().getFullYear(); // get current year
   year: number[] = [];
+  
+  // Loading
   isLoading: boolean = false;
   error: string = null as any;
-  jenisSurat: string = null as any;
+  
+  // Subscription
   private suratKeluarSub!: Subscription;
   private suratKeluarQueryParamSub!: Subscription;
+  
+  // Pagination
   pageNumber: number = 1;
   pageSize: number = 10;
   totalElements: number = 0;
   isSearching: boolean = false;
+  
+  // Notification
   currentNotificationStatus: boolean = false;
+  
+  // Sorting
   orderDate: boolean = false;
-
+  orderKepada: boolean = false;
+  orderPerihal: boolean = false;
+  isDesc: boolean = true;
+  
   constructor(
     private suratKeluarService: SuratKeluarService,
     private router: Router,
@@ -210,13 +227,39 @@ export class SuratKeluarListComponent implements OnInit, OnDestroy {
       const asc = this.suratKeluar.sort((a, b) =>
         new Date(a.tanggalSurat).getDate() - new Date(b.tanggalSurat).getDate());
       this.suratKeluar = asc;
+      this.isDesc = false;
     } else {
       const desc = this.suratKeluar.sort((a, b) =>
         new Date(b.tanggalSurat).getDate() - new Date(a.tanggalSurat).getDate());
       this.suratKeluar = desc;
+      this.isDesc = true;
     }
 
     this.orderDate = !this.orderDate;
+  }
+
+  sortKepada(property: string) {
+    this.sortString(property);
+    this.orderKepada = !this.orderKepada;
+  }
+
+  sortPerihal(property: string) {
+    this.sortString(property);
+    this.orderPerihal = !this.orderPerihal;
+  }
+
+  sortString(property: string) {
+    this.isDesc = !this.isDesc;
+    const direction = this.isDesc ? 1 : -1;
+    this.suratKeluar.sort((a, b) => {
+      if (a[property as keyof typeof a] < b[property as keyof typeof b]) {
+        return -1 * direction;
+      } else if (a[property as keyof typeof a] > b[property as keyof typeof b]) {
+        return 1 * direction;
+      } else {
+        return 0;
+      }
+    });
   }
 
   ngOnDestroy(): void {

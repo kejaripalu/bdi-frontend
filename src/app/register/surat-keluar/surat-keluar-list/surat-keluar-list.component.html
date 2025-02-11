@@ -54,8 +54,8 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Tgl & No. Surat <span (click)="sortTanggal()"><i class="bi bi-caret-up-fill" style="cursor: pointer;" *ngIf="!orderDate"></i><i class="bi bi-caret-down-fill" style="cursor: pointer;" *ngIf="orderDate"></i></span></th>
-                    <th scope="col">Kepada</th>
-                    <th scope="col">Perihal</th>
+                    <th scope="col">Kepada <span (click)="sortKepada('kepada')"><i class="bi bi-caret-up-fill" style="cursor: pointer;" *ngIf="!orderKepada"></i><i class="bi bi-caret-down-fill" style="cursor: pointer;" *ngIf="orderKepada"></i></span></th>
+                    <th scope="col">Perihal <span (click)="sortPerihal('perihal')"><i class="bi bi-caret-up-fill" style="cursor: pointer;" *ngIf="!orderPerihal"></i><i class="bi bi-caret-down-fill" style="cursor: pointer;" *ngIf="orderPerihal"></i></span></th>
                     <th scope="col">Lampiran</th>
                     <th scope="col">Keterangan</th>
                     <th scope="col">Action</th>
